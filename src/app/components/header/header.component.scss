@@ -1,4 +1,7 @@
 
+.header{
+    width: 100%;
+}
 a{
     text-decoration: none;
     color: black;
@@ -18,7 +21,7 @@ a{
     margin-left: 10px;
 }
 
-.header-top{
+.header-top{    
     font-size: 15px;
     background-color: #f7f7f7;
 }
@@ -83,8 +86,6 @@ a{
         flex-direction: column;
     }
 }
-
-
 @media (max-width: 560px){
     .header-bottom-left{
         display: flex;
