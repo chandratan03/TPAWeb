@@ -1,0 +1,43 @@
+<div class="container">
+    
+    <div class="top-boxes">
+        <div class="box box1">
+            <span class="title1">Hey, kamu</span>
+            <br>
+            <span class="title2">Mau ke mana?</span>
+        </div>
+        <div class="box box2">
+            <div class="img img-pesawat" (click)="click1()">
+                <img src="../../../assets/flight-card/pesawat_picture.png" alt="">
+                <span>Pesawat</span>
+            </div>
+            <div class="img img-hotel" (click)="click2()">
+                <img src="../../../assets/flight-card/hotel_image.png" alt="">
+                <span>Hotel</span>
+            </div>
+            <div class="img img-kereta-api" (click)="click3()">
+                <img src="../../../assets/flight-card/kereta_picture.png" alt="">
+                <span>Kereta Api</span>
+            </div>
+            <div class="img img-sewa-mobil" (click)="click4()">
+                <img src="../../../assets/flight-card/mobil_picture.png" alt="">
+                <span>Sewa Mobil</span>
+            </div>
+    
+            <div class="img img-entertainment"  (click)="click5()">
+                <img src="../../../assets/flight-card/entertainment_picture.png" alt="">
+                <span>Entertainment</span>
+            </div>
+        </div>
+    </div>
+    <div class="contents">
+        <app-flight-card class="card-content card-content-1" *ngIf="no==1"></app-flight-card>
+        <app-hotel-card class="card-content card-content-2" *ngIf="no==2"></app-hotel-card>
+        <app-rentcar-card class="card-content card-content-3" *ngIf="no==4"></app-rentcar-card>
+
+
+
+    </div>
+
+
+</div>

@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="title-container">
+        <h2 class="title">Log in/Daftar</h2>
+        <p class="title-description">Perjalanan serumu dimulai disini</p>
+    </div>
+
+    <form action="">
+        <input class="input-emailOrPhonenumber" type="text" placeholder="Nomor Ponsel atau Email">
+        <input class="next-btn" type="button" value="LANJUTKAN">
+        <p class="or-with">atau dengan</p>
+        <ul class="button-list">
+            <li class="btn-li btn-li-google">
+                <div (click)="onSignIn()">
+                    <img src="../../../assets/LoginComponents/google.svg" alt="">
+                    <span>Google</span>
+
+                </div>
+            </li>
+            <div class="btn-divider"></div>
+            <li  class="btn-li  btn-li-facebook">
+                <div (click)="signInWithFB()"> 
+                    <img src="../../../assets/LoginComponents/facebook.svg" alt="">
+                    <span>Facebook</span>
+
+                </div>
+            </li>
+        </ul>
+        <p class="agreement">Dengan mendaftar kamu menyetujui <a href="">Kebijakan Privasi</a> dan <a href="">Syarat &
+            Ketentuan</a> kami.</p>
+            <p (click)="logOutWithFB()">HLEO?</p>
+        <div class="hr"></div>
+    </form>
+
+</div>
