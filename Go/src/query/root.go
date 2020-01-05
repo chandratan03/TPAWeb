@@ -14,11 +14,17 @@ func GetRoot() *graphql.Object{
         Type:graphql.NewList(types.GetUserType()),
         Args: graphql.FieldConfigArgument{
           "id" : &graphql.ArgumentConfig{
-            Type: graphql.Int,
+              Type: graphql.Int,
           },
         },
         Resolve: resolvers.GetUser,
         Description:"GET A USER",
+      },
+      "users":{
+              Type: graphql.NewList(types.GetUserType()),
+              Resolve: resolvers.GetUsers,
+              Description:"Get all users",
+
       },
 
     },

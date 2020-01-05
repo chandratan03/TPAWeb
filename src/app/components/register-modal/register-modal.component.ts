@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-modal.component.scss']
 })
 export class RegisterModalComponent implements OnInit {
-
+  selectedCode= "primary";
   constructor() { }
-
+  
   ngOnInit() {
   }
 

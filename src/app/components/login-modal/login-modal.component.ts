@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { SocialLoginService } from 'src/app/services/social-login.service';
 import { GoogleAuthService, GoogleApiService } from 'ng-gapi';
 import { ActivatedRoute } from '@angular/router';
+// import { EventEmitter } from 'protractor';
 
 
 declare var FB: any;
@@ -13,7 +14,7 @@ declare var FB: any;
   styleUrls: ['./login-modal.component.scss']
 })
 export class LoginModalComponent implements OnInit {
-
+  @Output() nextPage = new EventEmitter()
   
   constructor(
     private service: SocialLoginService,
@@ -81,5 +82,12 @@ export class LoginModalComponent implements OnInit {
     }
     )
   }
+
+  goToNextPage():void{
+   document.getElementById("loginModal2").style.display = "block"
+   document.getElementById("loginModal1").style.display = "None"
+   
+  }
+
 
 }

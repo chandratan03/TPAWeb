@@ -8,9 +8,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes, Router} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatDialogModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule} from '@angular/material';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { QuickCardComponent } from './components/quick-card/quick-card.component';
+import {ApolloModule, Apollo} from 'apollo-angular';
+import { HttpLinkModule, HttpLink }from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import {
   GoogleApiModule, 
@@ -25,6 +28,9 @@ import { HotelCardComponent } from './components/hotel-card/hotel-card.component
 import { RegisterModalComponent } from './components/register-modal/register-modal.component';
 import { RentcarCardComponent } from './components/rentcar-card/rentcar-card.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginModal2Component } from './components/login-modal2/login-modal2.component';
 
 
 let gapiClientConfig: NgGapiClientConfig = {
@@ -57,23 +63,27 @@ let gapiClientConfig: NgGapiClientConfig = {
     RegisterModalComponent,
     RentcarCardComponent,
     SliderComponent,
+    LoginModal2Component,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule, 
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
+    
     RouterModule.forRoot([
       {
         path: '', component:HomePageComponent
       },
       {
-        path:'tiket-card', component:FlightCardComponent
-      },
-      {
-        path:'hotel-card', component: HotelCardComponent 
-      },
-      {
-        path:'rentcar-card', component: RentcarCardComponent 
+        path: 'register', component:RegisterModalComponent
       },
       
 
@@ -90,4 +100,14 @@ let gapiClientConfig: NgGapiClientConfig = {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(
+    apollo: Apollo,
+    httpLink: HttpLink
+  ){
+    apollo.create({
+      link: httpLink.create({uri:'http://localhost:8000'}),
+      cache: new InMemoryCache()
+    })
+  }
+}

@@ -1,4 +1,4 @@
-<div class="container" id="loginModal1">
+<div class="container">
     <div class="title-container">
         <h2 class="title">Log in/Daftar</h2>
         <p class="title-description">Perjalanan serumu dimulai disini</p>
@@ -6,12 +6,14 @@
 
     <form action="localhost:8000/login" method="POST">
         <!-- <span> -->
-        <mat-form-field>
-            <input class="input-emailOrPhonenumber" name="emailOrPhonenumber" type="text"
-                placeholder="Nomor Ponsel atau Email" matInput>
-        </mat-form-field>
+            <mat-form-field>
+                <input class="input1 input-emailOrPhonenumber" name="emailOrPhonenumber" type="text" placeholder="Nomor Ponsel atau Email" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <input class="input2 inputPassword" name="password" type="password" placeholder="Password" matInput>
+            </mat-form-field>
         <!-- </span> -->
-        <input (click)="goToNextPage()" class="next-btn" type="button" value="LANJUTKAN">
+        <input type="submit" class="next-btn"  value="LANJUTKAN">
         <p class="or-with">atau dengan</p>
         <ul class="button-list">
             <li class="btn-li btn-li-google">
@@ -22,8 +24,8 @@
                 </div>
             </li>
             <div class="btn-divider"></div>
-            <li class="btn-li  btn-li-facebook">
-                <div (click)="signInWithFB()">
+            <li  class="btn-li  btn-li-facebook">
+                <div (click)="signInWithFB()"> 
                     <img src="../../../assets/LoginComponents/facebook.svg" alt="">
                     <span>Facebook</span>
 
@@ -31,10 +33,8 @@
             </li>
         </ul>
         <p class="agreement">Dengan mendaftar kamu menyetujui <a href="">Kebijakan Privasi</a> dan <a href="">Syarat &
-                Ketentuan</a> kami.</p>
-        <div class="hr"></div>
+            Ketentuan</a> kami.</p>
+        
     </form>
 
 </div>
-
-<app-login-modal2 id="loginModal2"></app-login-modal2>

@@ -1,1 +1,55 @@
-<p>register-modal works!</p>
+<div class="container">
+    <div class="form">
+
+        <div>
+            <i class="fas fa-arrow-left"></i><span class="title">Daftar</span>
+        </div>
+        <br>
+        <div>
+            <p class="email-title">
+                Email
+            </p>
+            <p>chandratan1234@gmail.com</p>
+        </div>
+        <div class="input input-firstname">
+            <mat-form-field color="accent">
+                <input type="text" placeholder="Nama depan" mdInput matInput>
+            </mat-form-field>
+        </div>
+        <div class="input input-lastname">
+            <mat-form-field >
+                <input type="text"  placeholder="Nama belakang"   matInput>
+                
+            </mat-form-field>
+        </div>
+        <div class="box-phonenumber">
+            <div class="input input-code">
+                <mat-form-field >
+                    <mat-select placeholder="Kode-Area" formControlName="color" [(value)]="selectedCode">
+                        <mat-option value="primary">Primary</mat-option>
+                        <mat-option value="accent">Accent</mat-option>
+                        <mat-option value="warn">Warn</mat-option>
+                      </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="input input-phonenumber">
+                <mat-form-field >
+                    <input type="text"  placeholder="Nomor ponsel"   matInput>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="input input-password">
+            <mat-form-field >
+                <input type="password"  placeholder="Password"   matInput>
+                <mat-hint [ngStyle]="{color: hintColor}">Min. 7 karakter dengan kombinasi antara angka, simbol, & huruf kapital.</mat-hint>
+            </mat-form-field>
+        </div>
+        <br>
+        <div class="register-button-box">
+            <button>Buat Akun</button>
+        </div>
+
+
+    </div>
+
+</div>

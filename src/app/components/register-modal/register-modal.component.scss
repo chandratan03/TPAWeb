@@ -1,0 +1,103 @@
+
+.container{
+    background: white;
+    padding: 3% 4%;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.form{
+    box-sizing: border-box;
+    width: 100%; 
+    // margin: 2% 4%;
+}
+*{
+    color:black;
+}
+
+mat-form-field{
+    input, mat-select{
+        border: 1px solid #c6cbda;
+        border-radius:5px;
+        // padding: 20px;
+        // padding: 2% 4%;
+    }
+
+}
+
+.title{
+    
+    font-size: 18px;
+}
+.email-title{
+    font-size: 12px;
+    color: #8a93a7;
+    padding-bottom: 4px;
+    margin-bottom: 1%;
+}
+
+.input, .box-phonenumber{
+    box-sizing: border-box;
+    // margin-top: 1%;
+    width: 100%;
+    // font-size: 16px;
+}
+input, mat-select{
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 2% 4%;
+    
+
+}
+.input>mat-form-field{
+    box-sizing: border-box;
+    width: 100%;
+}
+.box-phonenumber{
+    display:flex;
+    box-sizing: border-box;
+    // padding: 2% 4%;   
+    width: 100%!important;
+    .input{
+        width: 100%!important;
+        box-sizing: border-box;
+        mat-form-field{
+            width: 85%;
+            mat-select{
+                width: 100%;
+            }
+        }
+    }
+}
+mat-hint{
+    color: #c6cbda !important;
+}
+// .input-phonenumber>mat-form-field{
+//     width: 10px !important;
+// }
+
+.register-button-box>button{
+    width: 100%;
+    font-size: 16px;
+    padding: 3%;
+    border-radius: 50px;
+    background-color: #FEDD00;
+    color: #0064D2;
+    font-weight: bold;
+}
+
+
+::ng-deep  .mat-form-field-label {
+    color: #c6cbda !important;
+    padding: 2% 4%;
+}
+
+::ng-deep .mat-focused .mat-form-field-label{
+    color: indigo !important;
+}
+
+// mat-form-field:not(.mat-form-field-should-float) .mat-input-placeholder {
+//     // padding: 10px;
+//     // box-sizing: border-box;
+// }

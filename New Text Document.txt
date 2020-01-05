@@ -1,0 +1,3 @@
+// "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+
+Just put in on angular.json > style
