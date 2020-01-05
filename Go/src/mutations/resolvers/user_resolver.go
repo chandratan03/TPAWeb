@@ -6,8 +6,13 @@ import (
 )
 
 func CreateUser(params graphql.ResolveParams)(i interface{}, e error){
-  name := params.Args["name"].(string)
-  newUser, err := models.CreateUser(name)
+  firstName := params.Args["firstName"].(string)
+  lastName := params.Args["lastName"].(string)
+  password := params.Args["firstName"].(string)
+  phoneNumber := params.Args["firstName"].(string)
+  email := params.Args["firstName"].(string)
+
+  newUser, err := models.CreateUser(firstName, lastName, password, email, phoneNumber)
   if err!=nil{
     return nil, err
   }

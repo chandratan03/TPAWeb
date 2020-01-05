@@ -7,7 +7,7 @@
     <form action="localhost:8000/login" method="POST">
         <!-- <span> -->
         <mat-form-field>
-            <input class="input-emailOrPhonenumber" name="emailOrPhonenumber" type="text"
+            <input [(ngModel)]="emailOrPhonenumber" class="input-emailOrPhonenumber" name="emailOrPhonenumber" type="text"
                 placeholder="Nomor Ponsel atau Email" matInput>
         </mat-form-field>
         <!-- </span> -->
@@ -38,3 +38,4 @@
 </div>
 
 <app-login-modal2 id="loginModal2"></app-login-modal2>
+<app-register-modal id="registerModal"></app-register-modal>

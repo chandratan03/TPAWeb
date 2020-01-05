@@ -1,16 +1,12 @@
 package main
 
 import (
-  "Connect/database"
   "common/handlers"
-  "fmt"
   "github.com/gorilla/mux"
   "github.com/graphql-go/graphql"
   "github.com/graphql-go/handler"
   _ "github.com/lib/pq"
   "log"
-  "middleware"
-  "models"
   "mutations"
   "net/http"
   "query"
@@ -56,14 +52,24 @@ func main() {
 
 
   // FOR CREATE TABLE
-  //--------------------------
-  db,err := database.Connect()
-  if err!=nil{
-   panic(err)
-  }
-  db.AutoMigrate(&models.User{})
-
-
+  //--------------------------------------------------------
+  //db,err := database.Connect()
+  //if err!=nil{
+  // panic(err)
+  //}
+  //db.AutoMigrate(&models.User{})
+  //db.Create(&models.User{
+  //  //ID:          0,
+  //  //CreatedAt:   time.Time{},
+  //  //UpdatedAt:   time.Time{},
+  //  //DeletedAt:   nil,
+  //  FirstName:   "Chandra",
+  //  LastName:    "hehe",
+  //  Email:       "chandra",
+  //  Password:    "chandra",
+  //  PhoneNumber: "+628123123123",
+  //})
+ //--------------------------------------------------------------------------------
 
   //fmt.Print("success")
   schema, err := graphql.NewSchema(graphql.SchemaConfig{
@@ -74,20 +80,27 @@ func main() {
   if err !=nil{
   panic(err)
   }
-  h:= handler.New(&handler.Config{
+  handler.New(&handler.Config{
   Schema:           &schema,
   Pretty:           true,
   GraphiQL:         true,
   Playground:       true,
   })
   ////
-  wrapped := middleware.CorsMiddleware(h)
-  //
-  http.Handle("/", router)
-  router.HandleFunc("/login", handlers.LoginEmailPhonenumberHandler).Methods("POST")
-  fmt.Println("port serve at localhost:8000")
-  log.Fatal(http.ListenAndServe(":8000", wrapped))
+  //wrapped := middleware.CorsMiddleware(h)
 
+  // for handling routing/
+
+
+
+
+  //
+  router.HandleFunc("/login", handlers.LoginEmailPhonenumberHandler).Methods("POST")
+  router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
+  //fmt.Println("port serve at localhost:8000")
+  http.Handle("/", router)
+  log.Fatal(http.ListenAndServe(":8000", nil))
+  //http.ListenAndServe(":80")
 
 
 }

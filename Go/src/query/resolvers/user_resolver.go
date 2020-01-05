@@ -7,7 +7,7 @@ import (
 )
 
 func GetUsers(p graphql.ResolveParams)(i interface{}, e error){
-  rows, err := models.GetAll()
+  rows, err := models.GetUsers()
   if err!=nil{
     return nil, nil
   }
@@ -17,8 +17,20 @@ func GetUsers(p graphql.ResolveParams)(i interface{}, e error){
 func GetUser(p graphql.ResolveParams)(i interface{}, e error){
   id, ok := p.Args["id"].(int)
   if ok{
-    res, err := models.Get(uint(id))
+    res, err := models.GetUser(uint(id))
     if err!=nil {
+      return nil, nil
+    }
+    return res, nil
+  }
+  return nil, nil
+}
+
+func GetUserByEmail(p graphql.ResolveParams)(i interface{}, e error){
+  email, ok:= p.Args["email"].(string)
+  if ok{
+    res, err := models.GetUserByEmail(email)
+    if err!=nil{
       return nil, nil
     }
     return res, nil

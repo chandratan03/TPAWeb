@@ -3,8 +3,9 @@ import { SocialLoginService } from 'src/app/services/social-login.service';
 import { GoogleAuthService, GoogleApiService } from 'ng-gapi';
 import { ActivatedRoute } from '@angular/router';
 // import { EventEmitter } from 'protractor';
-
-
+import {GraphqpUserService} from "../../services/graphqp-user.service"
+import { User } from "../../models/user"
+import { Subscription } from 'rxjs';
 declare var FB: any;
 
 
@@ -16,11 +17,17 @@ declare var FB: any;
 export class LoginModalComponent implements OnInit {
   @Output() nextPage = new EventEmitter()
   
+  emailOrPhonenumber:string;
+
+  user$: Subscription
+  user: User;
+
   constructor(
     private service: SocialLoginService,
     private authService: GoogleAuthService,
     private gapiService: GoogleApiService,
     private route: ActivatedRoute,
+    private userService: GraphqpUserService
   ){
     this.gapiService.onLoad().subscribe();
   }
@@ -83,9 +90,25 @@ export class LoginModalComponent implements OnInit {
     )
   }
 
-  goToNextPage():void{
-   document.getElementById("loginModal2").style.display = "block"
-   document.getElementById("loginModal1").style.display = "None"
+   goToNextPage():void{
+    console.log(this.emailOrPhonenumber)
+    this.user$ =   this.userService.getUserByEmail(this.emailOrPhonenumber).subscribe( query =>{
+       this.user =  query.data as User  
+       if(this.user!=null){
+          document.getElementById("loginModal2").style.display = "block"
+          document.getElementById("loginModal1").style.display = "None"
+        }
+  
+      }        
+    );
+    // console.log(user.email)
+    // console.log(this.user.email)
+    // console.log(this.user)
+    
+
+
+
+
    
   }
 

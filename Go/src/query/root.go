@@ -10,7 +10,7 @@ func GetRoot() *graphql.Object{
   return graphql.NewObject(graphql.ObjectConfig{
     Name: "RootQuery",
     Fields: graphql.Fields{
-      "user":{
+      "userById":{
         Type:graphql.NewList(types.GetUserType()),
         Args: graphql.FieldConfigArgument{
           "id" : &graphql.ArgumentConfig{
@@ -18,6 +18,16 @@ func GetRoot() *graphql.Object{
           },
         },
         Resolve: resolvers.GetUser,
+        Description:"GET A USER",
+      },
+      "userByEmail":{
+        Type:types.GetUserType(),
+        Args: graphql.FieldConfigArgument{
+          "email" : &graphql.ArgumentConfig{
+              Type: graphql.String,
+          },
+        },
+        Resolve: resolvers.GetUserByEmail,
         Description:"GET A USER",
       },
       "users":{

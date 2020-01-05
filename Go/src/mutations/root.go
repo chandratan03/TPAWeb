@@ -15,14 +15,19 @@ func GetRoot() *graphql.Object{
       "createUser": &graphql.Field{
         Type:              types.GetUserType(),
         Args: graphql.FieldConfigArgument{
-          "name": &graphql.ArgumentConfig{
+          "firstName" : &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
-
+          },
+          "lastName" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
           },
           "password" : &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
           },
-          "phone_number" : &graphql.ArgumentConfig{
+          "email" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "phoneNumber" : &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
           },
         },

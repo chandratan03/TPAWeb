@@ -3,7 +3,6 @@ import {Apollo} from 'apollo-angular'
 import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { Query } from '../models/query';
-import { getOperationAST } from 'graphql';
 
 
 
@@ -17,18 +16,36 @@ export class GraphqpUserService {
   }
 
 
-  getUser(id:number):Observable<Query>{
+  getUserById(id:number):Observable<Query>{
     return this.apollo.query<Query>({
       query: gql`
       query getUser($id: ID!){
         user(id: $id){
+          email
           name
+          id
+          password
         }
       }`,
       variables: {
         "id" : id
       }
 
+    })
+  
+  } 
+  getUserByEmail(email:string):Observable<Query>{
+    return this.apollo.query<Query>({
+       query: gql`
+        query getUserByEmail($email: String!){
+        userByEmail(email: $email){
+          email
+          name
+        }
+      }`,
+      variables: {
+        "email" : email
+      }
     })
   
   } 

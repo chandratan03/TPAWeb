@@ -2,6 +2,7 @@ package models
 
 import (
   "Connect/database"
+  "fmt"
   "time"
 )
 type User struct {
@@ -10,16 +11,18 @@ type User struct {
   CreatedAt time.Time
   UpdatedAt time.Time
   DeletedAt *time.Time `sql:"index"`
-  Name string `json:"name" db:"name"`
+  FirstName string `json:"first_name" db:"first_name"`
+  LastName string `json:"last_name" db:"last_name"`
+  Email string `json:"email" db:"email" gorm:"unique"`
   Password string `json:"password" db:"password"`
   PhoneNumber string `json:"phonenumber" db:"phonenumber"`
 }
 
 
-func GetAll()  ([]User, error){
+func GetUsers()  ([]User, error){
   db, err := database.Connect()
 
-  if(err!=nil){
+  if err!=nil{
     return nil, err
   }
 
@@ -29,7 +32,7 @@ func GetAll()  ([]User, error){
   return users, nil
 }
 
-func Get(userId uint)([]User, error){
+func GetUser(userId uint)([]User, error){
   db,err := database.Connect()
   if err!=nil{
     panic(err)
@@ -43,14 +46,36 @@ func Get(userId uint)([]User, error){
   return user, nil
 }
 
-func CreateUser(name string)(i interface{},e error){
+func GetUserByEmail(email string)(i interface{}, e error){
+    db, err := database.Connect()
+    if err!=nil{
+      panic(err)
+    }
+    var user User
+    db.Where("email = ?", email).First(&user)
+    //fmt.Print(()
+    fmt.Println(user)
+    //fmt.Print("hallo")
+    return user, nil
+
+}
+
+func CreateUser(firstName string, lastName string, password string,  email string, phoneNumber string)(i interface{},e error){
   db, err := database.Connect()
   if err!=nil{
     return nil, err
   }
   defer db.Close()
-
-  db.Create(&User{Name:name})
+  db.Create(&User{
+    CreatedAt:   time.Time{},
+    UpdatedAt:   time.Time{},
+    DeletedAt:   nil,
+    FirstName:   firstName,
+    LastName:    lastName,
+    Email:       email,
+    Password:    password,
+    PhoneNumber: phoneNumber,
+  })
 
   var user User
   db.Last(&user)

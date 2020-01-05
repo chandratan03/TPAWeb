@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="form">
+    <form [formGroup]="userForm" class="form" method="post" action="http://localhost:8000/register">
 
         <div>
             <i class="fas fa-arrow-left"></i><span class="title">Daftar</span>
@@ -12,20 +12,19 @@
             <p>chandratan1234@gmail.com</p>
         </div>
         <div class="input input-firstname">
-            <mat-form-field color="accent">
-                <input type="text" placeholder="Nama depan" mdInput matInput>
+            <mat-form-field>
+                <input formControlName="firstName" name="firstName" type="text" placeholder="Nama depan" matInput>
             </mat-form-field>
         </div>
         <div class="input input-lastname">
-            <mat-form-field >
-                <input type="text"  placeholder="Nama belakang"   matInput>
-                
+            <mat-form-field>
+                <input  formControlName="lastName" name="lastName" type="text" placeholder="Nama belakang" matInput>  
             </mat-form-field>
         </div>
         <div class="box-phonenumber">
             <div class="input input-code">
                 <mat-form-field >
-                    <mat-select placeholder="Kode-Area" formControlName="color" [(value)]="selectedCode">
+                    <mat-select  formControlName="codeArea" placeholder="Kode-Area" [(value)]="selectedCode">
                         <mat-option value="primary">Primary</mat-option>
                         <mat-option value="accent">Accent</mat-option>
                         <mat-option value="warn">Warn</mat-option>
@@ -34,22 +33,22 @@
             </div>
             <div class="input input-phonenumber">
                 <mat-form-field >
-                    <input type="text"  placeholder="Nomor ponsel"   matInput>
+                    <input  formControlName="phoneNumber" type="text"  placeholder="Nomor ponsel" name="phoneNumber"  matInput>
                 </mat-form-field>
             </div>
         </div>
         <div class="input input-password">
             <mat-form-field >
-                <input type="password"  placeholder="Password"   matInput>
+                <input  formControlName="password"  type="password"  placeholder="Password" name="password"  matInput >
                 <mat-hint [ngStyle]="{color: hintColor}">Min. 7 karakter dengan kombinasi antara angka, simbol, & huruf kapital.</mat-hint>
             </mat-form-field>
         </div>
         <br>
         <div class="register-button-box">
-            <button>Buat Akun</button>
+            <button type="submit">Buat Akun</button>
         </div>
 
 
-    </div>
+    </form>
 
 </div>
