@@ -24,10 +24,23 @@ func GetRoot() *graphql.Object{
         Type:types.GetUserType(),
         Args: graphql.FieldConfigArgument{
           "email" : &graphql.ArgumentConfig{
-              Type: graphql.String,
+            Type: graphql.String,
           },
         },
         Resolve: resolvers.GetUserByEmail,
+        Description:"GET A USER",
+      },
+      "userByEmailAndPassword":{
+        Type:types.GetUserType(),
+        Args: graphql.FieldConfigArgument{
+          "email" : &graphql.ArgumentConfig{
+            Type: graphql.String,
+          },
+          "password" : &graphql.ArgumentConfig{
+            Type: graphql.String,
+          },
+        },
+        Resolve: resolvers.GetUserByEmailAndPassword,
         Description:"GET A USER",
       },
       "users":{

@@ -22,7 +22,7 @@ export class GraphqpUserService {
       query getUser($id: ID!){
         user(id: $id){
           email
-          name
+
           id
           password
         }
@@ -40,13 +40,65 @@ export class GraphqpUserService {
         query getUserByEmail($email: String!){
         userByEmail(email: $email){
           email
-          name
+          firstName
+          lastName
+          password
+          phoneNumber
         }
       }`,
       variables: {
         "email" : email
+      },
+      
+    })
+  } 
+
+  getUserByEmailAndPassword(email: string, password: string):Observable<Query>{
+    return this.apollo.query<Query>({
+      query: gql`
+        query getUserByEmailAndPassword($email: String!, $password: String!){
+          userByEmailAndPassword(email: $email, password: $password){
+            email
+            firstName
+            lastName
+            password
+            phoneNumber
+          }
+        }
+      `,
+      variables: {
+        "email" :  email,
+        "password" : password
       }
     })
-  
-  } 
+  }
+
+  createUser(firstName:string, 
+    lastName:string, 
+     password:string, 
+     email:string, 
+     phoneNumber:string):Observable<any>{
+      return this.apollo.mutate<any>({
+        mutation: gql `
+          mutation createUser($firstName: String!, $lastName:String!,$password:String!, $email:String!, $phoneNumber:String!){
+            createUser(firstName: $firstName, lastName: $lastName, password: $password, email: $email, phoneNumber: $phoneNumber){
+              firstName
+              lastName
+              email
+              password
+              phoneNumber
+            }
+          }
+        `,
+        variables: {
+          "firstName" : firstName,
+          "lastName" : lastName,
+          "password": password,
+          "email" : email,
+          "phoneNumber": phoneNumber      
+        }
+      })
+  }
+
+
 }

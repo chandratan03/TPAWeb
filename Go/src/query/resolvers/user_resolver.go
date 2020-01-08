@@ -37,3 +37,18 @@ func GetUserByEmail(p graphql.ResolveParams)(i interface{}, e error){
   }
   return nil, nil
 }
+
+func GetUserByEmailAndPassword(p graphql.ResolveParams)(i interface{}, e error){
+  email, ok:= p.Args["email"].(string)
+  password, ok2:= p.Args["password"].(string)
+  if ok && ok2{
+    res, err := models.GetUserByEmailAndPassword(email, password)
+    if err !=nil{
+      return nil, nil
+    }
+    return res, nil
+  }
+  return nil, nil
+
+
+}

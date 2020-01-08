@@ -1,8 +1,8 @@
 <div class="container">
     <app-slider></app-slider>
     <div class="container-detail">
-        <div class="quick-card">
-            <app-quick-card></app-quick-card>
+        <div class="quick-card" #quickCard (click)="quickCardClicked(quickCard, overlay)">
+            <app-quick-card></app-quick-card>   
         </div>
     </div>
     <div class="simple-feature">
@@ -67,9 +67,8 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
+<div class="overlay"  #overlay (click)="overlayClicked(quickCard, overlay)"></div>
+
+
+

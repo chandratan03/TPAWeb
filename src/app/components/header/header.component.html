@@ -23,11 +23,14 @@
         <div class="header-bottom-child header-bottom-right">
             <a href="">Tix Point</a>
             <a href="">Cek Order</a>
-            <a class="modal" (click)="openDialogLogin()" >Login</a>
-            <a class="modal" (click)="openDialogRegister()">Daftar</a>
+
+            <a *ngIf="!hasUser"class="modal" (click)="openDialogLogin()" >Login</a>
+            <a *ngIf="!hasUser"class="modal registerButton" (click)="openDialogRegister()">Daftar</a>
+            <a *ngIf="hasUser" class="profile">{{user.firstName}}</a>
+            <a *ngIf="hasUser" class="" (click)="logOut()">logOut</a>
+            
             <!-- <a class="modal" style="display: none;" (nextPage)="openDialogLogin2()">Daftar</a> -->
             
         </div>
     </div>
-
 </div>

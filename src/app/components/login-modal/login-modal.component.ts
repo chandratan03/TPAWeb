@@ -22,6 +22,8 @@ export class LoginModalComponent implements OnInit {
   user$: Subscription
   user: User;
 
+
+  
   constructor(
     private service: SocialLoginService,
     private authService: GoogleAuthService,
@@ -91,14 +93,18 @@ export class LoginModalComponent implements OnInit {
   }
 
    goToNextPage():void{
-    console.log(this.emailOrPhonenumber)
-    this.user$ =   this.userService.getUserByEmail(this.emailOrPhonenumber).subscribe( query =>{
-       this.user =  query.data as User  
-       if(this.user!=null){
-          document.getElementById("loginModal2").style.display = "block"
+     this.user$ =   this.userService.getUserByEmail(this.emailOrPhonenumber).subscribe(query =>{
+        this.user = query.data.userByEmail as User
+        console.log(typeof(query.data.userByEmail))
+        console.log(this.user.firstName)
+        // test = JSON.parse(query.data.userByEmail);
+        console.log(this.user)
+        if(this.user.email!= ""){
+            document.getElementById("loginModal2").style.display = "block"
+          }else{
+            document.getElementById("registerModal").style.display = "block"
+          }
           document.getElementById("loginModal1").style.display = "None"
-        }
-  
       }        
     );
     // console.log(user.email)

@@ -7,13 +7,13 @@
     <form action="localhost:8000/login" method="POST">
         <!-- <span> -->
             <mat-form-field>
-                <input class="input1 input-emailOrPhonenumber" name="emailOrPhonenumber" type="text" placeholder="Nomor Ponsel atau Email" matInput>
+                <input [(ngModel)]="email" class="input1 input-emailOrPhonenumber" name="emailOrPhonenumber" type="text" placeholder="Nomor Ponsel atau Email" matInput>
             </mat-form-field>
             <mat-form-field>
-                <input class="input2 inputPassword" name="password" type="password" placeholder="Password" matInput>
+                <input [(ngModel)]="password" class="input2 inputPassword" name="password" type="password" placeholder="Password" matInput>
             </mat-form-field>
         <!-- </span> -->
-        <input type="submit" class="next-btn"  value="LANJUTKAN">
+        <input type="submit" class="next-btn" (click)="login()" value="LANJUTKAN">
         <p class="or-with">atau dengan</p>
         <ul class="button-list">
             <li class="btn-li btn-li-google">
@@ -27,7 +27,7 @@
             <li  class="btn-li  btn-li-facebook">
                 <div (click)="signInWithFB()"> 
                     <img src="../../../assets/LoginComponents/facebook.svg" alt="">
-                    <span>Facebook</span>
+                    <span>Facebook</span>   
 
                 </div>
             </li>

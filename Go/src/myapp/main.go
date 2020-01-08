@@ -1,12 +1,14 @@
 package main
 
 import (
-  "common/handlers"
+  "Connect/database"
   "github.com/gorilla/mux"
   "github.com/graphql-go/graphql"
   "github.com/graphql-go/handler"
   _ "github.com/lib/pq"
   "log"
+  "middleware"
+  "models"
   "mutations"
   "net/http"
   "query"
@@ -53,10 +55,14 @@ func main() {
 
   // FOR CREATE TABLE
   //--------------------------------------------------------
-  //db,err := database.Connect()
-  //if err!=nil{
-  // panic(err)
-  //}
+  db,err := database.Connect()
+  if err!=nil{
+  panic(err)
+  }
+  db.AutoMigrate(models.Region{})
+  //db.AutoMigrate(models.City{})
+  db.AutoMigrate(models.City{})
+
   //db.AutoMigrate(&models.User{})
   //db.Create(&models.User{
   //  //ID:          0,
@@ -80,14 +86,14 @@ func main() {
   if err !=nil{
   panic(err)
   }
-  handler.New(&handler.Config{
+  h := handler.New(&handler.Config{
   Schema:           &schema,
   Pretty:           true,
   GraphiQL:         true,
   Playground:       true,
   })
   ////
-  //wrapped := middleware.CorsMiddleware(h)
+  wrapped := middleware.CorsMiddleware(h)
 
   // for handling routing/
 
@@ -95,11 +101,11 @@ func main() {
 
 
   //
-  router.HandleFunc("/login", handlers.LoginEmailPhonenumberHandler).Methods("POST")
-  router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
+  //router.HandleFunc("/login", handlers.LoginEmailPhonenumberHandler).Methods("POST")
+  //router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
   //fmt.Println("port serve at localhost:8000")
-  http.Handle("/", router)
-  log.Fatal(http.ListenAndServe(":8000", nil))
+  //http.Handle("/", router)
+  log.Fatal(http.ListenAndServe(":8000", wrapped))
   //http.ListenAndServe(":80")
 
 

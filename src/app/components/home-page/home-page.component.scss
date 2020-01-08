@@ -9,7 +9,7 @@
     border-radius: 20px;
     margin: 0 auto;
     position: relative;
-    z-index: 1000;
+    z-index: 5;
     top: -30px;    
     box-shadow: 2% 2%;
 }
@@ -121,4 +121,16 @@
         
 
     }
+}
+
+
+.overlay{
+    position: fixed;   
+    top: 0;
+    display: none;
+    z-index: -20;
+    
+    height: 100%;
+    width: 100%;
+    background-color:  rgba($color: black, $alpha: 0.7); 
 }

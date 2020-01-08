@@ -31,7 +31,7 @@ func GetRoot() *graphql.Object{
             Type: graphql.NewNonNull(graphql.String),
           },
         },
-        Resolve:          resolvers.CreateUser,
+        Resolve: resolvers.CreateUser,
       },
 
 

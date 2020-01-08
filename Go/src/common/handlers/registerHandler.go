@@ -16,6 +16,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
   fmt.Print("Test")
   fmt.Println(firstName, lastName, password, email, phoneNumber)
 
-
+  
 
 }

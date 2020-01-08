@@ -60,6 +60,21 @@ func GetUserByEmail(email string)(i interface{}, e error){
 
 }
 
+func GetUserByEmailAndPassword(email string, password string)(i interface{}, e error){
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  var user User
+  db.Where("email = ? and password = ? ", email, password).Or("phone_number=? and password = ?", email,password).First(&user)
+  //fmt.Print(()
+  fmt.Println(user)
+  //fmt.Print("hallo")
+  return user, nil
+
+}
+
+
 func CreateUser(firstName string, lastName string, password string,  email string, phoneNumber string)(i interface{},e error){
   db, err := database.Connect()
   if err!=nil{
