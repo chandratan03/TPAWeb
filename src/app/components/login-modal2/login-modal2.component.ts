@@ -55,6 +55,11 @@ export class LoginModal2Component implements OnInit {
   
 
   }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+      this.user$.unsubscribe();
+  } 
 
   login(): void{
     this.user$ = this.userService.getUserByEmailAndPassword(this.email, this.password).subscribe(query =>{

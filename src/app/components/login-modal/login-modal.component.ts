@@ -73,11 +73,11 @@ export class LoginModalComponent implements OnInit {
   } 
   
 
-  // GOOGLE
-  // onSignIn():void {
-  //   this.service.signIn( )
-  // }
-  
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.user$.unsubscribe();
+  }
 
   //FACEBOOk
   signInWithFB():void{
