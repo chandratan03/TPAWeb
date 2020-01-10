@@ -1,11 +1,10 @@
 <div class="container">
-    <div *ngFor="let hotel of hotels" >
+    <!-- <div *ngFor="let hotel of hotels" >
         <p>{{hotel.hotelName}}</p>
         <p>{{hotel.availableDates[0].date}}</p>
-        <!-- <p>{{hotel}}</p> -->
-    </div>
+    </div> -->
 
-    <div class="box">
+    <div class="box" *ngFor="let hotel of hotels">
         <div class="content-header">
             <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
             <div class="hotel-features">
@@ -24,11 +23,8 @@
             </div>
         </div>
         <div class="content-detail">
-            <div class="content-detailImage">
-                <img src="" alt="">
-            </div>
             <div class="content-specification">
-                <h3 class="contentTitle">The Papandayan</h3>
+                <h3 class="contentTitle">{{hotel.hotelName}}</h3>
                 <div class="stars">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -49,7 +45,6 @@
             </div>            
         </div>
         <div class="content-footer">
-            <span>price</span>
         </div>
 
     </div>

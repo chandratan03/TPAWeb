@@ -3,7 +3,7 @@ import { User } from 'src/app/models/user';
 import { Subscription } from 'rxjs';
 import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
 declare const gapi: any;
-
+declare const FB: any;
 @Component({
   selector: 'app-login-modal2',
   templateUrl: './login-modal2.component.html',
@@ -28,9 +28,32 @@ export class LoginModal2Component implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem("user"));
     if(this.user == null || this.user.email == ""){
       this.hasUser=false;
+      
     }else{
       this.hasUser = true
     }
+
+    (window as any).fbAsyncInit = function(){
+      FB.init({
+        appId:"552493818931035",
+        cookie:true,
+        xfbml: true,
+        version: 'v3.1'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d,s,id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if(d.getElementById(id)){
+        return;
+      };
+      js= d.createElement(s); js.id=id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  
+
   }
 
   login(): void{
@@ -46,6 +69,10 @@ export class LoginModal2Component implements OnInit {
       // }
     })
   }
+
+
+  //FACEBOOK
+    
 
 
 

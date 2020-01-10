@@ -19,8 +19,8 @@ export class HotelSearchPageComponent implements OnInit {
   }
 
   getHotels():void{
-      this.hotels$ = this.myService.getHotels().subscribe(async query => {
-        this.hotels = await query.data.hotels as Hotel[]
+      this.hotels$ = this.myService.getHotels().subscribe( query => {
+        this.hotels = query.data.hotels as Hotel[]
         console.log(this.hotels)
       }
       )
