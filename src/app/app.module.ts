@@ -15,14 +15,6 @@ import {ApolloModule, Apollo} from 'apollo-angular';
 import { HttpLinkModule, HttpLink }from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import {
-  GoogleApiModule, 
-  // GoogleApiService, 
-  // GoogleAuthService, 
-  NgGapiClientConfig, 
-  NG_GAPI_CONFIG,
-  GoogleApiConfig
-} from "ng-gapi";
 import { FlightCardComponent } from './components/flight-card/flight-card.component';
 import { HotelCardComponent } from './components/hotel-card/hotel-card.component';
 import { RegisterModalComponent } from './components/register-modal/register-modal.component';
@@ -31,25 +23,13 @@ import { SliderComponent } from './components/slider/slider.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModal2Component } from './components/login-modal2/login-modal2.component';
-
-
-let gapiClientConfig: NgGapiClientConfig = {
-  client_id: "928387927303-m0ecfie9ug0dflt54b046qc887fmu9r4.apps.googleusercontent.com",
-  discoveryDocs: ["https://analyticsreporting.googleapis.com/$discovery/rest?version=v4"],
-  ux_mode: "redirect",
-  redirect_uri: "http://localhost:4200",
-  scope: [
-      "https://www.googleapis.com/auth/userinfo.profile"
-  ].join(" ")
-};
-
+import { HotelSearchPageComponent } from './components/hotel-search-page/hotel-search-page.component';
 
 
 
 @NgModule({
   exports: [
     MatDialogModule,
-    GoogleApiModule
   ],
   declarations: [
     AppComponent,
@@ -64,6 +44,7 @@ let gapiClientConfig: NgGapiClientConfig = {
     RentcarCardComponent,
     SliderComponent,
     LoginModal2Component,
+    HotelSearchPageComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -85,15 +66,13 @@ let gapiClientConfig: NgGapiClientConfig = {
       {
         path: 'register', component:RegisterModalComponent
       },
-      
+      {
+        path: 'hotel/search', component:HotelSearchPageComponent
+      }
 
     ]),
     BrowserAnimationsModule,
     MatDialogModule,
-    GoogleApiModule.forRoot({
-      provide: NG_GAPI_CONFIG,
-      useValue: gapiClientConfig
-    }),
   ],
   providers: [
    

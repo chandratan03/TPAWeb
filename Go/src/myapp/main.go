@@ -57,12 +57,14 @@ func main() {
   //--------------------------------------------------------
   db,err := database.Connect()
   if err!=nil{
-  panic(err)
+    panic(err)
   }
+
   db.AutoMigrate(models.Region{})
   //db.AutoMigrate(models.City{})
   db.AutoMigrate(models.City{})
-
+  db.AutoMigrate(models.Hotel{})
+  db.AutoMigrate(models.AvailableDateForHotel{}).AddForeignKey("hotel_id", "hotels(id)", "CASCADE", "CASCADE")
   //db.AutoMigrate(&models.User{})
   //db.Create(&models.User{
   //  //ID:          0,

@@ -1,13 +1,13 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
-import { SocialLoginService } from 'src/app/services/social-login.service';
-import { GoogleAuthService, GoogleApiService } from 'ng-gapi';
+import { Component, OnInit, Output,EventEmitter, ElementRef } from '@angular/core';
+
 import { ActivatedRoute } from '@angular/router';
 // import { EventEmitter } from 'protractor';
 import {GraphqpUserService} from "../../services/graphqp-user.service"
 import { User } from "../../models/user"
 import { Subscription } from 'rxjs';
 declare var FB: any;
-
+declare const gapi: any;
+ 
 
 @Component({
   selector: 'app-login-modal',
@@ -21,21 +21,30 @@ export class LoginModalComponent implements OnInit {
 
   user$: Subscription
   user: User;
-
+  private clientId:string = "928387927303-m0ecfie9ug0dflt54b046qc887fmu9r4.apps.googleusercontent.com"
 
   
   constructor(
-    private service: SocialLoginService,
-    private authService: GoogleAuthService,
-    private gapiService: GoogleApiService,
+
     private route: ActivatedRoute,
-    private userService: GraphqpUserService
+    private element: ElementRef,
+    private userServiceGraph: GraphqpUserService,
   ){
-    this.gapiService.onLoad().subscribe();
+    // this.user = new User()
+
+    
   }
-  
-  
+
+  googleButton:HTMLElement = document.getElementById('googleBtn')
   ngOnInit() {
+    this.user = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phoneNumber:""
+    }
+
     this.route.fragment.subscribe((fragment) => {
       console.log(fragment)
     });
@@ -65,9 +74,9 @@ export class LoginModalComponent implements OnInit {
   
 
   // GOOGLE
-  onSignIn():void {
-    this.service.signIn( )
-  }
+  // onSignIn():void {
+  //   this.service.signIn( )
+  // }
   
 
   //FACEBOOk
@@ -78,9 +87,33 @@ export class LoginModalComponent implements OnInit {
         console.log(FB.user)
         // FB.
         // FB.signOut();
+        FB.api('/me', {fields: 'first_name,last_name, email'},(response)=>{
+          // console.log(response.first_name)
+          console.log(response);
+          console.log(response.email)
+          let desc = {
+            'firstName': response.first_name,
+            'lastName': response.last_name,
+            'email' : response.email,
+            'password': "",
+            'phoneNumber': "",
+          }
+          let facebookIsLogin= true;
+          sessionStorage.setItem("user", JSON.stringify(desc))
+          // console.log(JSON.stringify(facebookIsLogin))
+          sessionStorage.setItem("fb", JSON.stringify(facebookIsLogin));
+          
+          location.reload()
+        });
+
+
+
       }else{
         //what to do if fail
       }
+      
+    },{
+      scope: "email",
       
     })
   }
@@ -93,7 +126,7 @@ export class LoginModalComponent implements OnInit {
   }
 
    goToNextPage():void{
-     this.user$ =   this.userService.getUserByEmail(this.emailOrPhonenumber).subscribe(query =>{
+     this.user$ =   this.userServiceGraph.getUserByEmail(this.emailOrPhonenumber).subscribe(query =>{
         this.user = query.data.userByEmail as User
         console.log(typeof(query.data.userByEmail))
         console.log(this.user.firstName)
@@ -110,13 +143,59 @@ export class LoginModalComponent implements OnInit {
     // console.log(user.email)
     // console.log(this.user.email)
     // console.log(this.user)
-    
-
-
-
-
-   
   }
 
+
+
+  //GOOGLE
+  private scope = [
+    'profile',
+    'email',
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/admin.directory.user.readonly'
+  ].join(' ');
+
+  public auth2: any;
+  public googleInit() {
+    let that = this;
+    gapi.load('auth2', function () {
+      that.auth2 = gapi.auth2.init({
+        client_id: that.clientId,
+        cookie_policy: 'single_host_origin',
+        scope: that.scope
+      });
+      that.attachSignin(that.element.nativeElement.querySelector("#googleBtn"));
+    });
+    
+  } 
+  
+  public attachSignin(element) {
+    let that = this;
+    this.auth2.attachClickHandler(element, {},
+      function (googleUser) {
+        let profile = googleUser.getBasicProfile();
+        let desc = {
+          'firstName': profile.getGivenName(),
+          'lastName': profile.getFamilyName(),
+          'email' : profile.getEmail(),
+          'password': "",
+          'phoneNumber': "",
+        }
+
+        console.log(desc["email"])
+        sessionStorage.setItem("user", JSON.stringify(desc))
+        location.reload()
+
+
+
+      }, function (error) {
+        console.log(JSON.stringify(error, undefined, 2));
+      });
+  }
+
+  ngAfterViewInit() {
+    this.googleInit();
+  }
 
 }

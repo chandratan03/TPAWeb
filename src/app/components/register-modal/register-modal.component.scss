@@ -13,22 +13,17 @@
     // margin: 2% 4%;
 }
 *{
-    color:black;
+    // color:black;
 }
 
-mat-form-field{
-    input, mat-select{
-        border: 1px solid #c6cbda;
-        border-radius:5px;
-        // padding: 20px;
-        // padding: 2% 4%;
-    }
 
-}
 
 .title{
-    
+    color: black;
     font-size: 18px;
+}
+.fa-arrow-left{
+    color: black;
 }
 .email-title{
     font-size: 12px;
@@ -90,7 +85,7 @@ mat-hint{
 
 ::ng-deep  .mat-form-field-label {
     color: #c6cbda !important;
-    padding: 2% 4%;
+    // padding: 2% 4%;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label{

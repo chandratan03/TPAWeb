@@ -3,7 +3,7 @@ package models
 import "Connect/database"
 
 type City struct{
-  Id uint `gorm: "primary_key"`
+  CityId uint `gorm: "primary_key"`
   CityName string `json:"city_name" db:"city_name"`
   RegionId uint `json:"region_id"`
   Region Region `gorm: foreignkey:"RegionId"`

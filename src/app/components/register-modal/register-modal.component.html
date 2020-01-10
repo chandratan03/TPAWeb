@@ -11,23 +11,26 @@
             <!-- <p class="email-title">
                 Email
             </p> -->
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
                 <input [(ngModel)]="email" formControlName="email" name="email" type="text" placeholder="Email" matInput>
             </mat-form-field>
         </div>
         <div class="input input-firstname">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
                 <input [(ngModel)]="firstName" formControlName="firstName" name="firstName" type="text" placeholder="Nama depan" matInput>
             </mat-form-field>
         </div>
-        <div class="input input-lastname">
-            <mat-form-field>
+        <div class="input input-lastname" >
+            <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
                 <input [(ngModel)]="lastName"  formControlName="lastName" name="lastName" type="text" placeholder="Nama belakang" matInput>  
             </mat-form-field>
         </div>
         <div class="box-phonenumber">
             <div class="input input-code">
-                <mat-form-field >
+                <mat-form-field appearance = "outline">
                     <mat-select  formControlName="codeArea" placeholder="Kode-Area" [(value)]="selectedCode">
                         <mat-option value="primary">Primary</mat-option>
                         <mat-option value="accent">Accent</mat-option>
@@ -36,13 +39,15 @@
                 </mat-form-field>
             </div>
             <div class="input input-phonenumber">
-                <mat-form-field >
+                <mat-form-field apperance="outline">
+                    <mat-label>Phonenumber</mat-label>
                     <input [(ngModel)]="phoneNumber" formControlName="phoneNumber" type="text"  placeholder="Nomor ponsel" name="phoneNumber"  matInput>
                 </mat-form-field>
             </div>
         </div>
-        <div class="input input-password">
-            <mat-form-field >
+        <div class="input input-password" >
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
                 <input [(ngModel)]="password" formControlName="password"  type="password"  placeholder="Password" name="password"  matInput >
                 <mat-hint [ngStyle]="{color: hintColor}">Min. 7 karakter dengan kombinasi antara angka, simbol, & huruf kapital.</mat-hint>
             </mat-form-field>

@@ -49,6 +49,14 @@ func GetRoot() *graphql.Object{
               Description:"Get all users",
 
       },
+      "hotels": {
+          Type:graphql.NewList(types.GetHotelType()),
+          Resolve: resolvers.GetHotels,
+      },
+      "availableDateForHotel":{
+            Type:graphql.NewList(types.GetAvailableForHotelType()),
+            Resolve:resolvers.GetAvailableDateForHotels,
+      },
 
     },
 

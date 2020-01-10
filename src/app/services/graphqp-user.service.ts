@@ -99,6 +99,24 @@ export class GraphqpUserService {
         }
       })
   }
+  
+  getHotels():Observable<Query>{
+    return this.apollo.query<Query>({
+      query: gql `
+        query getHotels{
+          hotels{
+            id
+            hotelName
+            availableDates{
+              dateId
+              date
+            }
+          }
+        }
+      
+      `
+    })
+  }
 
 
 }

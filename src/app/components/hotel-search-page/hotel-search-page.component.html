@@ -1,0 +1,56 @@
+<div class="container">
+    <div *ngFor="let hotel of hotels" >
+        <p>{{hotel.hotelName}}</p>
+        <p>{{hotel.availableDates[0].date}}</p>
+        <!-- <p>{{hotel}}</p> -->
+    </div>
+
+    <div class="box">
+        <div class="content-header">
+            <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
+            <div class="hotel-features">
+                <span>
+                    <img src="../../../assets/hotel/search/facilities/AC.png" alt="">
+                </span>
+                <span>
+                    <img src="../../../assets/hotel/search/facilities/wifi.png" alt="">
+                </span>
+                <span>
+                    <img src="../../../assets/hotel/search/facilities/Parking.png" alt="">
+                </span>
+                <span class="last-facility">
+                    <span>+4</span>
+                </span>
+            </div>
+        </div>
+        <div class="content-detail">
+            <div class="content-detailImage">
+                <img src="" alt="">
+            </div>
+            <div class="content-specification">
+                <h3 class="contentTitle">The Papandayan</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="locations-box">
+                    <span>Lengkong</span>,<span>Bandung</span> - <a>BUKA DI PETA</a>
+                </div>
+                <div class="review-box">
+                    <img src="../../../assets/hotel/search/tripAdvisor_4.svg" alt="">
+                    <span>
+                        <img src="../../../assets/hotel/search/tiketLogo.svg" alt="">
+                        <span>fantastic 9.2/10</span>
+                    </span>
+                </div>
+            </div>            
+        </div>
+        <div class="content-footer">
+            <span>price</span>
+        </div>
+
+    </div>
+</div>

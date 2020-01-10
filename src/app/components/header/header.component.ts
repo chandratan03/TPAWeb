@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
     this.dialogLogin.open(RegisterModalComponent, {
       panelClass: "dialogBox",
       width: "25%",
-      height: "60%",
+      height: "70%",
       minWidth: "400px",
       minHeight: "425px",
     })
@@ -57,6 +57,9 @@ export class HeaderComponent implements OnInit {
 
   logOut():void{
     sessionStorage.removeItem("user")
+    if(sessionStorage.getItem("fb") == "true"){
+      sessionStorage.removeItem("fb")
+    }
     location.reload()
     
   }
