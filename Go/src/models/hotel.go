@@ -14,10 +14,17 @@ type Hotel struct{
   HotelName string `json:"hotel_name"`
   Price uint32 `json:"price"`
   Rate int `json:Rate`
+  LocationId int `json: "location_id"`
+  Location Location `json "location" gorm:foreignKey`
+  DiscountPercentage int `json: "discount_percentage"`
+  DiscountPrice int `json:"discount_price"`
   //City City `json: "city"`
   //CityId uint `json: "city_id" gorm: "foreignKey:CityId"
-  AvailableDates []AvailableDateForHotel `gorm: "foreignkey:hotel_id"`
-
+  //AvailableDates []AvailableDateForHotel `: "foreignkey:hotel_id"`
+  HotelFacilities[] HotelFacility `gorm:"foreignKey:HotelId"`
+  Address string
+  Quantity int `json:qty`
+  ImagePath string
 }
 
 func GetHotels()([]Hotel, error){
@@ -25,32 +32,41 @@ func GetHotels()([]Hotel, error){
    if err!=nil{
      return nil, err
    }
-   //db.Joins("JOIN a")
+
    var hotels []Hotel
-   //db.Model(&hotels).Related(&AvailableDateForHotel{})
-   //db.Find(&hotels)
-   //for hotel :=  range hotels {
-   //  db.Joins("join available_date_for_hotels ON available_date_for_hotels.hotel_id = hotels.id").Find(&hotel)
-   //}
 
-  // rows, error := db.Table("hotels").Joins("join available_date_for_hotels on hotels.id = available_date_for_hotels.hotel_id ").Rows()
-  //  if error!=nil{
-  //    return nil, error
-  //  }
-  //
-  // rows.Next(){
-  //   var
-  //
-  //  hotels = append(hotels, )
-  //}
-  //db.Raw("SELECT * FROM hotels h join available_date_for_hotels a on a.hotel_id = h.id").Scan(&hotels)
-  //var availableDates []AvailableDateForHotel
-  // db.Model(&hotels).Related(&hote)
-  db.Find(&hotels)
+   db.Find(&hotels)
+   for i:= range hotels{
+     //db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
+      db.Model(&hotels[i]).Related(&hotels[i].Location, "location_id").Model(&hotels[i].Location).
+      Related(&hotels[i].Location.City).Model(&hotels[i].Location.City).Related(&hotels[i].Location.City.Region).
+      Model(&hotels[i]).Related(&hotels[i].HotelFacilities, "HotelId")
+      //println(hotels[i].Facilities[0].HotelId)
+      for j, _ := range hotels[i].HotelFacilities{
+         db.Model(&hotels[i].HotelFacilities[j]).Related(&hotels[i].HotelFacilities[j].Facility, "Id")
+         println(hotels[i].HotelFacilities[j].Facility.Name)
+      }
 
-   for i, _:= range hotels{
-      db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
+
+
+
+      //db.Model(&hotels[i]).Related(&hotels[i].Location)
+
+
+
+      //print(hotels[i].ID)
+      //hotelFacilities := GetHotelFacilitiesByHotelId(hotels[i].ID)
+      ////println(hotelFacilities[0].Id)
+      //for j := range hotelFacilities{
+      //  f, err := GetFacilityByID(hotelFacilities[j].FacilityId)
+      //  if err!=nil{
+      //   hotels[i].Facilities = append(hotels[i].Facilities, f)
+      //  }
+      //}
+
    }
+
+
 
 
   fmt.Println(hotels)

@@ -5,6 +5,8 @@ import "Connect/database"
 type Region struct{
   ID        uint `gorm:"primary_key"`
   RegionName string `json:"region_name" db:"region_name"`
+  CountryCode string `json:"country_code""`
+  City[] City  `gorm:"foreignkey:city_id"`
 }
 
 func GetRegions()([]Region, error){

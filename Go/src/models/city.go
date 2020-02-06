@@ -3,10 +3,12 @@ package models
 import "Connect/database"
 
 type City struct{
-  CityId uint `gorm: "primary_key"`
+  Id uint `gorm: "primary_key"`
   CityName string `json:"city_name" db:"city_name"`
-  RegionId uint `json:"region_id"`
-  Region Region `gorm: foreignkey:"RegionId"`
+  CityCode string
+  RegionId uint `json:"region_id" `
+  Region Region `gorm: foreignkey:"region_id"`
+  Locations[] Location `json:"locations" gorm: foreignkey:"location_id"`
 }
 
 //func TableName(City) string {
@@ -20,11 +22,12 @@ func GetCityById(id uint) City {
   }
   var city City
   db.Joins("join regions on regions.id = cities.region_id").Where("id = ?", id).Find(&city)
+  db.Model(&city).Related(&city.Region, "city_id")
   db.Find(&city, id)
   return city
 }
 
-func GetCities() []City {
+func GetCities() ([]City, error) {
   db, err := database.Connect()
   if err!=nil {
     panic(err)
@@ -32,7 +35,12 @@ func GetCities() []City {
 
   var cities []City
   db.Find(&cities)
-  return cities
+
+  for i, _ := range cities{
+    db.Model(&cities[i]).Related(&cities[i].Locations, "city_id")
+    db.Model(&cities[i]).Related(&cities[i].Region, "city_id")
+  }
+  return cities,nil
 }
 func GetCitiesByName(name string) []City {
   db, err := database.Connect()

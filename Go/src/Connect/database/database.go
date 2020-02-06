@@ -5,11 +5,11 @@ import (
   "github.com/jinzhu/gorm"
 )
 const (
-  host     = "167.71.168.135"
+  host     = "127.0.0.1"
   port     = 5432
-  user     = "CT"
-  password = "CTCTCT"
-  dbname   = "CT"
+  user     = "postgres"
+  password = "admin"
+  dbname   = "TPA"
 )
 
 func Connect()(*gorm.DB, error){

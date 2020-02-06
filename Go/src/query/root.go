@@ -57,6 +57,47 @@ func GetRoot() *graphql.Object{
             Type:graphql.NewList(types.GetAvailableForHotelType()),
             Resolve:resolvers.GetAvailableDateForHotels,
       },
+      "locations":{
+            Type:graphql.NewList(types.GetLocationType()),
+            Resolve:resolvers.GetLocations,
+      },
+      "cities":{
+            Type:graphql.NewList(types.GetCityType()),
+            Resolve:resolvers.GetCities,
+      },
+      "regions":{
+            Type:graphql.NewList(types.GetRegionType()),
+            Resolve:resolvers.GetRegions,
+      },
+      "facilities":{
+            Type:graphql.NewList(types.GetFacilityType()),
+            Resolve:resolvers.GetFacilities,
+      },
+      "hotelFacilities":{
+            Type:graphql.NewList(types.GetHotelFacilityType()),
+            Resolve:resolvers.GetHotelFacilities,
+      },
+      "flights":{
+            Type:graphql.NewList(types.GetFlightType()),
+            Resolve:resolvers.GetFlights,
+      },
+      "airlines":{
+            Type:graphql.NewList(types.GetAirlineType()),
+            Resolve:resolvers.GetAirlines,
+      },
+      "airports":{
+            Type:graphql.NewList(types.GetAirportType()),
+            Resolve:resolvers.GetAirports,
+      },
+      "routes": {
+            Type:graphql.NewList(types.GetRouteType()),
+            Resolve:resolvers.GetRoutes,
+      },
+
+
+
+
+
 
     },
 

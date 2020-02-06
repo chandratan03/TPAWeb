@@ -3,49 +3,111 @@
         <p>{{hotel.hotelName}}</p>
         <p>{{hotel.availableDates[0].date}}</p>
     </div> -->
-
-    <div class="box" *ngFor="let hotel of hotels">
-        <div class="content-header">
-            <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
-            <div class="hotel-features">
-                <span>
-                    <img src="../../../assets/hotel/search/facilities/AC.png" alt="">
+    <div class="filter-box">
+        <div class="star-box">
+            <div class="star star1">
+                <input type="checkbox" name="" id="checkStar1" (click)="markHotel(0)">
+                <span class="stars">
+                    <i class="fas fa-star"></i>
                 </span>
-                <span>
-                    <img src="../../../assets/hotel/search/facilities/wifi.png" alt="">
+            </div>
+            <div class="star star2">
+                <input type="checkbox" name="" id="checkStar2" (click)="markHotel(1)">
+                <span class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                 </span>
-                <span>
-                    <img src="../../../assets/hotel/search/facilities/Parking.png" alt="">
+            </div>
+            <div class="star star3">
+                <input type="checkbox" name="" id="checkStar3" (click)="markHotel(2)">
+                <span class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                 </span>
-                <span class="last-facility">
-                    <span>+4</span>
+            </div>
+            <div class="star star4">
+                <input type="checkbox" name="" id="checkStar4" (click)="markHotel(3)">
+                <span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </span>
+            </div>
+            <div class="star star5">
+                <input type="checkbox" name="" id="checkStar5" (click)="markHotel(4)">
+                <span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                 </span>
             </div>
         </div>
-        <div class="content-detail">
-            <div class="content-specification">
-                <h3 class="contentTitle">{{hotel.hotelName}}</h3>
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="locations-box">
-                    <span>Lengkong</span>,<span>Bandung</span> - <a>BUKA DI PETA</a>
-                </div>
-                <div class="review-box">
-                    <img src="../../../assets/hotel/search/tripAdvisor_4.svg" alt="">
-                    <span>
-                        <img src="../../../assets/hotel/search/tiketLogo.svg" alt="">
-                        <span>fantastic 9.2/10</span>
-                    </span>
-                </div>
-            </div>            
-        </div>
-        <div class="content-footer">
+        
+        <div class="name-container">
+            <div class="name-asc-box">
+                <input type="radio" name="sort-name" id="" (click)="sortAscName()"> asc
+            </div>
+            <div class="name-des-box">
+                <input type="radio" name="sort-name" id=""  (click)="sortDscName()"> dsc
+            </div>
         </div>
 
+    </div>
+    <div class="information-box">
+        <div class="box" *ngFor="let hotel of hotels">
+            <div class="content-header">
+                <div class="image-content-header">
+                    <img src={{hotel.imagePath}} alt="">
+                </div>
+                <div class="hotel-features">
+                    <span *ngFor="let hf of hotel.hotelFacilities">
+                        <img src={{hf.facility.imagePath}} alt="">
+                    </span>
+                    <!-- <span>
+                        <img src="../../../assets/hotel/search/facilities/wifi.png" alt="">
+                    </span>
+                    <span>
+                        <img src="../../../assets/hotel/search/facilities/Parking.png" alt="">
+                    </span> --> 
+                    <span class="last-facility">
+                        <span>+4</span>
+                    </span>
+                </div>
+            </div>
+            <div class="content-detail">
+                <div class="content-specification">
+                    <h3 class="contentTitle">{{hotel.hotelName}}</h3>
+                    <div class="stars">
+                        <i class="fas fa-star" *ngFor= "let i of [].constructor(hotel.rate)"></i>
+                    </div>
+                    <div class="locations-box">
+                        <span>{{hotel.address}}</span>,<span>{{hotel.location.city.cityName}}</span> - <a>BUKA DI PETA</a>
+                    </div>
+                    <div class="review-box">
+                        <img src="../../../assets/hotel/search/tripAdvisor_4.svg" alt="">
+                        <span>
+                            <img src="../../../assets/hotel/search/tiketLogo.svg" alt="">
+                            <span>fantastic 9.2/10</span>
+                        </span>
+                    </div>
+                    
+                </div>
+                <div class="content-specification">
+                    <p>price:{{hotel.price}} </p> 
+                    <p>discount(%): {{hotel.discountPercentage}} % </p>
+                    <p>After Discount: {{hotel.price - hotel.price*hotel.discountPercentage/100}}</p>
+                    <p>Hotel Left: {{hotel.quantity}}</p>
+
+                </div>
+            </div>
+            <div class="content-footer">
+                <a href="/.">OrderNow</a>
+            </div>
+    
+        </div>
     </div>
 </div>

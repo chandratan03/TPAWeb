@@ -19,15 +19,32 @@ func GetHotelType() *graphql.Object{
           Type:  graphql.String,
         },
         "price": &graphql.Field{
-          Type:  graphql.Int,
+          Type:  graphql.Float,
         },
         "rate": &graphql.Field{
-          Type:  graphql.Int,
+          Type: graphql.Int,
         },
-        "availableDates": &graphql.Field{
-          Type:  graphql.NewList(GetAvailableForHotelType()),
+        "location": &graphql.Field{
+            Type:GetLocationType(),
         },
-
+        "address": &graphql.Field{
+          Type: graphql.String,
+        },
+        "hotelFacilities": &graphql.Field{
+          Type: graphql.NewList(GetHotelFacilityType()),
+        },
+        "imagePath": &graphql.Field{
+            Type:graphql.String,
+        },
+        "discountPrice": &graphql.Field{
+            Type:graphql.Float,
+        },
+        "discountPercentage": &graphql.Field{
+            Type:graphql.Int,
+        },
+        "quantity": &graphql.Field{
+          Type:graphql.Int,
+        },
       },
       Description: "",
     })
