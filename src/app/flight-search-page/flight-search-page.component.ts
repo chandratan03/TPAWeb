@@ -13,12 +13,17 @@ export class FlightSearchPageComponent implements OnInit {
   flights$: Subscription
   flights: Flight[]
   AllFlights: Flight[]
+  transits: boolean[]
   constructor(
     private myService: GraphqpUserService,
 
   ) { }
 
   ngOnInit() {
+    this.transits = Array(3)
+    for(let i =0; i<this.transits.length; i++){
+      this.transits[i] = false;
+    }
     this.getFlights()
     this.flights = Array(0)
     document.onscroll = function(){
@@ -27,6 +32,59 @@ export class FlightSearchPageComponent implements OnInit {
         this.setData()
       }
     }.bind(this)
+  }
+
+
+  validateTransits():void{
+    let flag = 0;
+    this.setData()
+    for(let i=0; i<this.transits.length; i++){
+      if(this.transits[i] == true) {
+        flag = 1;
+        break;
+      }
+    }
+
+    if(flag==0){
+      this.flights = Array(0)
+      this.flights = this.AllFlights
+    }else{
+      this.flights = Array(0)
+      this.transitsLangsung();
+      this.transits1();
+      this.transits2();
+    }
+  }
+
+  markTransit(index: number){
+    this.transits[index] = !this.transits[index]
+    this.validateTransits()
+  }
+  
+  transitsLangsung():void{
+    if(this.transits[0] == false)return
+    for(let i=0; i<this.AllFlights.length; i++){
+      if(this.AllFlights[i].transit == 0) {
+        this.flights.push(this.AllFlights[i])
+      }
+    }
+  }
+  transits1():void{
+    if(this.transits[1] == false)return
+    for(let i=0; i<this.AllFlights.length; i++){
+      if(this.AllFlights[i].transit == 1) {
+        this.flights.push(this.AllFlights[i])
+      }
+    }
+  }
+
+  transits2():void{
+    if(this.transits[2] == false)return
+    for(let i=0; i<this.AllFlights.length; i++){
+      if(this.AllFlights[i].transit >= 2) {
+        this.flights.push(this.AllFlights[i])
+      }
+    }
   }
 
   from:number = 0;
@@ -41,6 +99,10 @@ export class FlightSearchPageComponent implements OnInit {
     this.from+=5
   }
 
+  
+
+
+
   changeTimeFormat(word: number): string{
     if(word <= 10){
       var temp = "0"+word
@@ -48,7 +110,6 @@ export class FlightSearchPageComponent implements OnInit {
       var temp = word.toString()
     }
     return temp
-
   }
   getFlights(): void {
     this.flights$ = this.myService.getFlights().subscribe(query => {
