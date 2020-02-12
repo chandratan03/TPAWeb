@@ -3,7 +3,7 @@ package models
 import "Connect/database"
 
 type HotelFacility struct{
-  Id uint `gorm: "primary_key"`
+  Id uint `gorm:"primary_key"`
   HotelId uint
   FacilityId uint `json:"facility_id"`
   Facility Facility `gorm:"foreignkey"`

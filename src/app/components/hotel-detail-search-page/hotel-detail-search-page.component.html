@@ -1,0 +1,62 @@
+<div class="container">
+
+    <div class="hotel-rooms-box">
+        <div class="hotel-room" *ngFor="let hotelRoom of hotelRooms">
+            <div class="hotel-room-left">
+                <img src={{hotelRoom.imagePath}} alt="">
+            </div>
+            <div class="hotel-room-middle">
+                <div class="hotel-room-title">
+                    <h2>{{hotelRoom.name}}</h2>
+                </div>
+                <div class="hotel-room-information">
+                    <div class="hotel-room-information-info">
+                        <div class="hotel-room-info room-info">
+                            <h3>Info Kamar</h3>
+                            <div>
+                                <div>
+                                    <span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+                                    <span>Maks {{hotelRoom.maxGuest}} tamu</span>
+                                </div>
+                                <div>
+                                    <span class="icon"><i class="fas fa-square"></i></span>
+                                    <span>{{space}}m<sup>2</sup></span>
+                                </div>
+                                <div  >
+                                    <span class="icon"><i class="fas fa-bed"></i></span>
+                                    <span *ngFor="let hotelRoomBed of getHotelRoomBed(hotelRoom); let j=index">
+                                        {{hotelRoomBed.bed.bedName}}
+                                        <span *ngIf="getHotelRoomBed(hotelRoom).length != j+1">+</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hotel-room-info room-free-stuff">
+                            <h3>Layanan Gratis</h3>
+                            <div>
+                                <div *ngIf="hotelRoom.freeBreakFast">
+                                    <span class="icon"><i class="fas fa-utensils"></i></span>
+                                    <span>Sarapan gratis</span>
+                                </div>
+                                <div *ngIf="hotelRoom.freeWifi">
+                                    <span class="icon"><i class="fa fa-wifi" aria-hidden="true"></i></span>
+                                    <span>Wifi gratis</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hotel-room-order-now">
+                        <p>Sisa Kamar: {{hotelRoom.quantity}}</p>
+                        <div>
+                            <span>
+                                IDR {{hotelRoom.price}}/kamar/malam
+                            </span>
+                        </div>
+                        <button color="primary" mat-button>Pesan Sekarang</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

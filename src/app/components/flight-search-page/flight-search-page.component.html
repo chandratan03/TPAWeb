@@ -1,0 +1,152 @@
+<div class="container">
+    <div class="box1">
+        
+        <h1>Filter</h1>
+        <button mat-button (click)="resetStatus()">Reset</button>
+        <div class="transit">
+            <div>
+                <mat-checkbox [(ngModel)]="modelTransits[0]" color="primary" (click)="markTransit(0)">Langsung</mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox [(ngModel)]="modelTransits[1]" color="primary" (click)="markTransit(1)">1 Transit</mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox [(ngModel)]="modelTransits[2]" color="primary" (click)="markTransit(2)">2+ Transit</mat-checkbox>
+            </div>
+        </div>
+        <div>
+            <p>
+                Duration Transit In hour(s)
+            </p>
+            <mat-slider  (mouseup)="initSliderDuration($event)" [(ngModel)]="sliderValue" min="1" max="10" [displayWith]="formatLabel" ticksInterval=1000 thumbLabel></mat-slider>
+        </div>
+        <div>
+            <h1>Time</h1>
+            <div class="depart-box">
+                <h5>Berangkat</h5>
+                <mat-checkbox [(ngModel)]="depaturesTime2[0]" (click)="checkDeparture(0)" color="primary">00:00 - 06:00</mat-checkbox>
+                <mat-checkbox [(ngModel)]="depaturesTime2[1]" (click)="checkDeparture(1)" color="primary">06:00 - 12:00</mat-checkbox>
+                <mat-checkbox [(ngModel)]="depaturesTime2[2]" (click)="checkDeparture(2)" color="primary">12:00 - 18:00</mat-checkbox>
+                <mat-checkbox [(ngModel)]="depaturesTime2[3]" (click)="checkDeparture(3)" color="primary">18:00 - 24:00</mat-checkbox>
+            </div>
+            <div class="arrival-box">
+                <h5>Tiba</h5>
+                <mat-checkbox [(ngModel)]="arrivalsTime2[0]" (click)="checkArrival(0)" color="primary">00:00 - 06:00</mat-checkbox>
+                <mat-checkbox [(ngModel)]="arrivalsTime2[1]" (click)="checkArrival(1)" color="primary">06:-0 - 12:00</mat-checkbox>
+                <mat-checkbox [(ngModel)]="arrivalsTime2[2]" (click)="checkArrival(2)" color="primary">12:00 - 18:00</mat-checkbox>
+                <mat-checkbox [(ngModel)]="arrivalsTime2[3]" (click)="checkArrival(3)" color="primary">18:00 - 24:00</mat-checkbox>
+            </div>  
+        </div>
+
+        <div class="airlines-box">
+            <h1>Maskapai</h1>
+            <div class="airline" *ngFor="let airline of airlines;let i =index">
+                <div class="airline-image">
+                    <img src={{airline.path}} alt="">
+                </div>
+                <mat-checkbox (click)="checkboxAirlines(i)" [(ngModel)]="airlinesCheckbox[i]">{{airline.name}}</mat-checkbox>
+            </div>
+        </div>
+        <div class="filter-facilities-box">
+            <h1>Facility</h1>
+            <div *ngFor="let facility of airlineFacilities; let i = index">
+                <mat-checkbox [(ngModel)]="airlineFacilitiesChecked2[i]" (click)="markAirlineFacilities(i)"> {{facility.name | titlecase}}</mat-checkbox   >
+            </div>
+        </div>
+    </div>
+    <div class="box2">
+        <i class="fas fa-filter">
+            <mat-select  [(ngModel)]="selectedValue" name="item">
+                <mat-option (click)="sortByFilterAsc()">
+                    Transit Asc
+                </mat-option>
+                <mat-option (click)="sortByFilterDsc()">
+                    Transit Dsc
+                </mat-option>
+                <mat-option (click)="sortByDurationAsc()">
+                    Duration of transit Asc
+                </mat-option>
+                <mat-option (click)="sortByDurationDsc()">
+                    Duration of transit Dsc
+                </mat-option>
+                <mat-option (click)="sortByTimeAsc()">
+                    Time Asc
+                </mat-option>
+                <mat-option (click)="sortByTimeDsc()">
+                    Time Dsc
+                </mat-option>
+            </mat-select>
+
+        </i>
+        <div class="flight" *ngFor="let flight of flights; let i = index">
+            <div class="flight-top ">
+                <div class="flight-header">
+                    <p>{{flight.airline.name}}</p>
+                </div>
+                <div class="flight-detail">
+                    <div class="flight-detail-left">
+                        <div class="flight-image">
+                            <img src={{flight.airline.path}} alt="">
+                        </div>
+                    </div>
+                    <div class="flight-detail-mid">
+                        <p>
+
+                            {{flight.departure}} - {{flight.arrival}}
+                        </p>
+                        <p>
+                            Duration {{flight.duration}}
+                        </p>
+                        <p>
+                            Dest: {{flight.from.city.cityCode}} - Arrv: {{flight.to.city.cityCode}}
+                        </p>
+                        <p>
+                            {{flight.sTransit}}
+                        </p>
+                        <div>
+                            <button (click)="showDetailFlightClick(i)" class="button-show button-show-flight-detail" mat-button color="primary">Show Flight Detail</button>
+                            <button class="button-show button-show-detail-price" mat-button color="primary">Show Detail Price</button>
+                        </div>
+                        <div class="flight-facility-box">
+                            <div class="flight-facility" *ngFor="let airlineFacility of flight.airline.airlineFacilities">
+                                <img src={{airlineFacility.facility.imagePath}} alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight-detail-right">
+                        <p>IDR {{flight.price}}/pax</p>
+                        <button>PILIH</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flight-bottom" *ngIf="showDetailFlights[i]">
+                <div class="route-box">
+                    <div class="route-from">
+                        <p>From: {{flight.from.name}}</p>
+                        <p>Departure time: {{flight.departure}}</p> 
+                    </div>
+                    <div class="routes" *ngIf="flight.routes.length > 0">
+                        <h5>Routes</h5>
+                        <div class="route" *ngFor="let route of flight.routes">
+                            -
+                            <span>
+                                {{route.to.name}}: 
+                            </span>
+                            <span>
+                                {{route.to.city.cityCode}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="route-to">
+                        <p>To: {{flight.to.name}}</p>
+                        <p>Arrival-time: {{flight.arrival}}</p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

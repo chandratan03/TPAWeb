@@ -34,6 +34,25 @@ export class GraphqpUserService {
     })
 
   }
+
+  getFacilitiesByForObject(forObject: string): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query getFacilitiesByForObject($forObject: String!){
+        facilitiesByForObject(forObject: $forObject){
+          id
+          name
+          imagePath
+          forObject
+        }
+      }
+      `,
+      variables: {
+        "forObject": forObject
+      }
+    })
+  }
+
   getUserByEmail(email: string): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
@@ -52,6 +71,25 @@ export class GraphqpUserService {
 
     })
   }
+
+  getCities(): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+        query getCities{
+          cities{
+            id
+            cityName
+            cityCode
+            region{
+              id
+              regionName
+            }
+          }
+
+      }`
+    })
+  }
+
 
   getUserByEmailAndPassword(email: string, password: string): Observable<Query> {
     return this.apollo.query<Query>({
@@ -113,15 +151,15 @@ export class GraphqpUserService {
             price
             discountPercentage
             quantity
-            location{
-              id
-              city{
-                cityName
-                region{
-                  RegionName
-                }
+            longitude
+            latitude
+            city{
+              cityName
+              region{
+                regionName
               }
             }
+            
             hotelFacilities{
               id
               hotelId
@@ -129,6 +167,25 @@ export class GraphqpUserService {
                 id
                 name
                 imagePath
+              }
+            }
+            hotelRooms{
+              id
+              hotelId
+              name
+              maxGuest
+              price
+              quantity
+              space
+              freeWifi
+              freeBreakFast
+              hotelRoomBeds{
+                id
+                hotelRoomId
+                bed{
+                  id
+                  bedName
+                }
               }
             }
           }
@@ -151,18 +208,28 @@ export class GraphqpUserService {
            tax
            
            airline{
-             id
+             id 
              name
              path
+             airlineFacilities{
+              id
+              facility{
+                id
+                name
+                imagePath
+                forObject
+              }
+            }
            }
            from{
              id
              name
              city{
                cityName
+               cityCode
                id
                region{
-                 RegionName
+                 regionName
                  id
                }
              }
@@ -172,9 +239,10 @@ export class GraphqpUserService {
              name
              city{
                cityName
+               cityCode
                id
                region{
-                 RegionName
+                 regionName
                  id
                }
              }  
@@ -186,9 +254,10 @@ export class GraphqpUserService {
                name
                city{
                  cityName
+                 cityCode
                  id
                  region{
-                   RegionName
+                   regionName
                    id
                  }
                }  
@@ -198,9 +267,10 @@ export class GraphqpUserService {
                name
                city{
                  cityName
+                 cityCode
                  id
                  region{
-                   RegionName
+                   regionName
                    id
                  }
                }
@@ -212,6 +282,99 @@ export class GraphqpUserService {
     })
   }
 
+  getFlightsByFromToDate(fromId: number, toId: number, date: string): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+        query GetFlightsByFromToDate($fromId: Int, $toId: Int, $date: String){
+          flightsByFromToDate(fromId: $fromId, toId:$toId, date:$date){
+            id
+            arrival
+            departure
+            duration
+            price
+            tax
+            
+            airline{
+              id 
+              name
+              path
+              airlineFacilities{
+               id
+               facility{
+                 id
+                 name
+                 imagePath
+                 forObject
+               }
+             }
+            }
+            from{
+              id
+              name
+              city{
+                cityName
+                cityCode
+                id
+                region{
+                  regionName
+                  id
+                }
+              }
+            }
+            to{
+              id
+              name
+              city{
+                cityName
+                cityCode
+                id
+                region{
+                  regionName
+                  id
+                }
+              }  
+            }
+             routes{
+              id
+               to{
+                id
+                name
+                city{
+                  cityName
+                  cityCode
+                  id
+                  region{
+                    regionName
+                    id
+                  }
+                }  
+              }
+              from{
+                id
+                name
+                city{
+                  cityName
+                  cityCode
+                  id
+                  region{
+                    regionName
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      
+      `,
+      variables: {
+        "fromId": fromId,
+        "toId": toId,
+        "date": date,
+      }
+
+    })
+  }
 
 
 

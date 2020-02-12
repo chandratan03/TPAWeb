@@ -1,0 +1,74 @@
+<div class="cards">
+    <div class="card card-header">
+        <div class="card-header-top">
+            <div class="card-header-top-left">
+                <i class="fas fa-train"></i>
+                <span>
+                    Booking Hotel Murah Online dengan Harga Promo
+                </span>
+                
+            </div>
+            <div class="card-heaeder-top-right">
+                <span><a href="">Pencarian Terakhir ></a></span>
+
+            </div>
+        </div>
+        
+    </div>
+    <div class="card card-contents">
+        <div class="card-content card-content-from">
+            <mat-select placeholder="Dari" [(ngModel)]="selectedValue" name="item">
+                <mat-option>
+                    TEST
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="card-content card-content-to">
+            <mat-select placeholder="Ke" [(ngModel)]="selectedValue" name="item">
+                <mat-option>
+                    TEST
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="card-content card-content-depart">
+            <mat-form-field>
+                <mat-label>Tanggal Berangkat</mat-label>
+                <input matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="card-content card-content-back">
+            <div>
+                <mat-checkbox>Pulang</mat-checkbox>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Tanggal Pulang</mat-label>
+                    <input matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="card-content card-content-class">
+            <mat-select placeholder="Kelas Kabin" [(ngModel)]="selectedValue" name="item">
+                <mat-option>
+                    TEST
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="card-content card-content-many">
+            <mat-select placeholder="Penumpang" [(ngModel)]="selectedValue" name="item">
+                <mat-option>
+                    TEST
+                </mat-option>
+            </mat-select>
+        </div>
+
+        
+    </div>
+    <div class="card card-footer">
+        <button>Cari Hotel</button>
+    </div>
+</div>

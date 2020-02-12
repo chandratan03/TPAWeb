@@ -7,7 +7,7 @@ import (
 
 var hotelType *graphql.Object
 func GetHotelType() *graphql.Object{
-
+  //print("test")
   if hotelType == nil{
     hotelType = graphql.NewObject(graphql.ObjectConfig{
       Name:        "hotelType",
@@ -24,9 +24,9 @@ func GetHotelType() *graphql.Object{
         "rate": &graphql.Field{
           Type: graphql.Int,
         },
-        "location": &graphql.Field{
-            Type:GetLocationType(),
-        },
+        //"location": &graphql.Field{
+        //    Type:GetLocationType(),
+        //},
         "address": &graphql.Field{
           Type: graphql.String,
         },
@@ -44,6 +44,18 @@ func GetHotelType() *graphql.Object{
         },
         "quantity": &graphql.Field{
           Type:graphql.Int,
+        },
+        "longitude": &graphql.Field{
+          Type:graphql.Float,
+        },
+        "latitude": &graphql.Field{
+          Type:graphql.Float,
+        },
+        "city": &graphql.Field{
+          Type: GetCityType(),
+        },
+        "hotelRooms": &graphql.Field{
+          Type: graphql.NewList(GetHotelRoomType()),
         },
       },
       Description: "",

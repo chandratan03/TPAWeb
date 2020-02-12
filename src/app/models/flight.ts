@@ -1,6 +1,8 @@
 import { Airline } from './airline'
 import {Route} from './route'
 import { Airport } from './airport'
+import { Time } from '@angular/common'
+import { AirlineFacility } from './airline-facility'
 export class Flight {
     id: string
     airline: Airline
@@ -15,6 +17,7 @@ export class Flight {
     price: number
     tax: number
     serviceCharge: number
-    
-
+    timeDepature: Time
+    timeArrival: Time    
+    airlineFacilities: AirlineFacility[]
 }

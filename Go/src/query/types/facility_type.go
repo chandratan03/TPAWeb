@@ -13,10 +13,13 @@ func GetFacilityType() *graphql.Object{
           Type: graphql.Int,
       },
         "name":&graphql.Field{
-            Type:graphql.String,
+          Type:graphql.String,
         },
         "imagePath": &graphql.Field{
-              Type:graphql.String,
+          Type:graphql.String,
+        },
+        "forObject": &graphql.Field{
+          Type:graphql.String,
         },
       },
       Description: "Get Facility Type",

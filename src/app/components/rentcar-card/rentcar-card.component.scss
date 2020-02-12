@@ -3,9 +3,21 @@
 }
 
 .card-contents{
+    box-sizing: border-box;
     border: 1px solid black;
+    
+    .card-content{
+        box-sizing: border-box;
+        display:inline-block;
+        width: 25%;
+        padding: 0 2%;
+        
+    }
 }
 
+.card-contents .card-content:not(:first-child){
+    border-left: 1px solid darkgray;
+}
 .card-header-top{
     display: flex;
     justify-content: flex-end;

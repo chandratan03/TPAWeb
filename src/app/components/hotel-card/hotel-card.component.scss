@@ -3,7 +3,18 @@
 }
 
 .card-contents{
+    box-sizing: border-box;
     border: 1px solid black;
+
+    .card-content{
+        display:inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        width: 20%;
+        border-left: 0.5px solid darkgrey;
+    }
+  
+    
 }
 
 .card-header-top{

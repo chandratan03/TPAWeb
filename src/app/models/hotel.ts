@@ -1,9 +1,13 @@
-import { AvailableDateForHotel } from './available-date-for-hotel'
-import {Location} from './location'
+import { HotelFacility } from './hotel-facility'
+import { City } from './city'
 export class Hotel {
     id: string
     hotelName: string
     address: string
-    location: Location
     rate: number
+    price: number
+    longtitude: number
+    latitude: number
+    city: City
+    hotelFacilities: HotelFacility[]
 }

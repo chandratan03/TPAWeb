@@ -19,6 +19,9 @@ func GetAirlineType() *graphql.Object{
           "path": &graphql.Field{
             Type:graphql.String,
           },
+          "airlineFacilities": &graphql.Field{
+              Type:graphql.NewList(GetAirlineFacilityType()),
+          },
       },
     })
   }

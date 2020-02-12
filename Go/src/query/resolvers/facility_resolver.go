@@ -23,3 +23,15 @@ func GetFacilityById(params graphql.ResolveParams)(interface{}, error){
   }
   return nil, nil
 }
+
+func GetFacilitiesByForObject(params graphql.ResolveParams)(interface{}, error){
+  forObject, ok := params.Args["forObject"].(string)
+  if ok{
+    res, err := models.GetFacilitiesByForObject(forObject)
+    if err!=nil {
+      return nil, err
+    }
+    return res, nil
+  }
+  return nil, nil
+}

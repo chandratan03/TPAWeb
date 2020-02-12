@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes, Router} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule} from '@angular/material';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { QuickCardComponent } from './components/quick-card/quick-card.component';
 import {ApolloModule, Apollo} from 'apollo-angular';
@@ -26,7 +26,11 @@ import { LoginModal2Component } from './components/login-modal2/login-modal2.com
 import { HotelSearchPageComponent } from './components/hotel-search-page/hotel-search-page.component';
 import { HotelFilterComponent } from './components/hotel-filter/hotel-filter.component';
 import {} from '@angular/material/checkbox';
-import { FlightSearchPageComponent } from './flight-search-page/flight-search-page.component'
+import { FlightSearchPageComponent } from './components/flight-search-page/flight-search-page.component';
+import { TrainCardComponent } from './components/train-card/train-card.component';
+import { EntertainmentCardComponent } from './components/entertainment-card/entertainment-card.component';
+import { HotelDetailSearchPageComponent } from './components/hotel-detail-search-page/hotel-detail-search-page.component'
+import { componentFactoryName } from '@angular/compiler';
 
 @NgModule({
   exports: [
@@ -48,6 +52,9 @@ import { FlightSearchPageComponent } from './flight-search-page/flight-search-pa
     HotelSearchPageComponent,
     HotelFilterComponent,
     FlightSearchPageComponent,
+    TrainCardComponent,
+    EntertainmentCardComponent,
+    HotelDetailSearchPageComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -62,7 +69,15 @@ import { FlightSearchPageComponent } from './flight-search-page/flight-search-pa
     ApolloModule,
     HttpLinkModule,
     MatCheckboxModule,
-    
+    MatDatepickerModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatSliderModule,
+    MatTooltipModule,
+    MatButtonModule,
     RouterModule.forRoot([
       {
         path: '', component:HomePageComponent
@@ -76,6 +91,9 @@ import { FlightSearchPageComponent } from './flight-search-page/flight-search-pa
       {
         path: 'flight/search', component: FlightSearchPageComponent
       },
+      {
+        path: 'hotel/search/detail', component: HotelDetailSearchPageComponent
+      }
 
     ]),
     BrowserAnimationsModule,

@@ -15,12 +15,60 @@
         <div class=card-header-bottom>
             <label class="radio radio1"><input type="radio" name="trip" id="" value=""><span>Sekali Jalan</span></label>
             <label class="radio radio2"><input type="radio" name="trip" id=""><span>Pulang Pergi</span></label>
-        </div>        
+        </div>
     </div>
     <div class="card card-contents">
-        Halo
+        <div class="card-content card-content-from">
+            <mat-select placeholder="Dari" [(value)]="selectedFromId" name="item">
+                <mat-option *ngFor="let city  of cities" [value]="city.id">
+                    {{city.cityName}} - {{city.region.regionName}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="card-content card-content-to">
+            <mat-select placeholder="Ke" [(value)]="selectedToId" name="item">
+                <mat-option *ngFor="let city of cities" [value]="city.id">
+                    {{city.cityName}} - {{city.region.regionName}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="card-content card-content-depart">
+            <mat-form-field>
+                <mat-label>Tanggal Berangkat</mat-label>
+                <input [(ngModel)]="fromDate" matInput [matDatepicker]="picker1" >
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker  #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="card-content card-content-back">
+            <div>
+                <mat-checkbox [(ngModel)]="pulang" >Pulang</mat-checkbox>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-label>Tanggal Pulang</mat-label>
+                    <input disabled={{!pulang}} [(ngModel)]="backDate" matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="card-content card-content-class">
+            <mat-select placeholder="Kelas Kabin" name="item" [(value)] =selectedClass>
+                <mat-option *ngFor="let class of classes" [value]="class">
+                    {{class}}
+                </mat-option>
+            </mat-select>
+            
+        </div>
+        <div class="card-content card-content-many">
+            <mat-form-field>
+                <input matInput placeholder="Jumlah Penumpang" [(ngModel)]="manyPassenger" type="number" min="1" max="7">
+            </mat-form-field>
+        </div>
+
     </div>
     <div class="card card-footer">
-        <button>Cari Penerbangan</button>
+        <button (click)="flightSearchPage()" mat-raised-button color="primary">Cari Penerbangan</button>
     </div>
 </div>

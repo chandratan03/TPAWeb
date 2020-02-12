@@ -16,9 +16,39 @@
         
     </div>
     <div class="card card-contents">
-        Halo
+        <div class="card-content">
+            <mat-select placeholder="Tujuan Hotel" [(ngModel)]="destination" name="item">
+                <mat-option *ngFor="let city of cities" [value]="city.id">
+                    {{city.cityName}} - {{city.region.regionName}}
+                </mat-option>
+            </mat-select>            
+        </div>
+        <div class="card-content">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Check-in" [(ngModel)]="checkInDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="card-content">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker2" placeholder="Check-out" [(ngModel)]="checkOutDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="card-content">
+            <mat-form-field>
+                <input matInput type="number" placeholder="jumlah kamar" value="value" [(ngModel)]="quantityRoom">
+            </mat-form-field>
+        </div>
+        <div class="card-content">
+            <mat-form-field>
+                <input matInput type="number" placeholder="jumlah tamu" value="value" [(ngModel)]="quantityGuest">
+            </mat-form-field>
+        </div>
     </div>
     <div class="card card-footer">
-        <button>Cari Hotel</button>
+        <button mat-button (click)="goToHotelPage()">Cari Hotel</button>
     </div>
 </div>

@@ -13,14 +13,15 @@ func GetRegionType() *graphql.Object{
         "id" : &graphql.Field{
           Type:graphql.Int,
         },
-        "RegionName": &graphql.Field{
+        "regionName": &graphql.Field{
             Type:graphql.String,
         },
-        
-
       },
       Description: "Get Region Type",
     })
   }
   return regionType
 }
+
+
+

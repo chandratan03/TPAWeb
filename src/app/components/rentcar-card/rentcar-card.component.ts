@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
+import { City } from 'src/app/models/city';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-rentcar-card',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RentcarCardComponent implements OnInit {
 
-  constructor() { }
+  constructor(public myService: GraphqpUserService) { }
+  cities: City
+  cities$: Subscription
 
   ngOnInit() {
+    this.getCities()
   }
-
+  getCities():void{
+    this.cities$ = this.myService.getCities().subscribe(query => {
+      this.cities = query.data.cities
+      // console.log(query.data)
+    })
+  }
 }

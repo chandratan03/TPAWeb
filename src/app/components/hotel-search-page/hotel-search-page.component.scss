@@ -31,7 +31,10 @@
     height: 10px;
 }
 
-
+.mat-slider-thumb-label{
+    width: 100px;;
+    // background: transparent !important;
+}
 
 .content-detail{
     padding: 2%;
@@ -72,21 +75,10 @@
 .content-footer{
     display:flex;
     flex-direction: column-reverse;
-    width: 8%;
-  
-    a{    
-        text-decoration: none;
-        font-style: none;
-        width: 100%;
-        background-color: yellow;
-        text-align: center;
-        border-radius: 30%;
-        padding: 2% 4%;
-        &:hover{
-            background-color: blue;
-        }
+    box-sizing: border-box;
+    &>button{
+        background: yellow !important;
     }
-    padding-bottom: 2%;
 }
 
 .box{

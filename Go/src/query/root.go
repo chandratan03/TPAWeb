@@ -53,14 +53,23 @@ func GetRoot() *graphql.Object{
           Type:graphql.NewList(types.GetHotelType()),
           Resolve: resolvers.GetHotels,
       },
+      "hotelById":{
+          Type:types.GetHotelType(),
+          Resolve:resolvers.GetHotelById,
+          Args:graphql.FieldConfigArgument{
+            "hotelId": &graphql.ArgumentConfig{
+              Type:  graphql.Int,
+            },
+          },
+      },
       "availableDateForHotel":{
             Type:graphql.NewList(types.GetAvailableForHotelType()),
             Resolve:resolvers.GetAvailableDateForHotels,
       },
-      "locations":{
-            Type:graphql.NewList(types.GetLocationType()),
-            Resolve:resolvers.GetLocations,
-      },
+      //"locations":{
+      //      Type:graphql.NewList(types.GetLocationType()),
+      //      Resolve:resolvers.GetLocations,
+      //},
       "cities":{
             Type:graphql.NewList(types.GetCityType()),
             Resolve:resolvers.GetCities,
@@ -93,13 +102,50 @@ func GetRoot() *graphql.Object{
             Type:graphql.NewList(types.GetRouteType()),
             Resolve:resolvers.GetRoutes,
       },
+      "facilitiesByForObject": {
+            Type:graphql.NewList(types.GetFacilityType()),
+            Resolve:resolvers.GetFacilitiesByForObject,
+            Args: graphql.FieldConfigArgument{
+              "forObject": &graphql.ArgumentConfig{
+                Type:graphql.String,
+              },
+            },
+      },
+      "flightsByFromToDate":{
+        Type:graphql.NewList(types.GetFlightType()),
+        Resolve:resolvers.GetFlightsByFromToDate,
+        Args: graphql.FieldConfigArgument{
+          "fromId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+          "toId": &graphql.ArgumentConfig{
+            Type: graphql.Int,
+          },
+          "date": &graphql.ArgumentConfig{
+              Type:graphql.String,
+          },
+        },
+      },
+      "hotelRoomByHotelId": {
+         Type: graphql.NewList(types.GetHotelRoomType()),
+         Resolve: resolvers.GetHotelRoomByHotelId,
+         Args: graphql.FieldConfigArgument{
+           "hotelId": &graphql.ArgumentConfig{
+             Type: graphql.Int,
+           },
+         },
+      },
+      "hotelRooms": {
+         Type:    graphql.NewList(types.GetHotelRoomType()),
+         Resolve: resolvers.GetHotelRooms,
+      },
 
 
 
+      },
 
 
 
-    },
 
 
 

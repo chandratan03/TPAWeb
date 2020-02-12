@@ -1,11 +1,33 @@
 .cards{
     padding: 2% 4%;
     // z-index: 20;
+    min-width: 1000px;
 }
 
 .card-contents{
     border: 1px solid black;
+    box-sizing: border-box;
+    display:flex;
+    
 }
+.card-content{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 10px;
+    // min-width: 100px;
+}
+.card-content-back{
+    display:flex;
+    
+}
+.card-content-back{
+    margin: 0 2%;
+}
+
+
 
 .card-header-top{
     display: flex;
