@@ -5,6 +5,8 @@ import { Hotel } from 'src/app/models/hotel';
 import { Facility } from 'src/app/models/facility';
 import { MatSliderChange, MatSlider } from '@angular/material';
 import { Router } from '@angular/router';
+import { City } from 'src/app/models/city';
+import { Area } from 'src/app/models/area';
 
 @Component({
   selector: 'app-hotel-search-page',
@@ -14,6 +16,19 @@ import { Router } from '@angular/router';
 export class HotelSearchPageComponent implements OnInit {
 
 
+  //
+  cities: City
+  cities$: Subscription
+  destination: number
+  checkInDate: Date
+  checkOutDate: Date
+  quantityRoom: number
+  quantityGuest: number
+  
+  //
+  areas: Area[]
+  areasCheckbox: boolean[]
+  areasCheckbox2: boolean[]
   hotelFacilities$: Subscription
   hotelFacilities: Facility[]
 
@@ -39,13 +54,108 @@ export class HotelSearchPageComponent implements OnInit {
   // @ViewChild(MatSlider) slider: MatSlider;
   // sliderValueBefore: number=0
   ngOnInit() {
+    let json = JSON.parse(sessionStorage.getItem("hotelQuery"))
+
+    this.destination = json["cityId"]
+    this.checkInDate = new Date(json["checkInDate"])
+    this.checkOutDate = new Date(json["checkOutDate"])
+    this.quantityRoom = json["quantityRoom"]
+    this.quantityGuest = json["quantityGuest"]
+    this.getCities()
     this.getHotels();
     for (let i = 0; i < 5; i++) {
       this.starsBool[i] = false
     }
     this.isSlidedPrice = false;
     this.getFacilities()
+
+  
+    // console.log(json["cityId"]);
+    console.log(this.destination);
+    console.log(this.checkOutDate.getDate() - this.checkInDate.getDate()  )
+    console.log(this.checkOutDate);
+    console.log(this.quantityGuest)
+    console.log(this.quantityGuest)
   }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.cities$.unsubscribe()
+    this.hotelFacilities$.unsubscribe()
+  }
+
+  getCities(): void {
+    this.cities$ = this.myService.getCities().subscribe(query => {
+      this.cities = query.data.cities
+    })
+  }
+
+  goToHotelPage(): void {
+    if(this.destination==null){
+      alert("please select a city")
+      return
+    }
+    if(this.checkInDate == null){
+      alert("please input check in date")
+      return
+    }
+    if(this.checkOutDate == null){
+      alert("please input checkout date")
+      return
+    }
+    if(this.quantityGuest<= 0){
+      alert("please input guest quantity")
+      return
+    }
+    if(this.quantityRoom <= 0){
+      alert("please input room quantity")
+      return
+    }
+    if(this.checkInDate >= this.checkOutDate){
+      alert("please input valid date")
+      return
+    }
+
+
+    let day, month, year, checkInDate, checkOutDate = null
+
+    day = this.checkInDate.getDate()
+    // console.log(this.fromDate)
+    month = this.checkInDate.getMonth() + 1
+    year = this.checkInDate.getFullYear()
+    if (day < 10) {
+      day = "0" + day
+    }
+    if (month < 10) {
+      month = "0" + month
+    }
+    console.log(month)
+    checkInDate = month + "/" + day + "/" + year
+
+    day = this.checkOutDate.getDate()
+    month = this.checkOutDate.getMonth() + 1
+    year = this.checkOutDate.getFullYear()
+    if (day < 10) {
+      day = "0" + day
+    }
+    if (month < 10) {
+      month = "0" + month
+    }
+    checkOutDate = month + "/" + day + "/" + year
+
+    let json = {
+      "cityId": this.destination,
+      "checkInDate": checkInDate,
+      "checkOutDate": checkOutDate,
+      "quantityRoom": this.quantityRoom,
+      "quantityGuest": this.quantityGuest,
+    }
+    
+    sessionStorage.setItem("hotelQuery", JSON.stringify(json))
+    window.location.reload()
+    
+  }
+
 
   resetFilter(): void {
     for (let i = 0; i < this.starsBool.length; i++) {
@@ -94,6 +204,7 @@ export class HotelSearchPageComponent implements OnInit {
     this.validateAllStars()
     this.validateFacilities()
     this.validateSlide()
+    this.validateAreas();
   }
   validateSlide(): void {
     if (this.isSlidedPrice == false) return
@@ -140,17 +251,80 @@ export class HotelSearchPageComponent implements OnInit {
 
   }
 
+  getAreas():void{
+    this.areas=[]
+    for(let i=0; i<this.allHotelsData.length; i++){
+      let flag=0;
+      for(let j=0; j<this.areas.length; j++){
+        if(this.areas[j].id == this.allHotelsData[i].area.id){
+          flag=1
+          break;
+        }
+      }
+      if(flag==0){
+        this.areas.push(this.allHotelsData[i].area)
+      }
+    }
+    this.areasCheckbox= Array(this.areas.length)
+    this.areasCheckbox2 = Array(this.areas.length)
+    for(let i=0; i<this.areas.length; i++){
+      this.areasCheckbox[i]=this.areasCheckbox2[i]=false;
+    }
+  }
 
+  checkArea(i:number):void{
+    this.areasCheckbox[i] =!this.areasCheckbox[i]
+    this.validateAllFilter()
+  }
+  validateAreas():void{
+    let flag=0;
+    for(let i=0; i<this.areasCheckbox.length; i++){
+      if(this.areasCheckbox[i] == true){
+        flag=1;
+        break 
+      }
+    }
+    if(flag==1){
+      let temp = []
+      for(let i=0; i<this.areas.length; i++){
+        if(this.areasCheckbox[i] == false)
+          continue
+        for(let j=0; j<this.hotels.length; j++){
+          if(this.hotels[j].area.id == this.areas[i].id){
+            temp.push(this.hotels[j])
+          }
+        }
+      }
+      this.hotels = temp;
+      
+
+    }
+    
+  }
   getHotels(): void {
     this.hotels$ = this.myService.getHotels().subscribe(query => {
-      this.hotels = query.data.hotels as Hotel[]
+      this.hotels = query.data.hotels
+      
       console.log(this.hotels)
-      this.allHotelsData = this.hotels
+      this.allHotelsData = []
+      for(let i=0; i<this.hotels.length; i++){
+        // console.log(this.hotels[i].city)
+        if(this.hotels[i].city.id == this.destination){
+          this.allHotelsData.push(this.hotels[i])
+          // console.log(this.hotels[i])
+        }
+      }
+      this.getAreas()
+      
+
+
+      // this.allHotelsData = this.hotels
       this.hotels = Array(0)
       this.validateAllStars()
     }
     )
   }
+ 
 
   markHotel(index): void {
     this.starsBool[index] = !this.starsBool[index]

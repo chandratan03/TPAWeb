@@ -139,6 +139,10 @@ func GetRoot() *graphql.Object{
          Type:    graphql.NewList(types.GetHotelRoomType()),
          Resolve: resolvers.GetHotelRooms,
       },
+      "areas":{
+           Type:graphql.NewList(types.GetAreaType()),
+           Resolve:resolvers.GetAreas,
+      },
 
 
 

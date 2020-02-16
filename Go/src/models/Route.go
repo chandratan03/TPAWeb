@@ -29,6 +29,7 @@ func GetRoutes()([]Route, error){
    db.Model(&routes[i]).Related(&routes[i].From, "from_refer").Model(&routes[i]).Related(&routes[i].To, "to_refer")
     //println(routes[i].Id)
   }
+  defer db.Close()
   //print(routes)
   return routes, nil
 }

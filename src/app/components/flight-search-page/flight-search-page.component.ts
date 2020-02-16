@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { MatSliderChange } from '@angular/material';
 import { Airline } from 'src/app/models/airline';
 import { Facility } from 'src/app/models/facility';
+import { City } from 'src/app/models/city';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flight-search-page',
@@ -24,6 +26,7 @@ export class FlightSearchPageComponent implements OnInit {
   modelTransits: boolean[]
 
 
+  boolDetailPriceBox: boolean[]
 
 
   showDetailFlights: boolean[]
@@ -47,9 +50,29 @@ export class FlightSearchPageComponent implements OnInit {
   airlinesCheckbox: boolean[]
   airlinesCheckbox2: boolean[]
 
+
+
+  // card
+  pulang:boolean;
+
+
+  fromDate:Date;
+  backDate:Date;
+
+  selectedFromId: string
+  selectedToId:string
+  selectedClass:string
+  manyPassenger: number
+
+  classes: string[]
+  classPrice:number;
+  flightToSearch = {}
+  
+  cities: City
+  cities$: Subscription
   constructor(
     private myService: GraphqpUserService,
-
+    private router: Router
   ) { }
 
   initSliderDuration(event: MatSliderChange) {
@@ -61,6 +84,7 @@ export class FlightSearchPageComponent implements OnInit {
     this.isSlideDuration = true
     console.log(this.sliderValue)
     this.validateTransits()
+    this.getCities()
   }
 
   resetStatus(): void {
@@ -93,6 +117,13 @@ export class FlightSearchPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.classes = [
+      "ekonomi",
+      "premium ekonomi",
+      "bisnis",
+      "first",
+      
+    ]
     this.airlines = Array()
 
     this.sliderValue = 0
@@ -131,6 +162,16 @@ export class FlightSearchPageComponent implements OnInit {
         this.setData()
       }
     }.bind(this)
+    this.getCities();
+
+
+
+
+
+
+
+
+    
   }
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -138,8 +179,123 @@ export class FlightSearchPageComponent implements OnInit {
     this.flights$.unsubscribe()
     this.flights2$.unsubscribe()
     this.airlineFacilitiesSubscription$.unsubscribe()
+    this.cities$.unsubscribe()
   }
 
+  //card
+
+
+  flightSearchPage():void{
+    if(this.selectedFromId == null){
+      alert("input where to depart")
+      return
+    }
+    if(this.selectedToId == null){
+      alert("input where to arrive")
+      return
+    }
+
+    if(this.selectedToId == this.selectedFromId){
+      alert("please don't select same country")
+      return
+    }
+
+    if(this.fromDate == null){
+      alert("Input from date")
+      return
+    }
+    if(this.pulang==true && this.backDate == null){
+      alert("Input back date")
+      return
+    }
+    if(this.manyPassenger <=0 || this.manyPassenger > 7){
+      alert("please insert quantity")
+      return
+    }
+    if(this.selectedClass == null){
+      alert("please select class")
+      return
+    }
+    console.log(this.fromDate.getDate())
+    let day, month, year, fromDate, backDate=null
+
+    day = this.fromDate.getDate()
+    // console.log(this.fromDate)
+    month = this.fromDate.getMonth()+1
+    year = this.fromDate.getFullYear()
+    if(day < 10){
+      day = "0"+day
+    }
+    if(month<10){
+      month = "0"+month
+    }
+    console.log(month)
+    fromDate = month+"/"+day+"/"+year
+
+    if(this.backDate !=null){
+      day = this.backDate.getDate()
+      month = this.backDate.getMonth()+1
+      year = this.backDate.getFullYear()
+      if(day < 10){
+        day = "0"+day
+      }
+      if(month<10){
+        month = "0"+month
+      }
+      backDate = month+"/"+day+"/"+year
+    }
+    this.flightToSearch = {
+      "fromId": this.selectedFromId,
+      "toId": this.selectedToId,
+      "fromDate": fromDate,
+      "backDate": backDate,
+      "manyPassenger": this.manyPassenger,
+      "class": this.selectedClass
+    }
+
+    // this.flightToSearch[]
+    sessionStorage.setItem("flightQuery", JSON.stringify(this.flightToSearch))
+    window.location.reload()
+    // this.router.navigateByUrl("/flight/search")
+  }
+
+  
+
+
+  getCities():void{
+    this.cities$ = this.myService.getCities().subscribe(query => {
+      this.cities = query.data.cities
+      // console.log(query.data)
+      console.log(this.cities)
+      
+      let json = JSON.parse(sessionStorage.getItem("flightQuery"))
+      this.selectedFromId = json["fromId"]
+      this.selectedToId = json["toId"]
+      this.fromDate = new Date(json["fromDate"])
+      this.backDate = new Date(json["backDate"])
+      this.manyPassenger = json["manyPassenger"]
+      this.selectedClass  = json["class"]
+      this.selectedClass = this.selectedClass.toLowerCase()
+      // "ekonomi",
+      // "premium ekonomi",
+      // "bisnis",
+      // "first",
+      
+      
+      if(this.backDate !=null){
+        this.pulang=true
+      }
+      console.log(this.selectedFromId)
+      console.log(this.selectedToId)
+      console.log(this.fromDate)
+      console.log(this.backDate)
+      console.log(this.manyPassenger)
+      console.log(this.selectedClass)
+    })
+
+  }
+
+//////////////////////
   getBySlideDuration(): void {
     let tempFlights = []
     for (let i = 0; i < this.AllFlights.length; i++) {
@@ -342,6 +498,10 @@ export class FlightSearchPageComponent implements OnInit {
   }
 
 
+  checkDetailPriceBox(i:number):void{
+    this.boolDetailPriceBox[i] = !this.boolDetailPriceBox[i]
+  }
+
 
   transitsLangsung(): void {
     if (this.transits[0] == false) return
@@ -407,8 +567,29 @@ export class FlightSearchPageComponent implements OnInit {
     fromId = flightQuery["fromId"]
     toId = flightQuery["toId"]
     fromDate = flightQuery["fromDate"]
-
     backDate = flightQuery["backDate"]
+    
+    this.selectedClass  = flightQuery["class"]
+    this.selectedClass = this.selectedClass.toLowerCase()
+    // "ekonomi",
+    //   "premium ekonomi",
+    //   "bisnis",
+    //   "first",
+    switch(this.selectedClass){
+      case "ekonomi":
+        this.classPrice = 0 // 0%
+        break;
+      case "premium ekonomi":
+        this.classPrice = (10/100) // 10%
+        break;
+      case "bisnis":
+        this.classPrice = 20/100 // 20%
+        break;
+      case "first":
+        this.classPrice = 30/100 // 30%
+        break
+
+    }
     console.log(fromId)
     console.log(toId)
     console.log(fromDate)
@@ -421,8 +602,10 @@ export class FlightSearchPageComponent implements OnInit {
         this.flights2$ = this.myService.getFlightsByFromToDate(toId, fromId, backDate).subscribe(query => {
           this.AllFlights.push(... query.data.flightsByFromToDate as Flight[])
           this.showDetailFlights = Array(this.AllFlights.length)
+          this.boolDetailPriceBox = []
           for (let i = 0; i < this.AllFlights.length; i++) {
             this.showDetailFlights[i] = false
+            this.boolDetailPriceBox.push(false)
             let depMinTemp = new Date(this.AllFlights[i].departure).getUTCHours()
             let depMin = this.changeTimeFormat(depMinTemp)
             let depSecTemp = new Date(this.AllFlights[i].departure).getUTCMinutes()

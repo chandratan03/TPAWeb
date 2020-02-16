@@ -33,13 +33,6 @@ export class HotelCardComponent implements OnInit {
   ngOnDestroy(): void {
     this.cities$.unsubscribe()
   }
-  test(): void {
-    console.log(this.destination)
-    console.log(this.checkInDate)
-    console.log(this.checkOutDate)
-    console.log(this.quantityRoom)
-    console.log(this.quantityGuest)
-  }
 
   goToHotelPage(): void {
     if(this.destination==null){

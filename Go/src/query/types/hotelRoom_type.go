@@ -43,6 +43,9 @@ func GetHotelRoomType() *graphql.Object{
         "freeWifi": &graphql.Field{
           Type:graphql.Boolean,
         },
+        "images": &graphql.Field{
+            Type:graphql.NewList(GetImageType()),
+        },
       },
       Description: "Get hotel Room type",
     })

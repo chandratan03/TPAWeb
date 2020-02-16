@@ -28,7 +28,7 @@ func GetUsers()  ([]User, error){
 
   var users []User
   db.Find(&users)
-
+  defer db.Close()
   return users, nil
 }
 
@@ -37,7 +37,7 @@ func GetUser(userId uint)([]User, error){
   if err!=nil{
     panic(err)
   }
-
+  defer db.Close()
   var user []User
   db.Where(&User{
    ID:userId,
@@ -52,6 +52,7 @@ func GetUserByEmail(email string)(i interface{}, e error){
       panic(err)
     }
     var user User
+  defer db.Close()
     db.Where("email = ?", email).First(&user)
     //fmt.Print(()
     fmt.Println(user)
@@ -65,6 +66,7 @@ func GetUserByEmailAndPassword(email string, password string)(i interface{}, e e
   if err!=nil{
     panic(err)
   }
+  defer db.Close()
   var user User
   db.Where("email = ? and password = ? ", email, password).Or("phone_number=? and password = ?", email,password).First(&user)
   //fmt.Print(()
@@ -80,6 +82,7 @@ func CreateUser(firstName string, lastName string, password string,  email strin
   if err!=nil{
     return nil, err
   }
+  
   defer db.Close()
   db.Create(&User{
     CreatedAt:   time.Time{},

@@ -12,11 +12,29 @@ const (
   dbname   = "TPA"
 )
 
+//var num int
+//var once sync.Once
+//
+//func Connect() (*gorm.DB, error){
+//  var e error
+//  once.Do(func(){
+//    sqlInfo:=fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+//    db,error:= gorm.Open("postgres", sqlInfo)
+//    if error!=nil{panic(error)}
+//    fmt.Print(db)
+//  })
+//  return db, e
+//}
 func Connect()(*gorm.DB, error){
+
+
+  //fmt.Println(db)
   sqlInfo:=fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
   db,error:= gorm.Open("postgres", sqlInfo)
+
   if error!=nil{panic(error)}
-  return db, error
+  //fmt.Println(num, db)
+  return db, nil
 }
 
 

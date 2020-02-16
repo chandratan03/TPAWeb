@@ -150,12 +150,15 @@ export class GraphqpUserService {
             imagePath
             price
             discountPercentage
+            discountPrice
             quantity
             longitude
             latitude
             city{
+              id
               cityName
               region{
+                id
                 regionName
               }
             }
@@ -168,6 +171,13 @@ export class GraphqpUserService {
                 name
                 imagePath
               }
+            }
+            ratings{
+              id
+              hotelId
+              date
+              description
+              rateScore
             }
             hotelRooms{
               id
@@ -185,6 +195,20 @@ export class GraphqpUserService {
                 bed{
                   id
                   bedName
+                }
+              }
+            }
+            area{
+              areaName
+              id
+              city{
+                id
+                cityCode
+                cityName
+                region{
+                  regionName
+                  id
+                
                 }
               }
             }

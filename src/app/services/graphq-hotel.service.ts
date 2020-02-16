@@ -27,6 +27,11 @@ export class GraphqHotelService {
           freeWifi
           freeBreakFast
           price
+          images{
+            id
+            hotelRoomId
+            path
+          }
           hotelRoomBeds{
             id
             hotelRoomId
@@ -34,6 +39,7 @@ export class GraphqHotelService {
               bedName
             }
           }
+          
         }
       }
       `,
@@ -55,6 +61,7 @@ export class GraphqHotelService {
           imagePath
           price
           discountPercentage
+          discountPrice
           quantity
           longitude
           latitude
@@ -74,6 +81,13 @@ export class GraphqHotelService {
               imagePath
             }
           }
+          ratings{
+            id
+            hotelId
+            date
+            description
+            rateScore
+          }
           hotelRooms{
             id
             hotelId
@@ -90,6 +104,20 @@ export class GraphqHotelService {
               bed{
                 id
                 bedName
+              }
+            }
+          }
+          area{
+            areaName
+            id
+            city{
+              id
+              cityCode
+              cityName
+              region{
+                regionName
+                id
+              
               }
             }
           }

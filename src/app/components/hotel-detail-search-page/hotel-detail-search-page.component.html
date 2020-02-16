@@ -1,4 +1,79 @@
 <div class="container">
+    <div (click)="showImageSlide()" *ngIf="isShowImageSlide" id="image-slider-container" class="image-slider-container" >
+        <div class="image-slider">
+            <div class="image-box">
+                <ng-container *ngFor="let image of imagePaths; let i=index">
+                    <div *ngIf="imageShows[i] == true" class="image-slide">
+                        <img (click)="theImage()" src={{image}} alt="">
+                    </div>
+                </ng-container>
+                
+            </div>
+            <img (click)="prev()" src="../../../assets/image-sliders/left.png" class="prev-next prev" >
+            <img (click)="next()" src="../../../assets/image-sliders/right.png" class="prev-next next">
+        </div>
+    </div>
+
+
+
+    <div class="hotel-box">
+        <div class="hotel-images-box">
+            <div class="hotel-images-box-child hotel-image-left">
+                <img src="../../../assets/hotel/search/hotel-images/shinchan-image.jpg" alt="">
+            </div>
+            <div class="hotel-images-box-child hotel-image-right-box">
+                <div class="hotel-images-right-top hotel-images-right-child">
+                    <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                </div>
+                <div class="hotel-images-right-bottom hotel-images-right-child">
+                    <div class="hotel-images-right-bottom-left hotel-images-right-bottom-child">
+                        <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                    </div>
+                    <div class="hotel-images-right-bottom-right hotel-images-right-bottom-child ">
+                        <div class="read-more-box" (click)="showImageSlide()">
+                            <span>Read More+</span>
+                        </div>
+                        <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hotel-detail">
+            <div class="hotel-detail-top">
+                <div>
+                    {{hotel.city.region.regionName}} > {{hotel.city.cityName}}
+                </div>
+                <div>
+                    <span>
+                        <h1>{{hotel.hotelName}}</h1>
+                    </span><i class="fas fa-star" *ngFor="let i of [].constructor(hotel.rate)"></i>
+                </div>
+                <div>
+                    <h3>
+                        Area : {{hotel.area.areaName}}
+                    </h3>
+                </div>
+                <div>
+                    <h3>
+                        Rate: {{overallRateScore}}
+                    </h3>
+                </div>
+            </div>
+            <div class="facility-box">
+                <h1>Fasilitas</h1>
+                <div>
+                    <span class="facility" matTooltip={{hf.facility.name}} *ngFor="let hf of hotel.hotelFacilities">
+                        <img src={{hf.facility.imagePath}} alt="">
+                        <span>{{hf.facility.name}}</span>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
 
     <div class="hotel-rooms-box">
         <div class="hotel-room" *ngFor="let hotelRoom of hotelRooms">
@@ -22,7 +97,7 @@
                                     <span class="icon"><i class="fas fa-square"></i></span>
                                     <span>{{space}}m<sup>2</sup></span>
                                 </div>
-                                <div  >
+                                <div>
                                     <span class="icon"><i class="fas fa-bed"></i></span>
                                     <span *ngFor="let hotelRoomBed of getHotelRoomBed(hotelRoom); let j=index">
                                         {{hotelRoomBed.bed.bedName}}
@@ -47,9 +122,18 @@
                     <div class="hotel-room-order-now">
                         <p>Sisa Kamar: {{hotelRoom.quantity}}</p>
                         <div>
-                            <span>
-                                IDR {{hotelRoom.price}}/kamar/malam
-                            </span>
+                            <div>
+                                Price: IDR {{hotelRoom.price}}/kamar/malam
+                            </div>
+                            <div>
+                                Discount price : {{hotel.discountPrice}}
+                            </div>
+                            <div>
+                                Discount percentage : {{hotel.discountPercentage}}
+                            </div>
+                            <div>
+                                TotalPrice: {{hotelRoom.price-hotel.discountPrice - (hotelRoom.price- (hotelRoom.price*hotel.discountPercentage/100))}}
+                            </div>
                         </div>
                         <button color="primary" mat-button>Pesan Sekarang</button>
                     </div>
@@ -57,6 +141,35 @@
             </div>
         </div>
     </div>
+
+    <div class="hotel-rating-container">
+        <h1>ULASAN</h1>
+        <ng-container *ngFor="let ratings of ratingsPagination; let i=index">
+            <div *ngIf="ratingPage[i]" class="hotel-rating">
+                <div class="hotel-rating-box"  *ngFor="let rating of ratings">
+                    <div class="hotel-rating-profile">
+                        <h3>Name: Anonymous</h3>
+                        <h6>Date: {{rating.date | date}}</h6>
+                        <br>
+                        <h5>Rate: {{rating.rateScore || "0"}} /5</h5>
+                    </div>
+                    <br>
+                    <h3>Comment:</h3>
+                    <p class="hotel-rating-description">{{rating.description}}</p>
+                </div>
+            </div>
+        </ng-container>
+        
+        <div class="hotel-rating-page-number">
+            <button mat-button (click)="prevRating()" class="rating-page-prev rating-page-prevnext">Prev</button>
+            <span class="rating-page-number-container">
+                <span (click)="ratingGotoPage(i)"  class="rating-page-number" *ngFor="let item of [].constructor(lengthOfRatingPage);let i=index">{{i+1}}</span>
+               
+            </span>
+            <button mat-button (click)="nextRating()" class="rating-page-next rating-page-prevnext">Next</button>
+        </div>
+    </div>
+
 
 
 </div>

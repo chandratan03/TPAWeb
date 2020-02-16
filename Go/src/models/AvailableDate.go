@@ -20,6 +20,7 @@ func GetAvailableDateForHotels() ([]AvailableDateForHotel, error){
   if err!=nil{
     return nil, err
   }
+  defer db.Close()
   var dates []AvailableDateForHotel
   db.Find(&dates)
   return dates, nil

@@ -32,7 +32,7 @@ func GetCities() ([]City, error) {
   if err!=nil {
     panic(err)
   }
-
+  defer db.Close()
   var cities []City
   db.Find(&cities)
 

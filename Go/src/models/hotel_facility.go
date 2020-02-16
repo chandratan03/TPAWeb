@@ -15,6 +15,7 @@ func GetHotelFacilities()([]HotelFacility,error){
   }
   var hotelFacilities[] HotelFacility
   db.Find(&hotelFacilities)
+  defer db.Close()
   return hotelFacilities,nil
 
 
@@ -27,7 +28,7 @@ func GetHotelFacilitiesByHotelId(id uint) []HotelFacility{
     panic(err)
   }
   var hotelFacilities[] HotelFacility
-
+  defer db.Close()
   //rows, err:= db.Where("id", id).Rows()
   //for rows.Next(){
   // var temp HotelFacility

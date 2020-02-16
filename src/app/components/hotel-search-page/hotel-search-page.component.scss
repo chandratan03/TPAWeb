@@ -1,7 +1,11 @@
 .container{
+    width: 100%;
+    min-width: 450pxpx;
+}
+.page-container{
     box-sizing: border-box;
     width: 100%;
-    margin: 0 2%;
+    padding: 0 2%;
     display:flex;
 }
 
@@ -89,5 +93,53 @@
 .review-box{
     &>span{
         margin-left: 20px;
+    }
+}
+
+
+// card page
+
+.card-container{
+    box-sizing: border-box;
+}
+
+.card-contents{
+    box-sizing: border-box;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    
+    padding: 0 10%;
+    .card-content{
+        display:inline-block;
+        box-sizing: border-box;
+        text-align: center;
+        width: 20%;
+        min-width: 200px;
+    }
+    
+}
+
+@media (max-width: 1255px){
+    
+    .card-content-no-first-child{
+        border: 0;
+    }
+    .card-content{
+        border: 1px solid darkgrey;
+    }
+    
+}
+
+.card-content-no-first-child{
+    border-left: 1px solid darkgrey;
+}
+.card-footer{
+    display: flex;
+    justify-content: flex-end;
+    padding: 2% 4%;
+    button{
+        background-color: yellow;
+        color: white;
+        font-size: 18px;
     }
 }

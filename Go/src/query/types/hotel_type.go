@@ -57,6 +57,12 @@ func GetHotelType() *graphql.Object{
         "hotelRooms": &graphql.Field{
           Type: graphql.NewList(GetHotelRoomType()),
         },
+        "area": &graphql.Field{
+          Type: GetAreaType(),
+        },
+        "ratings": &graphql.Field{
+          Type:graphql.NewList(GetRatingType()),
+        },
       },
       Description: "",
     })

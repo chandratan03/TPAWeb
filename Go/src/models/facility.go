@@ -71,6 +71,7 @@ func GetFacilityByID(id uint)(Facility, error){
   if err!=nil {
     panic(err)
   }
+  defer db.Close()
   var facility Facility
   db.Where("id = ?", id).First(&facility)
   return facility,nil

@@ -30,7 +30,7 @@ func GetLocations()([]Location, error){
     //city := &locations[i].City
     db.Model(&locations[i]).Related(&locations[i].City).Model(&locations[i].City).Related(&locations[i].City.Region)
   }
-
+  defer db.Close()
   return locations, nil
 
 

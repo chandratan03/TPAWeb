@@ -35,7 +35,9 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.City{}).AddForeignKey("region_id", "regions(id)", "CASCADE", "CASCADE")
   //db.AutoMigrate(models.Location{}).AddForeignKey("city_id", "cities(id)", "CASCADE", "CASCADE")
   db.AutoMigrate(models.Facility{})
-  db.AutoMigrate(models.Hotel{}).AddForeignKey("city_id", "cities(id)", "CASCADE", "CASCADE")
+  db.AutoMigrate(models.Area{})
+  db.AutoMigrate(models.Hotel{}).AddForeignKey("city_id", "cities(id)", "CASCADE", "CASCADE").
+    AddForeignKey("area_id", "areas", "CASCADE", "CASCADE")
   db.AutoMigrate(models.HotelFacility{}).AddForeignKey("facility_id", "facilities(id)", "Cascade", "Cascade")
   db.AutoMigrate(models.Airline{})
   db.AutoMigrate(models.AirlineFacility{}).AddForeignKey("facility_id", "facilities(id)", "cascade", "cascade")
@@ -44,9 +46,10 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Route{}).AddForeignKey("from_refer", "airports(id)", "CASCADE", "CASCADE").AddForeignKey("to_refer", "airports(id)", "CASCADE", "CASCADE").AddForeignKey("flight_id", "flights(id)","CASCADE","CASCADE")
 
   db.AutoMigrate(models.HotelRoom{})
+  db.AutoMigrate(models.Image{})
   db.AutoMigrate(models.Bed{})
   db.AutoMigrate(models.HotelRoomBed{}).AddForeignKey("bed_id", "beds(id)", "cascade", "cascade")
-
+  db.AutoMigrate(models.Rating{})
 
 }
 
@@ -160,6 +163,7 @@ func initHotel(db *gorm.DB){
     Latitude:            -6.209132,
     ZoomLevel:          0,
     CityId:             1,
+    AreaId: 1,
   })
   db.Create(&models.Hotel{
     HotelName:          "Raffles Hotel",
@@ -174,6 +178,7 @@ func initHotel(db *gorm.DB){
     Latitude:  -6.209132,
     ZoomLevel: 0,
     CityId:    1,
+    AreaId: 1,
   })
   db.Create(&models.Hotel{
     HotelName:          "Marina Bay Sands Hotel",
@@ -188,6 +193,7 @@ func initHotel(db *gorm.DB){
     Latitude:  1.282302,
     ZoomLevel: 0,
     CityId:    4,
+    AreaId: 2,
   })
   db.Create(&models.Hotel{
     HotelName:          "Swissôtel The Stamford",
@@ -202,6 +208,7 @@ func initHotel(db *gorm.DB){
     Latitude: 1.293354,
     ZoomLevel: 0,
     CityId:    4,
+    AreaId: 2,
   })
   db.Create(&models.Hotel{
     HotelName:          "Hotel Miramar",
@@ -216,6 +223,23 @@ func initHotel(db *gorm.DB){
     Latitude:  1.288710,
     ZoomLevel: 0,
     CityId:    4,
+    AreaId: 2,
+  })
+}
+
+func initArea(db *gorm.DB){
+  db.Create(&models.Area{
+    AreaName: "Jakarta Pusat",
+    CityId:   1,
+  })
+
+  db.Create(&models.Area{
+    AreaName: "Marina",
+    CityId:   4,
+  })
+  db.Create(&models.Area{
+    AreaName: "Jakarta Barat",
+    CityId:   1,
   })
 }
 
@@ -673,6 +697,190 @@ func initHotelRoom(db *gorm.DB){
   ///////////////////////////////
 }
 
+func initImagesForHotelRoom(db *gorm.DB){
+  db.Create(&models.Image{
+    HotelRoomId: 1,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 1,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 1,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 1,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 2,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 2,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 2,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 2,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 3,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 3,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 3,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 3,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 4,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 4,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 4,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 4,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 5,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 5,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 5,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 5,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 6,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 6,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 6,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 6,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 7,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 7,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 7,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 7,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 8,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 8,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 8,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 8,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 9,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 9,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 9,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 9,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+  //////
+  db.Create(&models.Image{
+    HotelRoomId: 10,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 10,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 10,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Image{
+    HotelRoomId: 10,
+    Path:        "../../../assets/hotel/search/hotel-images/shinchan-image2.jpg",
+  })
+
+
+  //////
+
+}
 
 func initHotelRoomBed(db *gorm.DB){
 
@@ -780,6 +988,111 @@ func initHotelRoomBed(db *gorm.DB){
 }
 
 
+func initRatings(db *gorm.DB){
+  db.Create(&models.Rating{
+    HotelId:     1,
+    Description: "This is so goodddddddddddddddddddddddddd",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     1,
+    Description: "This is so goodd",
+    RateScore: 4,
+    Date: time.Now(),
+
+  })
+
+  db.Create(&models.Rating{
+    HotelId:     1,
+    Description: "This is so gooddd",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     1,
+    Description: "This is so gooddddd",
+    RateScore: 4,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     1,
+    Description: "This is so gooddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    RateScore: 5,
+    Date: time.Now(),
+  })
+
+
+  db.Create(&models.Rating{
+    HotelId:     2,
+    Description: "This is so good",
+    RateScore: 5,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     2,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+
+  })
+
+  db.Create(&models.Rating{
+    HotelId:     3,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     3,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+
+  db.Create(&models.Rating{
+    HotelId:     4,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+
+  })
+  db.Create(&models.Rating{
+    HotelId:     4,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+
+  db.Create(&models.Rating{
+    HotelId:     5,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     5,
+    Description: "This is so good",
+    RateScore: 3.5,
+    Date: time.Now(),
+  })
+
+  db.Create(&models.Rating{
+    HotelId:     5,
+    Description: "This is so good",
+    RateScore: 5,
+    Date: time.Now(),
+  })
+  db.Create(&models.Rating{
+    HotelId:     5,
+    Description: "This is so good",
+    RateScore:   5,
+    Date: time.Now(),
+  })
+
+}
+
+
 func dropAllTable(db *gorm.DB){
 
     db.DropTable(
@@ -797,9 +1110,32 @@ func dropAllTable(db *gorm.DB){
       &models.Hotel{},
       &models.City{},
       &models.Region{},
+      &models.Image{},
+
+      &models.Area{},
+      &models.Rating{},
     )
+}
 
 
+func initAllData(db *gorm.DB){
+  //initDBUser(db)
+  //initRegion(db)
+  //initCity(db)
+  //initArea(db)
+  //initHotel(db)
+  //initFacilities(db)
+  //initHotelFacilities(db)
+  //initAirline(db)
+  //initAirlineFacilities(db)
+  //initAirport(db)
+  //initFlight(db)
+  //initRoute(db)
+  //initBed(db)
+  //initHotelRoomBed(db)
+  //initImagesForHotelRoom(db)
+  //initHotelRoom(db)
+  //initRatings(db)
 }
 
 func main() {
@@ -809,24 +1145,14 @@ func main() {
   if err!=nil{
     panic(err)
   }
+
+
+
   //dropAllTable(db)
   migrateDB(db)
-  //initDBUser(db)
-  //initRegion(db)
-  //initCity(db)
-  //
-  //initHotel(db)
-  //initFacilities(db)
-  //initHotelFacilities(db)
-  //
-  //initAirline(db)
-  //initAirlineFacilities(db)
-  //initAirport(db)
-  //initFlight(db)
-  //initRoute(db)
-  //initHotelRoom(db)
-  //initBed(db)
-  //initHotelRoomBed(db)
+  //initAllData(db)
+
+
 
 
   //t,_ := time.Parse("01/02/2006", "02/10/2020")
@@ -860,7 +1186,11 @@ func main() {
   //http.Handle("/", router)
   fmt.Println("Success listen to port 8000")
   log.Fatal(http.ListenAndServe(":8000", wrapped))
+  db.Close()
   //http.ListenAndServe(":80")
 //
 
 }
+
+
+

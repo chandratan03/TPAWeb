@@ -33,7 +33,7 @@ func GetFlights()([]Flight, error){
     return nil, err
   }
   var flights []Flight
-
+  defer db.Close()
   db.Find(&flights)
   for i:= range flights{
     db.Model(&flights[i]).Related(&flights[i].From, "from_refer").
@@ -108,6 +108,7 @@ func GetFlightByFromToDate(fromId int, toId int, date string)([]Flight, error){
   if err != nil{
     return nil, err
   }
+  defer db.Close()
   var flights []Flight
   //t,_ := time.Parse("01/02/2006",date)
   db.Where("from_refer = ? and to_refer = ? and date(departure) = ?", fromId, toId, date).Find(&flights)

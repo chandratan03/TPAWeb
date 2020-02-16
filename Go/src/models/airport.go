@@ -25,6 +25,6 @@ func GetAirports()([]Airport, error){
   var airports[] Airport
 
   db.Find(&airports)
-
+  defer db.Close()
   return airports, nil
 }

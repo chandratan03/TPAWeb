@@ -16,6 +16,7 @@ func GetRegions()([]Region, error){
   }
   var regions []Region
   db.Find(&regions)
+  defer db.Close()
   return regions, nil
 }
 

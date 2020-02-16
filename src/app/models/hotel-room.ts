@@ -1,4 +1,5 @@
 import { HotelRoomBed } from './hotel-room-bed'
+import { Image } from './image'
 
 export class HotelRoom {
     id: number
@@ -12,6 +13,6 @@ export class HotelRoom {
     space : number
     freeBreakFast: boolean
     freeWifi: boolean
-
+    images: Image[]
 
 }
