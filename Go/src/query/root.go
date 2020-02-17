@@ -140,9 +140,37 @@ func GetRoot() *graphql.Object{
          Resolve: resolvers.GetHotelRooms,
       },
       "areas":{
-           Type:graphql.NewList(types.GetAreaType()),
-           Resolve:resolvers.GetAreas,
+         Type:graphql.NewList(types.GetAreaType()),
+         Resolve:resolvers.GetAreas,
       },
+      "trains":{
+         Type:graphql.NewList(types.GetTrainType()),
+         Resolve:resolvers.GetTrains,
+      },
+      "trainTrips":{
+         Type:graphql.NewList(types.GetTrainTripType()),
+         Resolve:resolvers.GetTrainTrips,
+      },
+      "stations": {
+         Type:graphql.NewList(types.GetStationType()),
+         Resolve:resolvers.GetStations,
+      },
+      "trainTripsFromToDate":{
+        Type:graphql.NewList(types.GetTrainTripType()),
+        Resolve:resolvers.GetTrainTripsByFromToDate,
+        Args: graphql.FieldConfigArgument{
+          "fromId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+          "toId": &graphql.ArgumentConfig{
+            Type: graphql.Int,
+          },
+          "date": &graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+        },
+      },
+
 
 
 

@@ -51,6 +51,11 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.HotelRoomBed{}).AddForeignKey("bed_id", "beds(id)", "cascade", "cascade")
   db.AutoMigrate(models.Rating{})
 
+  db.AutoMigrate(models.TrainClass{})
+  db.AutoMigrate(models.Train{})
+  db.AutoMigrate(models.Station{})
+  db.AutoMigrate(models.TrainTrip{})
+
 }
 
 func initDBUser(db *gorm.DB){
@@ -1092,6 +1097,196 @@ func initRatings(db *gorm.DB){
 
 }
 
+func initTrainClass(db *gorm.DB){
+  db.Create(&models.TrainClass{
+    ClassName: "Ekonomi",
+    PricePercentage:0,
+  })
+  db.Create(&models.TrainClass{
+    ClassName: "Bisnis",
+    PricePercentage:10,
+  })
+  db.Create(&models.TrainClass{
+    ClassName: "Eksekutif",
+    PricePercentage:20,
+  })
+}
+
+func initTrain(db *gorm.DB){
+  db.Create(&models.Train{
+    Name:          "Argo Perahyangan 1",
+    TrainClassId:  1,
+    TrainSubClass: "Subclass C",
+  })
+  db.Create(&models.Train{
+    Name:          "Serayu 1",
+    TrainClassId:  1,
+    TrainSubClass: "Subclass C",
+  })
+  db.Create(&models.Train{
+    Name:          "Argo Wilis 1",
+    TrainClassId:  2,
+    TrainSubClass: "Subclass A",
+  })
+  db.Create(&models.Train{
+    Name:          "Argo Wilis Priority 1",
+    TrainClassId:  3,
+    TrainSubClass: "Subclass J",
+  })
+}
+func initStation(db *gorm.DB){
+  db.Create(&models.Station{
+    Name:   "Station bebek",
+    StationCode:"STE",
+    AreaId: 1,
+  })
+  db.Create(&models.Station{
+    Name:   "Station ayam",
+    StationCode:"STA",
+    AreaId: 1,
+  })
+  db.Create(&models.Station{
+    Name:   "station burung",
+    StationCode:"STB",
+    AreaId: 1,
+  })
+  db.Create(&models.Station{
+    Name:   "station kuda",
+    StationCode:"STK",
+    AreaId: 3,
+  })
+  db.Create(&models.Station{
+    Name:   "station ikan",
+    StationCode:"STI",
+    AreaId: 3,
+  })
+}
+
+func initTrainTrips(db *gorm.DB){
+  //1-3 4-5
+  db.Create(&models.TrainTrip{
+    TrainId: 1,
+    FromRefer:     1,
+    ToRefer:       2,
+    Departure:     time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 10, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         90000,
+    Tax:           10000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId:  1,
+    FromRefer:     1,
+    ToRefer:       2,
+    Departure:     time.Date(2020, 3, 1, 12, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 14, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         90000,
+    Tax:           10000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 1,
+    FromRefer:     1,
+    ToRefer:       3,
+    Departure:     time.Date(2020, 3, 1, 10, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 13, 00, 00, 0, time.Now().Location()),
+    Duration:      180,
+    Price:         120000,
+    Tax:           10000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 2,
+    FromRefer:     1,
+    ToRefer:       4,
+    Departure:     time.Date(2020, 3, 1, 10, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 12, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         150000,
+    Tax:           10000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 2,
+    FromRefer:     1,
+    ToRefer:       5,
+    Departure:     time.Date(2020, 3, 1, 9, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 11, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         150000,
+    Tax:           10000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 3,
+    FromRefer:     1,
+    ToRefer:       5,
+    Departure:     time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 12, 00, 00, 0, time.Now().Location()),
+    Duration:      240,
+    Price:         200000,
+    Tax:           20000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 3,
+    Train:         models.Train{},
+    FromRefer:     1,
+    From:          models.Station{},
+    ToRefer:       5,
+    To:            models.Station{},
+    Departure:     time.Date(2020, 3, 1, 9, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 12, 00, 00, 0, time.Now().Location()),
+    Duration:      180,
+    Price:         250000,
+    Tax:           25000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 3,
+    FromRefer:     1,
+    ToRefer:       5,
+    Departure:     time.Date(2020, 3, 1, 18, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 20, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         250000,
+    Tax:           25000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 3,
+    Train:         models.Train{},
+    FromRefer:     1,
+    From:          models.Station{},
+    ToRefer:       2,
+    To:            models.Station{},
+    Departure:     time.Date(2020, 3, 1, 20, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 22, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         200000,
+    Tax:           20000,
+    ServiceCharge: 0,
+  })
+  db.Create(&models.TrainTrip{
+    TrainId: 3,
+    Train:         models.Train{},
+    FromRefer:     2,
+    From:          models.Station{},
+    ToRefer:       1,
+    To:            models.Station{},
+    Departure:     time.Date(2020, 3, 1, 21, 00, 00, 0, time.Now().Location()),
+    Arrival:       time.Date(2020, 3, 1, 23, 00, 00, 0, time.Now().Location()),
+    Duration:      120,
+    Price:         200000,
+    Tax:           20000,
+    ServiceCharge: 0,
+  })
+
+}
+
+
 
 func dropAllTable(db *gorm.DB){
 
@@ -1111,31 +1306,41 @@ func dropAllTable(db *gorm.DB){
       &models.City{},
       &models.Region{},
       &models.Image{},
-
-      &models.Area{},
       &models.Rating{},
+      &models.TrainTrip{},
+      &models.Train{},
+      &models.TrainClass{},
+      &models.Station{},
+      &models.Area{},
+
+
     )
 }
 
 
 func initAllData(db *gorm.DB){
-  //initDBUser(db)
-  //initRegion(db)
-  //initCity(db)
-  //initArea(db)
-  //initHotel(db)
-  //initFacilities(db)
-  //initHotelFacilities(db)
-  //initAirline(db)
-  //initAirlineFacilities(db)
-  //initAirport(db)
-  //initFlight(db)
-  //initRoute(db)
-  //initBed(db)
-  //initHotelRoomBed(db)
-  //initImagesForHotelRoom(db)
-  //initHotelRoom(db)
-  //initRatings(db)
+  initDBUser(db)
+  initRegion(db)
+  initCity(db)
+  initArea(db)
+  initHotel(db)
+  initFacilities(db)
+  initHotelFacilities(db)
+  initAirline(db)
+  initAirlineFacilities(db)
+  initAirport(db)
+  initFlight(db)
+  initRoute(db)
+  initBed(db)
+  initHotelRoomBed(db)
+  initImagesForHotelRoom(db)
+  initHotelRoom(db)
+  initRatings(db)
+  initTrainClass(db)
+  initTrain(db)
+  initStation(db)
+  initTrainTrips(db)
+
 }
 
 func main() {
@@ -1145,12 +1350,12 @@ func main() {
   if err!=nil{
     panic(err)
   }
+  defer db.Close()
 
 
-
-  //dropAllTable(db)
+  dropAllTable(db)
   migrateDB(db)
-  //initAllData(db)
+  initAllData(db)
 
 
 
@@ -1186,7 +1391,6 @@ func main() {
   //http.Handle("/", router)
   fmt.Println("Success listen to port 8000")
   log.Fatal(http.ListenAndServe(":8000", wrapped))
-  db.Close()
   //http.ListenAndServe(":80")
 //
 

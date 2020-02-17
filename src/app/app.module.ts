@@ -31,6 +31,7 @@ import { TrainCardComponent } from './components/train-card/train-card.component
 import { EntertainmentCardComponent } from './components/entertainment-card/entertainment-card.component';
 import { HotelDetailSearchPageComponent } from './components/hotel-detail-search-page/hotel-detail-search-page.component'
 import { componentFactoryName } from '@angular/compiler';
+import { TrainSearchPageComponent } from './components/train-search-page/train-search-page.component';
 
 @NgModule({
   exports: [
@@ -55,6 +56,7 @@ import { componentFactoryName } from '@angular/compiler';
     TrainCardComponent,
     EntertainmentCardComponent,
     HotelDetailSearchPageComponent,
+    TrainSearchPageComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -93,6 +95,9 @@ import { componentFactoryName } from '@angular/compiler';
       },
       {
         path: 'hotel/search/detail', component: HotelDetailSearchPageComponent
+      },
+      {
+        path: 'train/search', component: TrainSearchPageComponent
       }
 
     ]),

@@ -599,13 +599,16 @@ export class FlightSearchPageComponent implements OnInit {
       this.AllFlights = query.data.flightsByFromToDate as Flight[]
       console.log(query.data)
       if(backDate != null){
+        this.boolDetailPriceBox = []
         this.flights2$ = this.myService.getFlightsByFromToDate(toId, fromId, backDate).subscribe(query => {
           this.AllFlights.push(... query.data.flightsByFromToDate as Flight[])
           this.showDetailFlights = Array(this.AllFlights.length)
-          this.boolDetailPriceBox = []
+          console.log(this.AllFlights.length)
+          this.boolDetailPriceBox = Array(this.AllFlights.length)
           for (let i = 0; i < this.AllFlights.length; i++) {
             this.showDetailFlights[i] = false
-            this.boolDetailPriceBox.push(false)
+            this.boolDetailPriceBox[i] = false
+            
             let depMinTemp = new Date(this.AllFlights[i].departure).getUTCHours()
             let depMin = this.changeTimeFormat(depMinTemp)
             let depSecTemp = new Date(this.AllFlights[i].departure).getUTCMinutes()
@@ -674,8 +677,10 @@ export class FlightSearchPageComponent implements OnInit {
         })
       }else{// copy paste dari atas
         this.showDetailFlights = Array(this.AllFlights.length)
+        this.boolDetailPriceBox = Array(this.AllFlights.length)
           for (let i = 0; i < this.AllFlights.length; i++) {
             this.showDetailFlights[i] = false
+            this.boolDetailPriceBox[i] = false
             let depMinTemp = new Date(this.AllFlights[i].departure).getUTCHours()
             let depMin = this.changeTimeFormat(depMinTemp)
             let depSecTemp = new Date(this.AllFlights[i].departure).getUTCMinutes()

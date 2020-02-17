@@ -1,0 +1,58 @@
+.container{
+    padding: 2% 4%;
+}
+
+
+.page-container{
+    display:flex;
+}
+.train-container{
+    width: 100%;
+    .train{
+        box-sizing: border-box;
+        border: 1px solid #3d3d3d;
+        border-radius: 10px;
+        padding: 1% 3%;
+        margin-bottom: 5px;
+        .train-info-box{
+            .train-info{
+                box-sizing: border-box;
+                min-width: 200px;
+                padding: 2%;
+            }
+            .train-info-left{
+                width: 25%;
+                display:inline-block;
+            }
+            
+            
+            .train-info-mid{
+                width: 50%;
+                display:inline-block;
+                .train-info-time{
+                    display:flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .train-info-mid-bottom{
+                    text-align: center;
+                    box-sizing: border-box;
+                    &>div{
+                        display:inline-block;
+                        width: 50%;
+                        min-width: 108px;
+                    }
+                }
+                
+            }
+            .train-info-right{
+                width: 25%;
+                display:inline-block;
+               
+            }
+        }
+        .train-detail-trips{
+            border-top: 1px solid darkgrey;
+        }
+    }
+}

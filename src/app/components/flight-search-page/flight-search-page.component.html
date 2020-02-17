@@ -218,13 +218,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="flight-detail-price-box" *ngIf="boolDetailPriceBox[i]">
+                
+                <div class="flight-detail-price-box"  *ngIf="boolDetailPriceBox[i] == true">
                     <div>
                         <h4>Tarif</h4>
                         <ul>
                             <li>
                                 <span>
-                                    Penumpang({{manyPassenger}}x):
+                                    Penumpang({{manyPassenger}}):
                                 </span>
                                 <span>
                                     {{(flight.price+ (flight.price*classPrice)) * manyPassenger}}
@@ -246,7 +247,7 @@
                             </li>
                             <li>
                                 <span>Biaya pelayanan Penumpang: </span>
-                                <span>GRATIS</span>
+                                <span>GRATIS </span>
                             </li>
                         </ul>
                     </div>
