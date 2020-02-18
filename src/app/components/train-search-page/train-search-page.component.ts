@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TrainTrip } from 'src/app/models/train-trip';
 import { GraphqTrainService } from 'src/app/services/graphq-train.service';
-import { isBuffer } from 'util';
 import { Train } from 'src/app/models/train';
-import { ifStmt, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Station } from 'src/app/models/station';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-train-search-page',
@@ -13,13 +13,18 @@ import { ifStmt, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class TrainSearchPageComponent implements OnInit {
 
-  constructor(private service: GraphqTrainService) { }
+  constructor(private service: GraphqTrainService,
+    private router: Router 
+    ) { }
 
   trainTrips$: Subscription
   trainTrips2$: Subscription
   trainTrips: TrainTrip[]
   trainTrips2: TrainTrip[]
   
+  stations: Station[]
+  stations$: Subscription
+
   trainTripsFIX: TrainTrip[]
 
   detailTrainTrip: boolean[]
@@ -40,8 +45,8 @@ export class TrainSearchPageComponent implements OnInit {
   trains: Train[]
   trainCheckbox: boolean[]
   trainCheckbox2: boolean[]
-
-
+  trainToSearch={}
+  pulang: boolean
 
   ngOnInit() {
     let json = JSON.parse(sessionStorage.getItem("trainQuery"))
@@ -52,10 +57,12 @@ export class TrainSearchPageComponent implements OnInit {
     this.fromDate = new Date(json["fromDate"])
     if(this.backDateStr!=null){
       this.backDate = new Date(json["backDate"])
+      this.pulang = true
 
     }
     this.manyPassenger = json["manyPassenger"]
     console.log(this.backDateStr)
+    this.getStations()
     this.getTrainTrips()
 
     this.classCheckbox = Array(3)
@@ -71,13 +78,90 @@ export class TrainSearchPageComponent implements OnInit {
       this.times[i] = 6*i
     }
   }
+
+ 
+  trainSearchPage():void{
+    if(this.selectedFromId == null){
+      alert("input where to depart")
+      return
+    }
+    if(this.selectedToId == null){
+      alert("input where to arrive")
+      return
+    }
+
+    if(this.selectedToId == this.selectedFromId){
+      alert("please don't select same station")
+      return
+    }
+
+    if(this.fromDate == null){
+      alert("Input from date")
+      return
+    }
+    if(this.pulang==true && this.backDate == null){
+      alert("Input back date")
+      return
+    }
+    if(this.manyPassenger <=0 || this.manyPassenger > 7){
+      alert("please insert quantity")
+      return
+    }
+   
+    console.log(this.fromDate.getDate())
+    let day, month, year, fromDate, backDate=null
+
+    day = this.fromDate.getDate()
+    // console.log(this.fromDate)
+    month = this.fromDate.getMonth()+1
+    year = this.fromDate.getFullYear()
+    if(day < 10){
+      day = "0"+day
+    }
+    if(month<10){
+      month = "0"+month
+    }
+    console.log(month)
+    fromDate = month+"/"+day+"/"+year
+
+    if(this.backDate !=null){
+      day = this.backDate.getDate()
+      month = this.backDate.getMonth()+1
+      year = this.backDate.getFullYear()
+      if(day < 10){
+        day = "0"+day
+      }
+      if(month<10){
+        month = "0"+month
+      }
+      backDate = month+"/"+day+"/"+year
+    }
+    this.trainToSearch = {
+      "fromId": this.selectedFromId,
+      "toId": this.selectedToId,
+      "fromDate": fromDate,
+      "backDate": backDate,
+      "manyPassenger": this.manyPassenger,
+    }
+    // this.flightToSearch[]
+    sessionStorage.setItem("trainQuery", JSON.stringify(this.trainToSearch))
+    window.location.reload()
+  }
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.trainTrips$.unsubscribe()
     this.trainTrips2$.unsubscribe()
+    this.stations$.unsubscribe()
   }
 
+  getStations():void{
+    this.stations$ = this.service.getStations().subscribe(query=>{
+      this.stations = query.data.stations
+      // console.log(query.data)
+    })
+  }
 
   reset():void{
     for(let i=0; i<this.trainCheckbox.length; i++){
@@ -129,9 +213,9 @@ export class TrainSearchPageComponent implements OnInit {
   getTrainTrips():void{
     this.trainTrips$ = this.service.getTrainTripsByFromToDate(this.selectedFromId, this.selectedToId, this.fromDateStr).subscribe(query => {
       this.trainTrips=[]
-      console.log(query.data.trainTripsFromToDate)
+      // console.log(query.data.trainTripsFromToDate)
       if(this.backDate !=null ){
-        console.log(this.backDate)
+        // console.log(this.backDate)
         this.trainTrips2$ = this.service.getTrainTripsByFromToDate(this.selectedFromId, this.selectedToId, this.backDateStr).subscribe(query2 => {
            
           let temp = query2.data.trainTripsFromToDate as TrainTrip[]

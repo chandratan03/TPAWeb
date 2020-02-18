@@ -56,6 +56,10 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Station{})
   db.AutoMigrate(models.TrainTrip{})
 
+  db.AutoMigrate(models.Vendor{})
+  db.AutoMigrate(models.VendorCar{})
+  db.AutoMigrate(models.Brand{})
+  db.AutoMigrate(models.Car{})
 }
 
 func initDBUser(db *gorm.DB){
@@ -1286,6 +1290,206 @@ func initTrainTrips(db *gorm.DB){
 
 }
 
+func initVendor(db *gorm.DB){
+  db.Create(&models.Vendor{
+    Name:      "Ayam",
+    ImagePath: "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Vendor{
+    Name:      "Bebek",
+    ImagePath: "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+  db.Create(&models.Vendor{
+    Name:      "Burung",
+    ImagePath: "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+}
+
+func initBrand(db *gorm.DB){
+  db.Create(&models.Brand{
+    Name:      "Nissan",
+    ImagePath: "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Brand{
+    Name:      "Toyota",
+    ImagePath: "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+}
+func initVendorCar(db *gorm.DB){
+  db.Create(&models.VendorCar{
+    CarId:     1,
+    VendorId:  1,
+    Price:     1000000,
+    AreaId: 1,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     1,
+    VendorId:  2,
+    Price:     1200000,
+    AreaId: 1,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     1,
+    VendorId:  3,
+    Price:     1300000,
+    AreaId: 1,
+  })
+  //
+  db.Create(&models.VendorCar{
+    CarId:     2,
+    VendorId:  1,
+    Price:     1400000,
+    AreaId: 1,
+
+
+  })
+  db.Create(&models.VendorCar{
+    CarId:     2,
+    VendorId:  2,
+    Price:     1100000,
+    AreaId: 3,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     2,
+    VendorId:  3,
+    Price:     1000000,
+    AreaId: 3,
+  })
+  //
+  db.Create(&models.VendorCar{
+    CarId:     3,
+    VendorId:  1,
+    Price:     1100000,
+    AreaId: 1,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     3,
+    VendorId:  2,
+    Price:     1500000,
+    AreaId: 1,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     3,
+    VendorId:  3,
+    Price:     1100000,
+    AreaId: 2,
+  })
+
+  db.Create(&models.VendorCar{
+    CarId:     4,
+    VendorId:  1,
+    Price:     1000000,
+    AreaId: 2,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     4,
+    VendorId:  2,
+    Price:     1200000,
+    AreaId: 2,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     4,
+    VendorId:  3,
+    Price:     1300000,
+    AreaId: 2,
+  })
+  //
+  db.Create(&models.VendorCar{
+    CarId:     5,
+    VendorId:  1,
+    Price:     1400000,
+    AreaId: 2,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     5,
+    VendorId:  2,
+    Price:     1100000,
+    AreaId: 3,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     5,
+    VendorId:  3,
+    Price:     1000000,
+    AreaId: 3,
+  })
+  //
+  db.Create(&models.VendorCar{
+    CarId:     6,
+    VendorId:  1,
+    Price:     1100000,
+    AreaId: 3,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     6,
+    VendorId:  2,
+    Price:     1500000,
+    AreaId: 2,
+  })
+  db.Create(&models.VendorCar{
+    CarId:     6,
+    VendorId:  3,
+    Price:     1100000,
+    AreaId: 3,
+  })
+
+}
+
+func initCar(db *gorm.DB){
+  db.Create(&models.Car{
+    Price:       500000,
+    BrandId:     1,
+    Model:       "Daihatsu Xenia",
+    Capacity:    4,
+    Luggage:     2,
+    ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+  })
+  db.Create(&models.Car{
+    Price:       200000,
+    BrandId:     2,
+    Model:       "Avanza",
+    Capacity:    6,
+    Luggage:     3,
+    ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+  })
+  db.Create(&models.Car{
+    Price:       300000,
+    BrandId:     2,
+    Model:       "Yaris",
+    Capacity:    4,
+    Luggage:     2,
+    ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+  })
+
+  //
+  db.Create(&models.Car{
+    Price:       700000,
+    BrandId:     1,
+    Model:       "Agya",
+    Capacity:    4,
+    Luggage:     2,
+    ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+  })
+  db.Create(&models.Car{
+    Price:       800000,
+    BrandId:     2,
+    Model:       "Sigra",
+    Capacity:    4,
+    Luggage:     2,
+    ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+  })
+  db.Create(&models.Car{
+    Price:       1000000,
+    BrandId:     2,
+    Model:       "Livina",
+    Capacity:    6,
+    Luggage:     4,
+    ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+  })
+}
+
+
+
 
 
 func dropAllTable(db *gorm.DB){
@@ -1312,8 +1516,10 @@ func dropAllTable(db *gorm.DB){
       &models.TrainClass{},
       &models.Station{},
       &models.Area{},
-
-
+      &models.Car{},
+      &models.Brand{},
+      &models.VendorCar{},
+      &models.Vendor{},
     )
 }
 
@@ -1340,7 +1546,10 @@ func initAllData(db *gorm.DB){
   initTrain(db)
   initStation(db)
   initTrainTrips(db)
-
+  initVendor(db)
+  initVendorCar(db)
+  initBrand(db)
+  initCar(db)
 }
 
 func main() {

@@ -1,6 +1,54 @@
 <div class="container">
     <div class="card-container">
-
+        <div class="card card-contents">
+            <div class="card-content card-content-from">
+                
+                <mat-select placeholder="Dari" [(ngModel)]="selectedFromId" name="item">
+                    <mat-option *ngFor="let station of stations" [value]="station.id">
+                        {{station.area.city.cityCode}} - {{station.stationCode}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="card-content card-content-to">
+                
+                <mat-select placeholder="Ke" [(ngModel)]="selectedToId" name="item">
+                    <mat-option *ngFor="let station of stations" [value]="station.id">
+                        {{station.area.city.cityCode}} - {{station.stationCode}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="card-content card-content-depart">
+                <mat-form-field>
+                    <mat-label>Tanggal Berangkat</mat-label>
+                    <input [(ngModel)]="fromDate" matInput [matDatepicker]="picker1">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="card-content card-content-back">
+                <div>
+                    <mat-checkbox [(ngModel)]="pulang">Pulang</mat-checkbox>
+                </div>
+                <div>
+                    <mat-form-field>
+                        <mat-label>Tanggal Pulang</mat-label>
+                        <input disabled={{!pulang}} [(ngModel)]="backDate" matInput [matDatepicker]="picker2">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="card-content card-content-many">
+                <mat-form-field>
+                    <input matInput [(ngModel)]="manyPassenger" placeholder="quantity" type="number" max="10" min="1" value="value">
+                </mat-form-field>
+            </div>
+    
+            
+        </div>
+        <div class="card card-footer">
+            <button mat-flat-button color="primary" (click)="trainSearchPage()">Cari Hotel</button>
+        </div>
     </div>
 
     <div class="page-container">

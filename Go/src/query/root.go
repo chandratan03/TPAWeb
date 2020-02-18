@@ -170,6 +170,10 @@ func GetRoot() *graphql.Object{
           },
         },
       },
+      "cars": {
+         Type:graphql.NewList(types.GetCarType()),
+         Resolve:resolvers.GetCars,
+      },
 
 
 

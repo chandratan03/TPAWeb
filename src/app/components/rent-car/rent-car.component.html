@@ -1,0 +1,63 @@
+<div class="container">
+    
+    <div class="page-container">
+        <div class="filter-container">
+            <div class="filter-capacity">
+                <h2>Kapasitas Penumpang</h2>
+                <div class="capacity-box">
+                    <button mat-flat-button>Semua</button>
+                </div>
+                <div  class="capacity-box">
+                    <button mat-flat-button > < 5 penumpang </button>
+                </div>
+                <div class="capacity-box"> 
+                    <button mat-flat-button > 5 - 6 penumpang</button>
+                </div>
+                <div class="capacity-box">
+                    <button mat-flat-button > 6 > penumpang  </button>
+                </div>
+            </div>
+            <div class="filter-price">
+                <h2>Price</h2>
+                <div>
+                    <mat-slider [(ngModel)]="currentPrice" (input)= "updatePrice($event)"   min={{minPrice}} max={{maxPrice}}></mat-slider>
+                    
+                </div>
+                <h3>minPrice: {{currentPrice}}</h3>
+            </div>
+            <div class="filter-brand">
+                <h2>Merek Mobil</h2>
+                <div class="brand" *ngFor="let brand of brands">
+                    <mat-checkbox>{{brand.name}}</mat-checkbox>
+                </div>
+            </div>
+            
+            <div class="filter-model">
+                <h2>Model Mobil</h2>
+                <div class="Model" *ngFor="let car of carsDistinct">
+                    <mat-checkbox>{{car.model}}</mat-checkbox>
+                </div>
+            </div>
+        </div>
+        <div class="car-container">
+            <div class="car-box" *ngFor="let car of cars">
+                <div class="car-detail car-image">
+                    <img src={{car.imagePath}} alt="">
+                </div>
+                <div class="car-detail car-info">
+                    <p>{{car.model}}</p>
+                    <div>
+                        <i matTooltip="capacity" class="fas fa-user">{{car.capacity}}</i>
+                        <i matTooltip="luggage" class="fas fa-suitcase">{{car.luggage}}</i>
+                    </div>
+                </div>
+                <div class="car-detail car-price">
+                    <p>Mulai dari</p>
+                    <h3>IDR {{car.price}}<sup>/hari</sup></h3>
+                    <button mat-flat-button color="primary">Pilih</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

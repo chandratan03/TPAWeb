@@ -1,0 +1,44 @@
+.container{
+    padding: 2% 4%;
+}
+
+.car-box{
+    display:flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    .car-detail{
+        box-sizing: border-box;
+        // display:inline-block;
+        // min-width: 200px;
+        padding: 2%;
+        height: 100%;    
+    }
+}
+.car-info{
+    width: 50%;
+    p{
+        font-size: 26px;
+        font-weight: 600;
+    }
+    &>div>i{
+        margin-left: 10px;
+    }
+}
+.car-image .car-price{
+    width: 25%;
+   
+}
+.car-image{
+    width: 200px;
+    &>img{
+        width: 100%;
+        
+    }
+}
+
+
+
