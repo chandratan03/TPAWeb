@@ -4,12 +4,15 @@ import { Airport } from './airport'
 import { Time } from '@angular/common'
 import { AirlineFacility } from './airline-facility'
 export class Flight {
-    id: string
+    id: number
+    airlineRefer:number
     airline: Airline
     routes: Route[]
     transit: number
     sTransit: string
+    fromRefer:number
     from: Airport
+    toRefer:number
     to: Airport
     departure: string
     arrival: string

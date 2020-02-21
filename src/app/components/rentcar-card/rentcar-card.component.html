@@ -17,22 +17,22 @@
     </div>
     <div class="card card-contents">
         <div class="card-content">
-            <mat-select placeholder="City" [(ngModel)]="selectedValue" name="item">
-                <mat-option *ngFor="let city of cities" [value]="city.cityName">
+            <mat-select placeholder="City" [(ngModel)]="cityId" name="item">
+                <mat-option *ngFor="let city of cities" [value]="city.id">
                     {{city.cityName}} - {{city.region.regionName}}
                 </mat-option>
             </mat-select>
         </div>
         <div class="card-content">
             <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Tanggal Mulai">
+                <input matInput [matDatepicker]="picker" [(ngModel)]="fromDate" placeholder="Tanggal Mulai">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
         <div class="card-content">
             <mat-form-field>
-                <input matInput [matDatepicker]="picker2" placeholder="Tanggal Selesai">
+                <input matInput [matDatepicker]="picker2" [(ngModel)]="backDate" placeholder="Tanggal Selesai">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
@@ -40,15 +40,12 @@
         <div class="card-content">
             <mat-form-field>
                 <mat-label>Jumlah mobil</mat-label>
-                <input type="number" matInput>
+                <input [(ngModel)]="quantity" type="number" matInput>
             </mat-form-field>
         </div>
         
     </div>
     <div class="card card-footer">
-        <button>Cari Hotel</button>
+        <button mat-flat-button (click)="searchCar()">Cari Hotel</button>
     </div>
 </div>
-<script>
-    console.log("fahalooasdasdsad")
-</script>

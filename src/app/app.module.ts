@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes, Router} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule} from '@angular/material';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { QuickCardComponent } from './components/quick-card/quick-card.component';
 import {ApolloModule, Apollo} from 'apollo-angular';
@@ -34,6 +34,10 @@ import { componentFactoryName } from '@angular/compiler';
 import { TrainSearchPageComponent } from './components/train-search-page/train-search-page.component';
 import { HotelSearchComponent } from './components/hotel-search/hotel-search.component';
 import { RentCarComponent } from './components/rent-car/rent-car.component';
+import { ManageFlightComponent } from './components/manage-flight/manage-flight.component';
+import { GraphqServiceComponent } from './services/graphq-service/graphq-service.component';
+import { PopUpComponent } from './pop-up/pop-up.component';
+import { ManageTrainComponent } from './components/manage-train/manage-train.component';
 
 @NgModule({
   exports: [
@@ -61,6 +65,10 @@ import { RentCarComponent } from './components/rent-car/rent-car.component';
     TrainSearchPageComponent,
     HotelSearchComponent,
     RentCarComponent,
+    ManageFlightComponent,
+    GraphqServiceComponent,
+    PopUpComponent,
+    ManageTrainComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -84,6 +92,7 @@ import { RentCarComponent } from './components/rent-car/rent-car.component';
     MatSliderModule,
     MatTooltipModule,
     MatButtonModule,
+    MatExpansionModule,
     RouterModule.forRoot([
       {
         path: '', component:HomePageComponent
@@ -105,8 +114,13 @@ import { RentCarComponent } from './components/rent-car/rent-car.component';
       },
       {
         path: 'car/search',  component: RentCarComponent
+      },
+      {
+        path: "manage/flight", component: ManageFlightComponent
+      },
+      {
+        path: "manage/train", component: ManageTrainComponent
       }
-
     ]),
     BrowserAnimationsModule,
     MatDialogModule,

@@ -174,6 +174,20 @@ func GetRoot() *graphql.Object{
          Type:graphql.NewList(types.GetCarType()),
          Resolve:resolvers.GetCars,
       },
+      "CarsByCity":{
+           Type: graphql.NewList(types.GetCarType()),
+           Resolve:resolvers.GetCarsByCity,
+           Args:graphql.FieldConfigArgument{
+             "cityId":&graphql.ArgumentConfig{
+               Type:graphql.Int,
+             },
+           },
+      },
+      "trainTypes":{
+         Type:graphql.NewList(types.GetTrainTypeType()),
+         Resolve:resolvers.GetTrainTypes,
+
+      },
 
 
 

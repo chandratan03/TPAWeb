@@ -44,37 +44,37 @@ func GetHotels()([]Hotel, error){
    db, err := database.Connect()
    if err!=nil{
      return nil, err
-   }
+   }  
 
    var hotels []Hotel
 
    db.Find(&hotels)
-   for i:= range hotels{
-     //db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
-      db.Model(&hotels[i]).
+  for i:= range hotels{
+    //db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
+    db.Model(&hotels[i]).
       Related(&hotels[i].City).Model(&hotels[i].City).Related(&hotels[i].City.Region).
       Model(&hotels[i]).Related(&hotels[i].HotelFacilities, "HotelId").
-        Model(&hotels[i]).Related(&hotels[i].HotelRooms, "hotel_id").
-        Model(&hotels[i]).Related(&hotels[i].Ratings).
-        Model(&hotels[i]).Related(&hotels[i].Area, "area_id").
-        Model(&hotels[i].Area).Related(&hotels[i].Area.City).
-        Model(&hotels[i].Area.City).Related(&hotels[i].Area.City.Region)
-      //println(hotels[i].Facilities[0].HotelId)
-      for j, _ := range hotels[i].HotelFacilities{
-         db.Model(&hotels[i].HotelFacilities[j]).Related(&hotels[i].HotelFacilities[j].Facility, "facility_id")
-         //println(hotels[i].HotelFacilities[j].Facility.Name)
+      Model(&hotels[i]).Related(&hotels[i].HotelRooms, "hotel_id").
+      Model(&hotels[i]).Related(&hotels[i].Ratings).
+      Model(&hotels[i]).Related(&hotels[i].Area, "area_id").
+      Model(&hotels[i].Area).Related(&hotels[i].Area.City).
+      Model(&hotels[i].Area.City).Related(&hotels[i].Area.City.Region)
+    //println(hotels[i].Facilities[0].HotelId)
+    for j, _ := range hotels[i].HotelFacilities{
+      db.Model(&hotels[i].HotelFacilities[j]).Related(&hotels[i].HotelFacilities[j].Facility, "facility_id")
+      //println(hotels[i].HotelFacilities[j].Facility.Name)
+    }
+    for j, _ := range hotels[i].HotelRooms{
+      db.Model(&hotels[i].HotelRooms[j]).Related(&hotels[i].HotelRooms[j].HotelRoomBeds, "hotel_room_id")
+      for k, _:= range hotels[i].HotelRooms[j].HotelRoomBeds{
+        db.Model(&hotels[i].HotelRooms[j].HotelRoomBeds[k]).Related(&hotels[i].HotelRooms[j].HotelRoomBeds[k].Bed)
       }
-     for j, _ := range hotels[i].HotelRooms{
-       db.Model(&hotels[i].HotelRooms[j]).Related(&hotels[i].HotelRooms[j].HotelRoomBeds, "hotel_room_id")
-       for k, _:= range hotels[i].HotelRooms[j].HotelRoomBeds{
-         db.Model(&hotels[i].HotelRooms[j].HotelRoomBeds[k]).Related(&hotels[i].HotelRooms[j].HotelRoomBeds[k].Bed)
-       }
-     }
-   }
+    }
+  }
   //fmt.Println(hotels)
   println(hotels[0].Area.Id)
   defer db.Close()
-   return hotels, nil
+  return hotels, nil
 }
 
 func GetHotelById(id uint)(Hotel, error){
@@ -86,7 +86,7 @@ func GetHotelById(id uint)(Hotel, error){
   var hotel Hotel
 
   db.Where("id= ?",id).Find(&hotel)
-    //db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
+  //db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
   db.Model(&hotel).Model(&hotel).
     Related(&hotel.City).Model(&hotel.City).Related(&hotel.City.Region).
     Model(&hotel).Related(&hotel.HotelFacilities, "HotelId").

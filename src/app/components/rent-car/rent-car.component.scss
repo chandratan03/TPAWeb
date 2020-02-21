@@ -2,6 +2,21 @@
     padding: 2% 4%;
 }
 
+.page-container{
+    display:flex;   
+    @media (max-width: 500px){
+        flex-wrap: wrap;
+        .filter-container{
+            margin: 0 auto;
+        }
+    }
+}   
+
+.car-container{
+    width: 100%;
+    min-width: 300px;
+}
+
 .car-box{
     display:flex;
     box-sizing: border-box;
@@ -42,3 +57,103 @@
 
 
 
+//card
+
+.cards{
+    padding: 2% 4%;
+}
+
+.card-contents{
+    box-sizing: border-box;
+    border: 1px solid black;
+    min-width: 280px;
+    .card-content{
+        box-sizing: border-box;
+        display:inline-block;
+        width: 25%;
+        min-width: 200px;
+        padding: 0 2%;
+        
+    }
+}
+
+.card-contents .card-content:not(:first-child){
+}
+.card-header-top{
+    display: flex;
+    justify-content: flex-end;
+    padding: 2% 4%;
+}
+
+.card-header-top-left{
+    width: 50%;
+    box-sizing: border-box;
+    display: flex;
+    margin-right: auto;
+}
+
+.card-header-top-left>i{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background:#00A474;
+    color:white;    
+    border-radius: 30px;
+    width: 35px;
+    height: 35px;
+}   
+
+.card-header-top-left>span{
+    display: block;
+    margin-left: 2%;
+    font-family: OpenSans-SemiBold;
+    color: #35405a;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.radio>span{
+    margin-left: 1%;
+}
+
+
+.radio2{
+    margin-left: 2%;
+}
+
+.card-footer{
+    display: flex;
+    justify-content: flex-end;
+    padding: 2% 4%;
+}
+
+
+
+
+.vendor-box{
+    display:flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    .vendor-detail{
+        box-sizing: border-box;
+        // display:inline-block;
+        // min-width: 200px;
+        padding: 2%;
+        height: 100%;    
+    }
+}
+
+.filter-h2:hover{
+    cursor: pointer;
+}
+.filter-box>h2{
+    user-select: none;
+}
+.filter-box{
+    margin-bottom: 10px;
+    border-bottom: 1px solid darkgrey
+}

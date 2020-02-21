@@ -12,7 +12,7 @@ type Airport struct{
   DeletedAt 	*time.Time	`sql:index`
   Name		string
   CityId	int `json:"city_id"`
-  City City `json "city" gorm:foreignKey`
+  City City `json "city" gorm:foreignKey:city_id`
 
 }
 
@@ -23,8 +23,14 @@ func GetAirports()([]Airport, error){
     return nil, err
   }
   var airports[] Airport
-
   db.Find(&airports)
+  for i,_ := range airports{
+    db.Model(&airports[i]).Related(&airports[i].City).Model(&airports[i].City).Related(&airports[i].City.Region)
+  }
+
+
+
+
   defer db.Close()
   return airports, nil
 }

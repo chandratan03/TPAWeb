@@ -4,7 +4,7 @@ import { Area } from './area'
 export class VendorCar {
     id: number
     carId: number
-    Vendor: Vendor
+    vendor: Vendor
     price: number
     areaId: number
     area: Area

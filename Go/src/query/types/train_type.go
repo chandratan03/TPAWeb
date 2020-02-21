@@ -32,6 +32,9 @@ func GetTrainType() *graphql.Object{
         "trainSubClass": &graphql.Field{
           Type:graphql.String,
         },
+        "trainType": &graphql.Field{
+          Type: GetTrainTypeType(),
+        },
 
 
       },

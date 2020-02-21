@@ -1,61 +1,163 @@
 <div class="container">
+    <div class="card-container">
+        <div class="card card-contents">
+            <div class="card-content">
+                <mat-select placeholder="City" [(ngModel)]="cityId" name="item">
+                    <mat-option *ngFor="let city of cities" [value]="city.id">
+                        {{city.cityName}} - {{city.region.regionName}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="card-content">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="fromDate" placeholder="Tanggal Mulai">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="card-content">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="backDate" placeholder="Tanggal Selesai">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="card-content">
+                <mat-form-field>
+                    <mat-label>Jumlah mobil</mat-label>
+                    <input [(ngModel)]="quantity" type="number" matInput>
+                </mat-form-field>
+            </div>
+            
+        </div>
+        <div class="card card-footer">
+            <button mat-flat-button color="primary" (click)="searchCar()">Cari Hotel</button>
+        </div>
+    </div>
     
     <div class="page-container">
         <div class="filter-container">
-            <div class="filter-capacity">
-                <h2>Kapasitas Penumpang</h2>
-                <div class="capacity-box">
-                    <button mat-flat-button>Semua</button>
-                </div>
-                <div  class="capacity-box">
-                    <button mat-flat-button > < 5 penumpang </button>
-                </div>
-                <div class="capacity-box"> 
-                    <button mat-flat-button > 5 - 6 penumpang</button>
-                </div>
-                <div class="capacity-box">
-                    <button mat-flat-button > 6 > penumpang  </button>
+            <button (click)="reset()" mat-button>Reset</button>
+            <div class="filter-box filter-capacity">
+                <h2 class='filter-h2' (click)="filterCapacity = !filterCapacity">Kapasitas Penumpang</h2>
+                <div *ngIf="filterCapacity">
+                    <div class="capacity-box">
+                        <button (click)="passengerCheck(-1)" mat-flat-button>Semua</button>
+                    </div>
+                    <div  class="capacity-box">
+                        <button (click)="passengerCheck(1)" mat-flat-button > < 5 penumpang </button>
+                    </div>
+                    <div class="capacity-box"> 
+                        <button (click)="passengerCheck(2)" mat-flat-button > 5 - 6 penumpang</button>
+                    </div>
+                    <div class="capacity-box">
+                        <button (click)="passengerCheck(3)" mat-flat-button > 6 > penumpang  </button>
+                    </div>
                 </div>
             </div>
-            <div class="filter-price">
-                <h2>Price</h2>
-                <div>
-                    <mat-slider [(ngModel)]="currentPrice" (input)= "updatePrice($event)"   min={{minPrice}} max={{maxPrice}}></mat-slider>
-                    
-                </div>
-                <h3>minPrice: {{currentPrice}}</h3>
+            <div class="filter-box filter-price">
+                <h2 class='filter-h2' (click)="filterPrice = !filterPrice">Price</h2>
+                <ng-container *ngIf="filterPrice">
+                    <div >
+                        <mat-slider [(ngModel)]="currentPrice" (input)= "slidePrice($event)"   min={{minPrice}} max={{maxPrice}}></mat-slider>
+                    </div>
+                    <h3>minPrice: {{currentPrice}}</h3>
+
+                </ng-container>
+                
             </div>
-            <div class="filter-brand">
-                <h2>Merek Mobil</h2>
-                <div class="brand" *ngFor="let brand of brands">
-                    <mat-checkbox>{{brand.name}}</mat-checkbox>
-                </div>
+            <div class="filter-box filter-brand">
+                <h2 class='filter-h2' (click)="filterBrand = !filterBrand">Merek Mobil</h2>
+                <ng-container *ngIf="filterBrand">
+                    <div class="brand" *ngFor="let brand of brands; let i = index">
+                        <mat-checkbox [(ngModel)]="brandsBoolean2[i]" (click)="checkBrand(i)">{{brand.name}}</mat-checkbox>
+                    </div>
+                </ng-container>
+                
             </div>
             
-            <div class="filter-model">
-                <h2>Model Mobil</h2>
-                <div class="Model" *ngFor="let car of carsDistinct">
-                    <mat-checkbox>{{car.model}}</mat-checkbox>
-                </div>
+            <div class="filter-box filter-model">
+                <h2 class='filter-h2' (click)="filterModel= !filterModel">Model Mobil</h2>
+                <ng-container *ngIf="filterModel">
+                    <div class="Model" *ngFor="let car of carsDistinct; let i=index">
+                        <mat-checkbox [(ngModel)]="modelBoolean2[i]" (click)="checkModel(i)">{{car.model}}</mat-checkbox>
+                    </div>
+                </ng-container>
+                
             </div>
         </div>
         <div class="car-container">
-            <div class="car-box" *ngFor="let car of cars">
-                <div class="car-detail car-image">
-                    <img src={{car.imagePath}} alt="">
-                </div>
-                <div class="car-detail car-info">
-                    <p>{{car.model}}</p>
-                    <div>
-                        <i matTooltip="capacity" class="fas fa-user">{{car.capacity}}</i>
-                        <i matTooltip="luggage" class="fas fa-suitcase">{{car.luggage}}</i>
+            <i class="fas fa-filter">
+                <mat-select [(ngModel)]="selectedValue" name="item">
+                    <mat-option (click)="sortByPriceAsc()">
+                        Price Asc
+                    </mat-option>
+                    <mat-option (click)="sortByPriceDsc()">
+                        Price Dsc
+                    </mat-option>
+                    <mat-option (click)="sortByBrandAsc()">
+                        Brand Asc
+                    </mat-option>
+                    <mat-option (click)="sortByBrandDsc()">
+                        Brand Dsc
+                    </mat-option>
+                    <mat-option (click)="sortByModelAsc()">
+                        Model Asc
+                    </mat-option>
+                    <mat-option (click)="sortByModelDsc()">
+                        Model Dsc
+                    </mat-option>
+                    <mat-option (click)="sortByCapacityAsc()">
+                        Capacity Asc
+                    </mat-option>
+                    <mat-option (click)="sortByCapacityDsc()">
+                        Capacity Dsc
+                    </mat-option>
+                </mat-select>
+
+            </i>
+            <div class="car-box-container" *ngFor="let car of showCars; let i=index">
+                <div class="car-box">
+                    <div class="car-detail car-image">
+                        <img src={{car.imagePath}} alt="">
+                    </div>
+                    <div class="car-detail car-info">
+                        <p>{{car.model}}</p>
+                        <h4>Brand: {{car.brand.name}}</h4>
+                        <div>
+                            <i matTooltip="capacity" class="fas fa-user">{{car.capacity}}</i>
+                            <i matTooltip="luggage" class="fas fa-suitcase">{{car.luggage}}</i>
+                        </div>
+                    </div>
+                    <div class="car-detail car-price">
+                        <p>Mulai dari</p>
+                        <h3>IDR {{car.price}}<sup>/hari</sup></h3>
+                        <button (click)="showVendor[i] = !showVendor[i]" mat-flat-button color="primary">Show Vendor</button>
                     </div>
                 </div>
-                <div class="car-detail car-price">
-                    <p>Mulai dari</p>
-                    <h3>IDR {{car.price}}<sup>/hari</sup></h3>
-                    <button mat-flat-button color="primary">Pilih</button>
-                </div>
+                <ng-container *ngFor="let vendorCar of car.vendorCars; let j=index">
+                    <div class="carsVendor" *ngIf="showVendor[i]">
+                        <h5>Vendors</h5>
+                        <div class="vendor-box">
+                            <div class="vendor-detail car-image">
+                                <img src={{vendorCar.vendor.imagePath}} alt="">
+                            </div>
+                            <div class="vendor-detail car-info">
+                                <p>{{vendorCar.vendor.name}}</p>
+                               
+                            </div>
+                            <div class="vendor-detail car-price">
+                                <p>Mulai dari</p>
+                                <h3>IDR {{vendorCar.price}}<sup>/hari</sup></h3>
+                                <button mat-flat-button color="primary">Read more</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </ng-container>
+                
+               
+
             </div>
         </div>
     </div>

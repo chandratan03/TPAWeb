@@ -141,3 +141,100 @@ func GetFlightByFromToDate(fromId int, toId int, date string)([]Flight, error){
   //println(flights)
   return flights, nil
 }
+
+func CreateFlight(airlineRefer int, routeIds []int, transit int, fromRefer int,
+  toRefer int, departure string, arrival string, duration int, price int, tax int, serviceCharge int)Flight{
+  db, error := database.Connect()
+  defer db.Close()
+  if error!=nil{
+    panic(error)
+  }
+  departureTime, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", departure)
+  if error!=nil{
+    panic(error)
+  }
+  arrivalTime, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", arrival)
+  if error!=nil{
+    panic(error)
+  }
+  var routes []Route
+  for i := range routeIds{
+    db.Where("id = ?", routeIds[i]).Find(&routes[i])
+  }
+
+  db.Create(&Flight{
+    AirlineRefer:  uint(airlineRefer),
+    Routes:        routes,
+    Transit:       transit,
+    FromRefer:     uint(fromRefer),
+    ToRefer:       uint(toRefer),
+    Departure:     departureTime,
+    Arrival:       arrivalTime,
+    Duration:      uint(duration),
+    Price:         price,
+    Tax:           tax,
+    ServiceCharge: serviceCharge,
+  })
+  var flight Flight
+  db.Last(&flight)
+  return flight
+}
+
+func UpdateFlight(id int, airlineRefer int, routeIds []int, transit int,
+  fromRefer int, toRefer int, departure string,
+  arrival string,
+  duration int, price int, tax int, serviceCharge int)Flight{
+  db, error := database.Connect()
+  defer db.Close()
+  if error!=nil{
+    panic(error)
+  }
+  var flight Flight
+
+  departureTime, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", departure)
+  if error!=nil{
+    panic(error)
+  }
+  arrivalTime, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", arrival)
+  if error!=nil{
+    panic(error)
+  }
+  var routes []Route
+  for i := range routeIds{
+    db.Where("id = ?", routeIds[i]).Find(&routes[i])
+  }
+  db.Where("id  = ? ", id).Find(&flight)
+  flight.AirlineRefer =  uint(airlineRefer)
+  flight.Routes=        routes
+  flight.Transit=       transit
+  flight.FromRefer=     uint(fromRefer)
+  flight.ToRefer=       uint(toRefer)
+  flight.Departure=     departureTime
+  flight.Arrival=       arrivalTime
+  flight.Duration=      uint(duration)
+  flight.Price=         price
+  flight.Tax=           tax
+  flight.ServiceCharge= serviceCharge
+  flight.Routes = routes
+  db.Save(&flight)
+
+  return flight
+
+
+}
+
+
+func DeleteFlight(id int){
+  db,err := database.Connect()
+  if err != nil{
+    panic(err)
+  }
+  defer db.Close()
+  println(id)
+  // batch delete
+  var flight Flight
+  db.Where("id = ?", uint(id)).Find(&flight)
+  print(flight.Id)
+  db.Delete(&flight)
+  print("test")
+}

@@ -51,6 +51,7 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.HotelRoomBed{}).AddForeignKey("bed_id", "beds(id)", "cascade", "cascade")
   db.AutoMigrate(models.Rating{})
 
+  db.AutoMigrate(models.TrainType{})
   db.AutoMigrate(models.TrainClass{})
   db.AutoMigrate(models.Train{})
   db.AutoMigrate(models.Station{})
@@ -1116,26 +1117,69 @@ func initTrainClass(db *gorm.DB){
   })
 }
 
+func initTrainType(db *gorm.DB){
+  db.Create(&models.TrainType{
+    Name:      "Argo Perahyangan",
+  })
+  db.Create(&models.TrainType{
+    Name:      "Serayu",
+  })
+  db.Create(&models.TrainType{
+    Name:      "Argo Wilis",
+  })
+  db.Create(&models.TrainType{
+    Name:      "Argo Wilis Priority",
+  })
+}
+
 func initTrain(db *gorm.DB){
   db.Create(&models.Train{
-    Name:          "Argo Perahyangan 1",
+    Name:          "1",
     TrainClassId:  1,
     TrainSubClass: "Subclass C",
+    TrainTypeId: 1,
   })
   db.Create(&models.Train{
-    Name:          "Serayu 1",
+    Name:          "2",
     TrainClassId:  1,
     TrainSubClass: "Subclass C",
+    TrainTypeId: 1,
   })
   db.Create(&models.Train{
-    Name:          "Argo Wilis 1",
+    Name:          "1",
+    TrainClassId:  1,
+    TrainSubClass: "Subclass C",
+    TrainTypeId: 2,
+  })
+  db.Create(&models.Train{
+    Name:          "2",
+    TrainClassId:  1,
+    TrainSubClass: "Subclass C",
+    TrainTypeId: 2,
+  })
+  db.Create(&models.Train{
+    Name:          "1",
     TrainClassId:  2,
     TrainSubClass: "Subclass A",
+    TrainTypeId: 3,
   })
   db.Create(&models.Train{
-    Name:          "Argo Wilis Priority 1",
+    Name:          "2",
+    TrainClassId:  2,
+    TrainSubClass: "Subclass A",
+    TrainTypeId: 3,
+  })
+  db.Create(&models.Train{
+    Name:          "1",
     TrainClassId:  3,
     TrainSubClass: "Subclass J",
+    TrainTypeId: 4,
+  })
+  db.Create(&models.Train{
+    Name:          "2",
+    TrainClassId:  3,
+    TrainSubClass: "Subclass J",
+    TrainTypeId: 4,
   })
 }
 func initStation(db *gorm.DB){
@@ -1443,6 +1487,7 @@ func initCar(db *gorm.DB){
     Capacity:    4,
     Luggage:     2,
     ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
+
   })
   db.Create(&models.Car{
     Price:       200000,
@@ -1480,7 +1525,7 @@ func initCar(db *gorm.DB){
   })
   db.Create(&models.Car{
     Price:       1000000,
-    BrandId:     2,
+    BrandId:     2  ,
     Model:       "Livina",
     Capacity:    6,
     Luggage:     4,
@@ -1513,13 +1558,16 @@ func dropAllTable(db *gorm.DB){
       &models.Rating{},
       &models.TrainTrip{},
       &models.Train{},
+      //&models.TrainType{},
       &models.TrainClass{},
       &models.Station{},
+      &models.TrainType{},
       &models.Area{},
       &models.Car{},
       &models.Brand{},
       &models.VendorCar{},
       &models.Vendor{},
+      
     )
 }
 
@@ -1543,6 +1591,7 @@ func initAllData(db *gorm.DB){
   initHotelRoom(db)
   initRatings(db)
   initTrainClass(db)
+  initTrainType(db)
   initTrain(db)
   initStation(db)
   initTrainTrips(db)
@@ -1569,8 +1618,8 @@ func main() {
 
 
 
-  //t,_ := time.Parse("01/02/2006", "02/10/2020")
-  //println(t.Day() )
+  t,_ := time.Parse("01/02/2006", "02/10/2020")
+  println(t.Day() )
 
  //--------------------------------------------------------------------------------
 

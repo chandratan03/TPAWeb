@@ -41,6 +41,9 @@ func GetFlightType() *graphql.Object{
         "tax": &graphql.Field{
           Type:graphql.Int,
         },
+        "serviceCharge": &graphql.Field{
+            Type:graphql.Int,
+        },
 
       },
     })

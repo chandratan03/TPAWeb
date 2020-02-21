@@ -48,5 +48,45 @@ export class GraphqCarService {
       `
     })
   }
+  getCarsByCityId(cityId: number): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query carsByCity($cityId: Int){
+        CarsByCity(cityId: $cityId){
+          id
+          brand{
+            id
+            name
+            imagePath
+          }
+          capacity
+          luggage
+          model
+          price
+          imagePath
+          vendorCars{
+            id
+            price
+            area{
+              id
+              areaName
+            }
+            vendor{
+              id
+              name
+              imagePath
+              
+            }
+          }
+          
+        }
+      
+      }
+      `,
+      variables:{
+        "cityId": cityId
+      }
+    })
+  }
 
 }

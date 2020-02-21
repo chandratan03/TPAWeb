@@ -1,0 +1,213 @@
+<div class="modal" id="modal">
+    <div class="form">
+        <div>
+            <p>id: {{id}}</p>
+        </div>
+        <br>
+        <div>
+            <mat-select color="primary" placeholder="from" [(value)]="fromRefer" name="item">
+                <mat-option *ngFor="let airport of airports" [value]="airport.id">
+                    {{airport.name}}({{airport.city.cityName}})
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-select color="primary" placeholder="to" [(value)]="toRefer" name="item">
+                <mat-option *ngFor="let airport of airports" [value]="airport.id">
+                    {{airport.name}}({{airport.city.cityName}})
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        
+        <div>
+            <mat-select placeholder="select airline" [(value)]="airlineRefer" name="item">
+                <mat-option *ngFor="let airline of airlines" [value]="airline.id">
+                    {{airline.name}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-form-field>
+                <mat-label>Departure Date</mat-label>
+                <input [(ngModel)]="fromDate" matInput [matDatepicker]="picker1" >
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker  #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        
+        <div>
+            <mat-form-field>
+                <mat-label>Departure Time</mat-label>
+                <input [(ngModel)]="departureTime" matInput placeholder="HH:MM" value="value">
+            </mat-form-field>
+        </div>
+        
+        <div>
+            <mat-form-field>
+                <mat-label>Arrival Date</mat-label>
+                <input [(ngModel)]="backDate" matInput [matDatepicker]="picker2" >
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker  #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        
+        <div>
+            <mat-form-field>
+                <mat-label>Arrival Time</mat-label>
+                <input [(ngModel)]="arrivalTime" matInput placeholder="HH:MM" value="">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Price</mat-label>
+                <input [(ngModel)]="price" matInput placeholder="" value="" type="number" min="250000">
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Tax</mat-label>
+                <input [(ngModel)]="tax" matInput placeholder="ex: 50000" value="" type="number" >
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Service Charge</mat-label>
+                <input [(ngModel)]="serviceCharge" placeholder="ex: 50000" matInput value="" type="number" >
+            </mat-form-field>
+        </div>
+        <!-- <div>
+            <input type="file" (change)="getImagePath($event)">
+        </div> -->
+        <div>
+            
+            <p>Click Add to new rou ter<small> (3 max)</small></p>
+            <button class="button" mat-flat-button color="primary" (click)="increaseRoute()">add route </button>                
+            <button class="button" mat-flat-button color="primary" (click)="decreaseRoute()">delete route(last)</button>
+            <div class="router" *ngIf="routerCount>=1">
+                <mat-select color="primary" placeholder="from" [(value)]="routeId[0]" name="item">
+                    <mat-option *ngFor="let airport of airports"  [value]="airport.id">
+                        {{airport.name}}({{airport.city.cityName}})
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="router" *ngIf="routerCount>=2">
+                <mat-select color="primary" placeholder="from"  [(value)]="routeId[1]"  name="item">
+                    <mat-option *ngFor="let airport of airports" [value]="airport.id">
+                        {{airport.name}}({{airport.city.cityName}})
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="router" *ngIf="routerCount>=3">
+                <mat-select color="primary" placeholder="from" [(value)]="routeId[2]"  name="item">
+                    <mat-option *ngFor="let airport of airports"  [value]="airport.id">
+                        {{airport.name}}({{airport.city.cityName}})
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <br>
+        <button class="button" mat-flat-button color="primary" (click)="doInsertFlight()">Insert</button>
+        <button class="button" mat-flat-button color="primary" (click)="update()">Update</button>
+    </div>
+</div>
+
+<app-pop-up class="pop-up-box"  [isOpen]="popUpDelete">
+    <p>Are you sure want to delete? </p>
+    <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
+    <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+</app-pop-up>
+
+<div class="container">
+    <div class="filterPage">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                    <h2>Airlines</h2>
+            </mat-expansion-panel-header>
+                <div class="airline-container" *ngFor="let airline of allAirlines; let i = index">
+                    <mat-checkbox (click)="markAirline(i)">{{airline.name}}</mat-checkbox>
+                </div>
+        </mat-expansion-panel>
+    </div>    
+    <button mat-flat-button id="showForm">Show Form</button>
+    <div class="flight-container">
+        <div class="flight" *ngFor="let flight of flights; let i = index">
+            <div class="flight-top ">
+                <div class="flight-header">
+                    <p>{{flight.airline.name}}</p>
+                </div>
+                <div class="flight-detail">
+                    <div class="flight-detail-left">
+                        <div class="flight-image">
+                            <img src={{flight.airline.path}} alt="">
+                        </div>
+                    </div>
+                    <div class="flight-detail-mid">
+                        <p>
+        
+                            {{flight.departure}} - {{flight.arrival}}
+                        </p>
+                        <p>
+                            Duration {{flight.duration}}
+                        </p>
+                        <p>
+                            Dest: {{flight.from.city.cityCode}} - Arrv: {{flight.to.city.cityCode}}
+                        </p>
+                        <p>
+                            {{flight.sTransit}}
+                        </p>
+                            <button (click)="showDetailFlights[i] = !showDetailFlights[i]" class="button-show button-show-flight-detail"
+                                mat-button color="primary">Show Flight Detail</button>
+                          
+                        <div class="flight-facility-box">
+                            <div class="flight-facility"
+                                *ngFor="let airlineFacility of flight.airline.airlineFacilities" matTooltip={{airlineFacility.facility.name}}>
+                                <img src={{airlineFacility.facility.imagePath}} alt="">
+                            </div>
+                            <p>IDR {{flight.price}}/pax</p>
+                        </div>
+                    </div>
+                    <div class="flight-detail-right">
+                        <button mat-flat-button color="primary"
+                        (click)="doShowUpdateForm(flight)"
+                        >Update</button>   
+                        <br>                
+                        <button mat-flat-button color="primary" (click)="openPopUp(flight.id)">Delete</button>
+                    </div>
+        
+                </div>
+            </div>
+            <div class="flight-bottom" *ngIf="showDetailFlights[i]">
+                <div class="route-box">
+                    <div class="route-from">
+                        <p>From: {{flight.from.name}}</p>
+                        <p>Departure time: {{flight.departure}}</p>
+                    </div>
+                    <div class="routes" *ngIf="flight.routes.length > 0">
+                        <h5>Routes</h5>
+                        <div class="route" *ngFor="let route of flight.routes">
+                            -
+                            <span>
+                                {{route.to.name}}:
+                            </span>
+                            <span>
+                                {{route.to.city.cityCode}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="route-to">
+                        <p>To: {{flight.to.name}}</p>
+                        <p>Arrival-time: {{flight.arrival}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flight-footer">
+            <button mat-flat-button color="primary" (click)="prevPage()">Prev</button>
+            <div>
+                <button mat-flat-button color="primary" (click)="setData(i)" *ngFor="let item of [].constructor(pageCount); let i = index">{{i+1}}</button>
+            </div>
+            <button mat-flat-button color="primary" (click)="nextPage()">Next</button>
+        </div>
+    </div>
+</div>    

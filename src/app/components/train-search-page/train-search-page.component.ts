@@ -5,6 +5,7 @@ import { GraphqTrainService } from 'src/app/services/graphq-train.service';
 import { Train } from 'src/app/models/train';
 import { Station } from 'src/app/models/station';
 import { Router } from '@angular/router';
+import { TrainType } from 'src/app/models/train-type';
 
 @Component({
   selector: 'app-train-search-page',
@@ -42,7 +43,7 @@ export class TrainSearchPageComponent implements OnInit {
   manyPassenger: number
 
 
-  trains: Train[]
+  trainTypes: TrainType[]
   trainCheckbox: boolean[]
   trainCheckbox2: boolean[]
   trainToSearch={}
@@ -80,73 +81,6 @@ export class TrainSearchPageComponent implements OnInit {
   }
 
  
-  trainSearchPage():void{
-    if(this.selectedFromId == null){
-      alert("input where to depart")
-      return
-    }
-    if(this.selectedToId == null){
-      alert("input where to arrive")
-      return
-    }
-
-    if(this.selectedToId == this.selectedFromId){
-      alert("please don't select same station")
-      return
-    }
-
-    if(this.fromDate == null){
-      alert("Input from date")
-      return
-    }
-    if(this.pulang==true && this.backDate == null){
-      alert("Input back date")
-      return
-    }
-    if(this.manyPassenger <=0 || this.manyPassenger > 7){
-      alert("please insert quantity")
-      return
-    }
-   
-    console.log(this.fromDate.getDate())
-    let day, month, year, fromDate, backDate=null
-
-    day = this.fromDate.getDate()
-    // console.log(this.fromDate)
-    month = this.fromDate.getMonth()+1
-    year = this.fromDate.getFullYear()
-    if(day < 10){
-      day = "0"+day
-    }
-    if(month<10){
-      month = "0"+month
-    }
-    console.log(month)
-    fromDate = month+"/"+day+"/"+year
-
-    if(this.backDate !=null){
-      day = this.backDate.getDate()
-      month = this.backDate.getMonth()+1
-      year = this.backDate.getFullYear()
-      if(day < 10){
-        day = "0"+day
-      }
-      if(month<10){
-        month = "0"+month
-      }
-      backDate = month+"/"+day+"/"+year
-    }
-    this.trainToSearch = {
-      "fromId": this.selectedFromId,
-      "toId": this.selectedToId,
-      "fromDate": fromDate,
-      "backDate": backDate,
-      "manyPassenger": this.manyPassenger,
-    }
-    // this.flightToSearch[]
-    sessionStorage.setItem("trainQuery", JSON.stringify(this.trainToSearch))
-    window.location.reload()
-  }
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -180,33 +114,30 @@ export class TrainSearchPageComponent implements OnInit {
 
   }
   getTrains():void{
-    this.trains = []
+    this.trainTypes = []
     for(let i=0; i<this.trainTripsFIX.length; i++){
       let flag=0;
-      for(let j=0; j<this.trains.length; j++){
-        if(this.trains[j] == this.trainTripsFIX[i].train){
+      for(let j=0; j<this.trainTypes.length; j++){
+        if(this.trainTypes[j].id == this.trainTripsFIX[i].train.trainType.id){
           flag=1;
           break;
         }
       }
       if(flag==0){
-        this.trains.push(this.trainTripsFIX[i].train)
+        this.trainTypes.push(this.trainTripsFIX[i].train.trainType)
       }
     }
+    console.log(this.trainTypes)
     this.trainCheckbox = []
     this.trainCheckbox2 = []
-    for(let i=0; i<this.trains.length; i++){
+    for(let i=0; i<this.trainTypes.length; i++){
       this.trainCheckbox.push(false);
       this.trainCheckbox2.push(false);
     }
   }
 
-  markTrain(name:string){
-    for(let i=0; i<this.trains.length; i++){
-      if(this.trains[i].name == name){
-        this.trainCheckbox[i] = !this.trainCheckbox[i]
-      }
-    }
+  markTrain(i:number){
+    this.trainCheckbox[i] = !this.trainCheckbox[i]
     this.validateAllFilter()
   }
 
@@ -371,7 +302,7 @@ export class TrainSearchPageComponent implements OnInit {
         if(this.trainCheckbox[i] ==false)continue
 
         for(let j=0; j<temp.length; j++){
-          if(temp[j].train.name == this.trains[i].name){
+          if(temp[j].train.trainType.id == this.trainTypes[i].id){
             this.trainTrips.push(temp[j])
           }
       }

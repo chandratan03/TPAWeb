@@ -70,6 +70,18 @@ export class FlightSearchPageComponent implements OnInit {
   
   cities: City
   cities$: Subscription
+
+
+
+  transitBoolean: Boolean = true
+  slideDurationBoolean: Boolean = true
+  timeBoolean: Boolean = true
+  airlineBoolean:boolean = true
+  facilityBoolean: boolean = true
+  
+
+
+
   constructor(
     private myService: GraphqpUserService,
     private router: Router

@@ -20,7 +20,7 @@ func GetAirlines()([]Airline, error){
   if err!=nil{
     panic(err)
   }
-
+  defer db.Close()
   var airlines []Airline
   db.Find(&airlines)
 

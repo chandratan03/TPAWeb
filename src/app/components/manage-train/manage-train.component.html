@@ -1,0 +1,171 @@
+<app-pop-up class="modal" [isOpen]="formIsOpen" >
+    
+</app-pop-up>
+<button mat-button (click)="formIsOpen = !formIsOpen">showForm</button>
+<div class="container">
+
+    
+    <div class="page-container">
+        
+        <div class="filter-container">
+            <i class="fas fa-filter" matTooltip="Sort ticket here ">
+                <mat-select [(ngModel)]="selectedValue" name="item">
+                    <mat-option (click)="sortAscByDeparture()">
+                        Departure Ascending
+                    </mat-option>
+                    <mat-option (click)="sortDscByDeparture()">
+                        Departure Descending
+                    </mat-option>
+                    <mat-option (click)="sortAscByArrival()">
+                        Arrival Ascending
+                    </mat-option>
+                    <mat-option (click)="sortDscByArrival()">
+                        Arrival Descending
+                    </mat-option>
+                    <mat-option (click)="sortAscByDuration()">
+                        Duration
+                    </mat-option>
+                </mat-select>
+            </i>
+            <button mat-flat-button color="primary" (click)="reset()">reset</button>
+            <div class="filter-train-box train-class">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Kelas</h3>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-checkbox (click)="markClass(0)" [(ngModel)]="classCheckbox2[0]" color="primary">Ekonomi</mat-checkbox>
+                    </div>
+                    <div>
+                        <mat-checkbox (click)="markClass(1)" [(ngModel)]="classCheckbox2[1]" color="primary">Bisnis</mat-checkbox>
+                    </div>
+                    <div>
+                        <mat-checkbox (click)="markClass(2)" [(ngModel)]="classCheckbox2[2]" color="primary">Eksekutif</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <div class="filter-train-box train-time">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Waktu</h3>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-checkbox (click)="markTime(0)" [(ngModel)]="timeCheckbox2[0]" color="primary">00:00 - 06:00</mat-checkbox>
+                    </div>
+                    <div>
+                        <mat-checkbox (click)="markTime(1)" [(ngModel)]="timeCheckbox2[1]" color="primary">06:00 - 12:00</mat-checkbox>
+                    </div>
+                    <div>
+                        <mat-checkbox (click)="markTime(2)" [(ngModel)]="timeCheckbox2[2]" color="primary">12:00 - 18:00</mat-checkbox>
+                    </div>
+                    <div>
+                        <mat-checkbox (click)="markTime(3)" [(ngModel)]="timeCheckbox2[3]" color="primary">18:00 - 24:00</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <div class="filter-train-box train-name">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Train</h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let trainType of trainTypes; let i=index">
+                        <mat-checkbox (click)="markTrain(i)" color="primary" [(ngModel)]="trainCheckbox2[i]" >{{trainType.name}}</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="train-container">
+            <div class="train" *ngFor="let trainTrip of trainTrips; let i=index">
+                <div class="train-info-box">
+                    <div class="train-info train-info-left">
+                        <h3>{{trainTrip.train.trainType.name}} {{trainTrip.train.name}}</h3>
+                        <p>{{trainTrip.train.trainClass.className}} ({{trainTrip.train.trainSubClass}})</p>
+                    </div>
+                    <div class="train-info train-info-mid">
+                        <div class="train-info-time">
+                            <div class="train-info-dep">
+                                <span>
+                                    {{trainTrip.departure | date:"HH:mm"}}-
+                                </span>
+                                <p>
+                                    {{trainTrip.from.stationCode}}
+                                </p>
+                            </div>
+                            
+                            <div class="train-info-arr">
+                                <span>
+                                    {{trainTrip.arrival |date:"HH:mm"}}
+                                </span>
+                                <p>
+                                    {{trainTrip.to.stationCode}}
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="train-info-mid-bottom">
+                            <div>
+                                <button mat-button color="primary" (click)="showDetailTrip(i)" class="detail-span">Detail Perjalanan</button>
+                            </div>
+                            <div>
+                                <button mat-button color="primary" (click)="showDetailPrice(i)" class="detail-span">Detail Harga</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="train-info train-info-right" >
+                        <div>
+                            <h2>IDR {{trainTrip.price}}</h2>
+                            <button mat-flat-button color="primary">Pilih</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="train-detail-trips"  *ngIf="detailTrainTrip2[i]">
+                    <p>from: {{trainTrip.from.stationCode}} </p>
+                    <p>to: {{trainTrip.to.stationCode}}</p>
+                    <p>duration: {{trainTrip.duration}}</p>
+                </div>
+                <div class="train-detail-price"  *ngIf="detailTrainPrice2[i]"> 
+                    <div>
+                        <h4>Tarif</h4>
+                        <ul>
+                            <li>
+                                <span>
+                                    Penumpang({{manyPassenger}}):
+                                </span>
+                                <span>
+                                    {{(trainTrip.price+ (trainTrip.price* trainTrip.train.trainClass.pricePercentage/100)) * manyPassenger}}
+                                </span>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Pajak dan biaya lainnya</h4>
+                        <ul>
+                            <li>
+                                <span>
+                                    Pajak <small>/org</small>:
+                                </span>
+                                <span>
+                                    {{trainTrip.tax}}
+                                </span>
+                            </li>
+                            <li>
+                                <span>Biaya pelayanan Penumpang: </span>
+                                <span>GRATIS</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flight-detail-price-total-price">
+                        <h2>Total:</h2>
+                        <h3>IDR {{((trainTrip.price+ (trainTrip.price* trainTrip.train.trainClass.pricePercentage/100))+trainTrip.tax)*manyPassenger}}
+                            </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
