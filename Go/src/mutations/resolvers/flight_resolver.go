@@ -20,11 +20,11 @@ func CreateFlight(params graphql.ResolveParams)(interface{}, error){
   price:=params.Args["price"].(int)
   tax:= params.Args["tax"].(int)
   serviceCharge := params.Args["serviceCharge"].(int)
-  newFlight :=models.CreateFlight(airlineRefer,
+  row := models.CreateFlight(airlineRefer,
     routeIds, transit, fromRefer, toRefer,
     departure, arrival, duration, price, tax,
     serviceCharge)
-  return newFlight, nil
+  return row, nil
 }
 
 
@@ -53,6 +53,6 @@ func UpdateFlight(params graphql.ResolveParams)(interface{}, error){
 
 func DeleteFlight(params graphql.ResolveParams)(interface{}, error){
   id:=params.Args["id"].(int)
-  models.DeleteFlight(id)
-  return nil, nil
+  row := models.DeleteFlight(id)
+  return row, nil
 }

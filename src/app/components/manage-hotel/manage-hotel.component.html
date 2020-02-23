@@ -1,0 +1,147 @@
+<div class="modal" id="modal">
+    <div class="form" id="form">
+        <p>id: {{id}}</p>
+        <div class="form-city">
+            <mat-select placeholder="city" [(value)]="formCity" name="item">
+                <mat-option (click)="getHotelsAfterChooseCity(city.id)" *ngFor="let city of cities" [value]="city.id">
+                    {{city.cityName}} - ({{city.region.regionName}})
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-select placeholder="hotel" [(value)]="hotelId" name="item">
+                <mat-option (click)="getPriceAfterChooseHotel(i)" *ngFor="let hotel of formHotels; let i = index" [value]="hotel.id">
+                    {{hotel.hotelName}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-form-field>
+                <input matInput [(ngModel)]="price" placeholder="price" type="number">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput [(ngModel)]="quantity" placeholder="quantity" type="number">
+            </mat-form-field>
+        </div>
+        <br>
+        <div>
+            <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input [(ngModel)]="date" matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <button color="primary" (click)="insert()" mat-flat-button>insert</button>
+            <button color="primary" (click)="update()" mat-flat-button>update</button> 
+        </div>
+    </div>
+</div>
+
+<app-pop-up class="pop-up-box"  [isOpen]="popUpDelete">
+    <div class="delete-box">
+        <p>Are you sure want to delete? </p>
+        <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
+        <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+    </div>
+</app-pop-up>
+
+<button color="primary" id="showForm" mat-flat-button>show form</button>
+<div class="container">
+    
+    <div class="hotel-container">
+        <div class="filter-container">
+            <h1>Filter</h1>
+            <div class="filter-hotel">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        Hotel
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let hotel of hotelsFilter; let i=index">
+                        <mat-checkbox [(ngModel)]="hotelsFilterBoolean2[i]"
+                        (click)="markHotel(i)"
+                        >{{hotel.hotelName}}</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <div>
+            <ng-container class="hotel-ng-container" *ngFor="let hotelTicket of hotelTickets; let i =index">
+                <div class="hotel-box">
+                    <div class="hotel-box-child hotel-left">
+                        <img src="../../../assets/hotel/search/hotel-images/shinchan-image.jpg" alt="">
+                    </div>
+                    <div class="hotel-box-child hotel-mid">
+                        <p>Hotel Name: {{hotelTicket.hotel.hotelName}}</p>
+                        <p>Hotel Location: 
+                            {{hotelTicket.hotel.area.areaName}},
+                            {{hotelTicket.hotel.area.city.cityName}},
+                            {{hotelTicket.hotel.area.city.region.regionName}}</p>
+                        <p>{{hotelTicket.price}}</p>
+                        <p>
+                            <i class="fas fa-star" *ngFor="let i of [].constructor(hotelTicket.hotel.rate)"></i>
+                        </p>
+                        <p>Rating: {{hotelTicket.hotel.ratingNumber}}/5</p>
+                        <div>
+                            <p>
+                                Facilities:
+                            </p>
+                            
+                            <span *ngFor="let hotelFacility of hotelTicket.hotel.hotelFacilities"
+                             class="facilities-img"><img src={{hotelFacility.facility.imagePath}} alt=""></span>                    
+                            
+                        </div>
+                        <div>
+                            <button mat-flat-button class="hotel-mid-hotel-room">Hotel room</button>
+                        </div>
+                    </div>
+                    <div class="hotel-box-child hotel-right">
+                        <div>
+                            <button mat-flat-button color="primary" (click)="showUpdate(i)">Update</button>
+                        </div>
+                        <div>
+                            <button mat-flat-button color="primary" (click)="openPopUp(hotelTicket.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotel-room-container">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            Hotel room
+                        </mat-expansion-panel-header>
+                        <div class="hotel-room" *ngFor="let hotelRoom of hotelTicket.hotel.hotelRooms">
+                            <div class="hotel-room-child hotel-room-left">
+                                <div class="hotel-img">
+                                    <img src={{hotelRoom.imagePath}} alt="">
+                                </div>
+                            </div>
+                            <div class="hotel-room-child hotel-room-right">
+                                <div>
+                                    <p>{{hotelRoom.name}}</p>
+                                    <p>{{hotelRoom.space}} x {{hotelRoom.space}} </p>
+                                    <p>{{hotelRoom.price}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </mat-expansion-panel>
+                </div>
+            </ng-container>
+        </div>
+       
+        <br>
+    </div>
+    <p>current page: {{from+1}}</p>
+        <div class="hotelPage-number">
+            <button (click)="prevHotelPage()" mat-flat-button color="primary">prev</button>
+            <div>
+                <button color="primary" (click)="setHotelPage(j)" mat-flat-button *ngFor="let item of [].constructor(hotelPage); let j=index">{{j+1}}</button>
+            </div>
+            <button (click)="nextHotelPage()" color="primary" mat-flat-button>next</button>
+        </div>
+</div>

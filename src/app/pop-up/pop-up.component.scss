@@ -13,9 +13,13 @@
 }
 
 .pop-up-box{
-    width: auto;
-    background: #ff7dff;
-    color: #ffffff;    
-    padding: 20px;
+    display:flex;
+    justify-content: center;;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    // background: #ff7dff;
+    // color: #ffffff;    
+    padding: 5px;
     border-radius: 20px;
 }

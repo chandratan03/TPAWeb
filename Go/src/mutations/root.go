@@ -153,7 +153,43 @@ func GetRoot() *graphql.Object{
             Type:graphql.NewNonNull(graphql.Float),
           },
         },
-        Resolve: resolvers.InsertTrain,
+        Resolve: resolvers.InsertTrainTrip,
+      },
+      "updateTrainTrip": &graphql.Field{
+        Type:              types.GetTrainTripType(),
+        Args:   graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "trainId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "fromRefer": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "toRefer": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "departure":&graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "arrival": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.String),
+          },
+          "duration": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "price": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Float),
+          },
+          "tax": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Float),
+          },
+          "serviceCharge": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Float),
+          },
+        },
+        Resolve: resolvers.UpdateTrainTrip,
       },
       "deleteTrainTrip": &graphql.Field{
         Type:types.GetTrainTripType(),
@@ -164,7 +200,58 @@ func GetRoot() *graphql.Object{
         },
         Resolve:resolvers.DeleteTrainTrip,
       },
+      "insertHotelTicket": &graphql.Field{
+        Type:types.GetHotelTicketType(),
+        Args: graphql.FieldConfigArgument{
+          "hotelId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "date": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.String),
+          },
+          "quantity": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "price": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Float),
+          },
+        },
+        Resolve:resolvers.InsertHotelTicket,
+      },
+      "updateHotelTicket": &graphql.Field{
+        Type:types.GetHotelTicketType(),
+        Args: graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "hotelId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "date": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.String),
+          },
+          "quantity": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "price": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Float),
+          },
+        },
+        Resolve:resolvers.UpdateHotelTicket,
+      },
+      "deleteHotelTicket": &graphql.Field{
+        Type:types.GetHotelTicketType(),
+        Args: graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+
+        },
+        Resolve:resolvers.DeleteHotelTicket,
+      },
     },
+
+
 
   })
 }

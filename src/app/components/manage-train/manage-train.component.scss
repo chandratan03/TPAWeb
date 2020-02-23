@@ -145,3 +145,87 @@
 .filter-train-box{
     padding: 2%;    
 }
+
+
+// .modal{
+//     display: none;
+//     position: fixed;
+//     width: 100%;
+//     height: 100%;
+//     z-index: 10;
+//     top: 0;
+//     left: 0;
+//     background-color: rgba($color: #000000, $alpha: 0.5);
+
+// }
+
+
+
+// .form{
+//     width: 75%;
+//     padding: 2% 4%;
+//     border: 1p solid black;
+//     border-radius: 20px;
+//     background: rgba($color: #FFFFFF, $alpha: 1.0);
+//     margin: auto;
+// }
+
+
+////////////////// .modal
+.modal{
+    display: none;
+    position: fixed;
+    min-width: 300px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+
+}
+
+.form{
+    width: 75%;
+    padding: 2% 4%;
+    border: 1p solid black;
+    border-radius: 20px;
+    background: rgba($color: #FFFFFF, $alpha: 1.0);
+    margin: auto;
+    >button{
+        margin-left: 2px;
+    }
+}
+//////////////////
+
+
+
+.train-info-right{
+    >div{
+        box-sizing: border-box;
+        margin: 5px;
+    }
+}
+
+
+
+.delete-box{
+    box-sizing: border-box;
+    background-color: #dce2e3;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+
+
+.trainPage-number{
+    display:flex;
+    flex-wrap: wrap;
+    >div{
+        margin: 0 3px;
+        display:flex;
+        >button{
+            margin: 0 5px;
+        }
+    }
+}

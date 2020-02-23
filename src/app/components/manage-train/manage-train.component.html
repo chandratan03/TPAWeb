@@ -1,12 +1,100 @@
-<app-pop-up class="modal" [isOpen]="formIsOpen" >
-    
+<div class="modal" id="modal" >
+    <div class="form">
+        <div>
+            id: {{trainTripId}}
+        </div>
+        <br>
+        <div class="form-train-box">
+            <mat-select placeholder="Train" [(value)]="trainId" >
+                <mat-option *ngFor="let train of formTrains" [value]="train.id">
+                    {{train.name}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-select placeholder="From" [(value)]="fromRefer">
+                <mat-option *ngFor="let station of stations" [value]="station.id">
+                    {{station.stationCode}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-select placeholder="To" [(value)]="toRefer" >
+                <mat-option *ngFor="let station of stations" [value]="station.id">
+                    {{station.stationCode}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <br>
+        <div>
+            <mat-form-field>
+                <mat-label>Tanggal Berangkat</mat-label>
+                <input [(ngModel)]="departure" matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Departure Time</mat-label>
+                <input matInput placeholder="HH:MM"  [(ngModel)]="departureTime">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Tanggal Sampai</mat-label>
+                <input [(ngModel)]="arrival" matInput [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <mat-label>Arrival Time</mat-label>
+                <input matInput placeholder="HH:MM"  [(ngModel)]="arrivalTime">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput type="number" placeholder="price" [(ngModel)]="price">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput type="number" placeholder="tax" [(ngModel)]="tax">
+            </mat-form-field>    
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput type="number" placeholder="service charge" [(ngModel)]="serviceCharge">
+            </mat-form-field>
+        </div>
+        
+        <button mat-flat-button color="primary" (click)="insertTrainTrip()">Insert</button>
+        <button mat-flat-button color="primary" (click)="updateTrainTrip()">update</button>
+    </div>
+</div>
+
+
+<button mat-button id="showForm">showForm</button>
+
+
+
+<app-pop-up class="pop-up-box"  [isOpen]="popUpDelete">
+    <div class="delete-box">
+        <p>Are you sure want to delete? </p>
+        <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
+        <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+    </div>
 </app-pop-up>
-<button mat-button (click)="formIsOpen = !formIsOpen">showForm</button>
+
 <div class="container">
 
-    
+
     <div class="page-container">
-        
+
         <div class="filter-container">
             <i class="fas fa-filter" matTooltip="Sort ticket here ">
                 <mat-select [(ngModel)]="selectedValue" name="item">
@@ -34,13 +122,16 @@
                         <h3>Kelas</h3>
                     </mat-expansion-panel-header>
                     <div>
-                        <mat-checkbox (click)="markClass(0)" [(ngModel)]="classCheckbox2[0]" color="primary">Ekonomi</mat-checkbox>
+                        <mat-checkbox (click)="markClass(0)" [(ngModel)]="classCheckbox2[0]" color="primary">Ekonomi
+                        </mat-checkbox>
                     </div>
                     <div>
-                        <mat-checkbox (click)="markClass(1)" [(ngModel)]="classCheckbox2[1]" color="primary">Bisnis</mat-checkbox>
+                        <mat-checkbox (click)="markClass(1)" [(ngModel)]="classCheckbox2[1]" color="primary">Bisnis
+                        </mat-checkbox>
                     </div>
                     <div>
-                        <mat-checkbox (click)="markClass(2)" [(ngModel)]="classCheckbox2[2]" color="primary">Eksekutif</mat-checkbox>
+                        <mat-checkbox (click)="markClass(2)" [(ngModel)]="classCheckbox2[2]" color="primary">Eksekutif
+                        </mat-checkbox>
                     </div>
                 </mat-expansion-panel>
             </div>
@@ -50,16 +141,20 @@
                         <h3>Waktu</h3>
                     </mat-expansion-panel-header>
                     <div>
-                        <mat-checkbox (click)="markTime(0)" [(ngModel)]="timeCheckbox2[0]" color="primary">00:00 - 06:00</mat-checkbox>
+                        <mat-checkbox (click)="markTime(0)" [(ngModel)]="timeCheckbox2[0]" color="primary">00:00 - 06:00
+                        </mat-checkbox>
                     </div>
                     <div>
-                        <mat-checkbox (click)="markTime(1)" [(ngModel)]="timeCheckbox2[1]" color="primary">06:00 - 12:00</mat-checkbox>
+                        <mat-checkbox (click)="markTime(1)" [(ngModel)]="timeCheckbox2[1]" color="primary">06:00 - 12:00
+                        </mat-checkbox>
                     </div>
                     <div>
-                        <mat-checkbox (click)="markTime(2)" [(ngModel)]="timeCheckbox2[2]" color="primary">12:00 - 18:00</mat-checkbox>
+                        <mat-checkbox (click)="markTime(2)" [(ngModel)]="timeCheckbox2[2]" color="primary">12:00 - 18:00
+                        </mat-checkbox>
                     </div>
                     <div>
-                        <mat-checkbox (click)="markTime(3)" [(ngModel)]="timeCheckbox2[3]" color="primary">18:00 - 24:00</mat-checkbox>
+                        <mat-checkbox (click)="markTime(3)" [(ngModel)]="timeCheckbox2[3]" color="primary">18:00 - 24:00
+                        </mat-checkbox>
                     </div>
                 </mat-expansion-panel>
             </div>
@@ -69,7 +164,8 @@
                         <h3>Train</h3>
                     </mat-expansion-panel-header>
                     <div *ngFor="let trainType of trainTypes; let i=index">
-                        <mat-checkbox (click)="markTrain(i)" color="primary" [(ngModel)]="trainCheckbox2[i]" >{{trainType.name}}</mat-checkbox>
+                        <mat-checkbox (click)="markTrain(i)" color="primary" [(ngModel)]="trainCheckbox2[i]">
+                            {{trainType.name}}</mat-checkbox>
                     </div>
                 </mat-expansion-panel>
             </div>
@@ -91,7 +187,7 @@
                                     {{trainTrip.from.stationCode}}
                                 </p>
                             </div>
-                            
+
                             <div class="train-info-arr">
                                 <span>
                                     {{trainTrip.arrival |date:"HH:mm"}}
@@ -103,67 +199,29 @@
                             </div>
                         </div>
                         <div class="train-info-mid-bottom">
-                            <div>
-                                <button mat-button color="primary" (click)="showDetailTrip(i)" class="detail-span">Detail Perjalanan</button>
-                            </div>
-                            <div>
-                                <button mat-button color="primary" (click)="showDetailPrice(i)" class="detail-span">Detail Harga</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="train-info train-info-right" >
-                        <div>
                             <h2>IDR {{trainTrip.price}}</h2>
-                            <button mat-flat-button color="primary">Pilih</button>
                         </div>
                     </div>
-                </div>
-                <div class="train-detail-trips"  *ngIf="detailTrainTrip2[i]">
-                    <p>from: {{trainTrip.from.stationCode}} </p>
-                    <p>to: {{trainTrip.to.stationCode}}</p>
-                    <p>duration: {{trainTrip.duration}}</p>
-                </div>
-                <div class="train-detail-price"  *ngIf="detailTrainPrice2[i]"> 
-                    <div>
-                        <h4>Tarif</h4>
-                        <ul>
-                            <li>
-                                <span>
-                                    Penumpang({{manyPassenger}}):
-                                </span>
-                                <span>
-                                    {{(trainTrip.price+ (trainTrip.price* trainTrip.train.trainClass.pricePercentage/100)) * manyPassenger}}
-                                </span>
-
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>Pajak dan biaya lainnya</h4>
-                        <ul>
-                            <li>
-                                <span>
-                                    Pajak <small>/org</small>:
-                                </span>
-                                <span>
-                                    {{trainTrip.tax}}
-                                </span>
-                            </li>
-                            <li>
-                                <span>Biaya pelayanan Penumpang: </span>
-                                <span>GRATIS</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="flight-detail-price-total-price">
-                        <h2>Total:</h2>
-                        <h3>IDR {{((trainTrip.price+ (trainTrip.price* trainTrip.train.trainClass.pricePercentage/100))+trainTrip.tax)*manyPassenger}}
-                            </h3>
+                    <div class="train-info train-info-right">
+                        <div>
+                            <button (click)="showUpdateForm(i)" mat-flat-button color="primary">Update</button>
+                        </div>
+                        <div>
+                            <button (click)="openPopUp(trainTrip.id)" mat-flat-button color="primary">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="trainPage-number">
+                <button (click)="prevTrainPage()" mat-flat-button color="primary">prev</button>
+                <div>
+                    <button color="primary" (click)="setTrainPage(j)" mat-flat-button *ngFor="let item of [].constructor(trainPage); let j=index">{{j+1}}</button>
+                </div>
+                <button (click)="nextTrainPage()" color="primary" mat-flat-button>next</button>
+            </div>
         </div>
-
+        
+        
     </div>
 
 

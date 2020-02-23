@@ -113,9 +113,11 @@
 </div>
 
 <app-pop-up class="pop-up-box"  [isOpen]="popUpDelete">
-    <p>Are you sure want to delete? </p>
-    <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
-    <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+    <div class="delete-box">
+        <p>Are you sure want to delete? </p>
+        <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
+        <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+    </div>
 </app-pop-up>
 
 <div class="container">

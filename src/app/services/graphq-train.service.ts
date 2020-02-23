@@ -11,7 +11,7 @@ export class GraphqTrainService {
 
   constructor(private apollo: Apollo) { }
 
-  getTrainTripsByFromToDate(fromId:number, toId:number, date:string): Observable<Query>{
+  getTrainTripsByFromToDate(fromId: number, toId: number, date: string): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
       query GetTrainTripsByFromToId($fromId: Int, $toId: Int, $date: String) {
@@ -78,7 +78,7 @@ export class GraphqTrainService {
       }
       
       `,
-      variables:{
+      variables: {
         "fromId": fromId,
         "toId": toId,
         "date": date
@@ -155,7 +155,7 @@ export class GraphqTrainService {
       `
     })
   }
-  
+
   getStations(): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
@@ -182,20 +182,20 @@ export class GraphqTrainService {
       `
     })
   }
-//TrainId:       uint(trainId),
-//FromRefer:     uint(fromRefer),
-//ToRefer:       uint(toRefer),
-//Departure:     departureTime,
-//Arrival:       arrivalTime,
-//Duration:      uint(duration),
-//Price:         price,
-//Tax:           tax,
-//ServiceCharge: serviceCharge,
+  //TrainId:       uint(trainId),
+  //FromRefer:     uint(fromRefer),
+  //ToRefer:       uint(toRefer),
+  //Departure:     departureTime,
+  //Arrival:       arrivalTime,
+  //Duration:      uint(duration),
+  //Price:         price,
+  //Tax:           tax,
+  //ServiceCharge: serviceCharge,
 
-  insertTrainTrip(trainId:number, fromRefer:number, toRefer:number, 
-    departure: string, arrival:string, duration:number, price:number, tax:number, serviceCharge:number):Observable<any>{
-      return this.apollo.mutate<any>({
-        mutation:gql`
+  insertTrainTrip(trainId: number, fromRefer: number, toRefer: number,
+    departure: string, arrival: string, duration: number, price: number, tax: number, serviceCharge: number): Observable<any> {
+    return this.apollo.mutate<any>({
+      mutation: gql`
           mutation insertTrainTrip($trainId: Int!, $fromRefer: Int!, $toRefer:Int!, $departure:String!, $arrival:String!, $duration:Int!,
             $price: Float!, $tax: Float!, $serviceCharge:Float!
           ){
@@ -206,23 +206,51 @@ export class GraphqTrainService {
             }
           }
         `,
-        variables:{
-          "trainId":trainId,
-          "fromRefer": fromRefer,
-          "toRefer":toRefer,
-          "departure": departure,
-          "arrival": arrival,
-          "duration": duration,
-          "price": price,
-          "tax": tax,
-          "serviceCharge":serviceCharge
-        }
-      })
+      variables: {
+        "trainId": trainId,
+        "fromRefer": fromRefer,
+        "toRefer": toRefer,
+        "departure": departure,
+        "arrival": arrival,
+        "duration": duration,
+        "price": price,
+        "tax": tax,
+        "serviceCharge": serviceCharge
+      }
+    })
   }
-  
 
-  deleteTrainTripById(id: number):void{
-    this.apollo.mutate<any>({
+  updateTrainTrip(id:number,trainId: number, fromRefer: number, toRefer: number,
+    departure: string, arrival: string, duration: number, price: number, tax: number, serviceCharge: number): Observable<any> {
+    return this.apollo.mutate<any>({
+      mutation: gql`
+          mutation insertTrainTrip($id:Int!,$trainId: Int!, $fromRefer: Int!, $toRefer:Int!, $departure:String!, $arrival:String!, $duration:Int!,
+            $price: Float!, $tax: Float!, $serviceCharge:Float!
+          ){
+            updateTrainTrip(id:$int,trainId: $trainId, fromRefer:$fromRefer, toRefer:$toRefer, departure:$departure, arrival:$arrival,
+              duration:$duration, price:$price, tax:$tax, serviceCharge:$serviceCharge
+            ){
+              id
+            }
+          }
+        `,
+      variables: {
+        "id":id,
+        "trainId": trainId,
+        "fromRefer": fromRefer,
+        "toRefer": toRefer,
+        "departure": departure,
+        "arrival": arrival,
+        "duration": duration,
+        "price": price,
+        "tax": tax,
+        "serviceCharge": serviceCharge
+      }
+    })
+  }
+
+  deleteTrainTripById(id: number): Observable<any> {
+    return this.apollo.mutate<any>({
       mutation: gql`
         mutation deleteTrainTrip($id: Int!){
           deleteTrainTrip(id: $id){
@@ -230,16 +258,16 @@ export class GraphqTrainService {
           }
         }
       `,
-      variables:{
+      variables: {
         "id": id
       }
     }
     )
   }
 
-  getTrains():Observable<Query>{
+  getTrains(): Observable<Query> {
     return this.apollo.query<Query>({
-      query:gql`
+      query: gql`
         query{
           trains{
             id
@@ -262,9 +290,9 @@ export class GraphqTrainService {
     })
   }
 
-  getTrainTypes():Observable<Query>{
+  getTrainTypes(): Observable<Query> {
     return this.apollo.query<Query>({
-      query:gql`
+      query: gql`
         query{
           trainTypes{
             id

@@ -13,7 +13,7 @@ import (
 //Price:         price,
 //Tax:           tax,
 //ServiceCharge: serviceCharge,
-func InsertTrain(params graphql.ResolveParams)(interface{}, error){
+func InsertTrainTrip(params graphql.ResolveParams)(interface{}, error){
   trainId:= params.Args["trainId"].(int)
   fromRefer:= params.Args["fromRefer"].(int)
   toRefer:= params.Args["toRefer"].(int)
@@ -27,8 +27,25 @@ func InsertTrain(params graphql.ResolveParams)(interface{}, error){
   return rows, nil
 
 }
+func UpdateTrainTrip(params graphql.ResolveParams)(interface{}, error){
+  id:= params.Args["id"].(int)
+  trainId:= params.Args["trainId"].(int)
+  fromRefer:= params.Args["fromRefer"].(int)
+  toRefer:= params.Args["toRefer"].(int)
+  departure:= params.Args["departure"].(string)
+  arrival:= params.Args["arrival"].(string)
+  duration := params.Args["trainId"].(int)
+  price := params.Args["price"].(float64)
+  tax :=params.Args["tax"].(float64)
+  serviceCharge:=params.Args["serviceCharge"].(float64)
+  rows := models.UpdateTrainTrip(id,trainId, fromRefer, toRefer, departure, arrival, duration, price, tax, serviceCharge)
+  return rows, nil
+
+}
+
+
 func DeleteTrainTrip(params graphql.ResolveParams)(interface{}, error){
   id:=params.Args["id"].(int)
-  models.DeleteTrainTrip(id)
-  return nil, nil
+  row  := models.DeleteTrainTrip(id)
+  return row, nil
 }

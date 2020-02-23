@@ -38,7 +38,7 @@ func GetCities() ([]City, error) {
 
   for i, _ := range cities{
     //db.Model(&cities[i]).Related(&cities[i].Locations, "city_id")
-    db.Model(&cities[i]).Related(&cities[i].Region, "city_id")
+    db.Model(&cities[i]).Related(&cities[i].Region)
   }
   return cities,nil
 }

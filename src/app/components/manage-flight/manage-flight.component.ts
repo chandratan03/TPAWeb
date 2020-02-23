@@ -289,7 +289,18 @@ export class ManageFlightComponent implements OnInit {
 
     this.insertFlight$ = this.flightService.insertFlight(this.airlineRefer, 
       this.routeId, this.transit, this.fromRefer, this.toRefer,
-      depDate, arrDate, duration,this.price,this.tax, this.serviceCharge).subscribe()
+      depDate, arrDate, duration,this.price,this.tax, this.serviceCharge).subscribe(mutate => {
+
+        let temp = mutate.data.createFlight as Flight
+        console.log(temp)
+        if(temp == null || temp.id == 0){
+          alert("fail")
+        }else{
+          alert("success")
+        }
+        
+
+      })
 
     console.log("hehe")
     console.log(this.arrivalTime)
@@ -379,7 +390,7 @@ export class ManageFlightComponent implements OnInit {
         this.showDetailFlights[i] = false;
         this.boolDetailPriceBox[i] = false
       }
-      this.pageCount = Math.ceil(this.flights.length/5)
+      this.pageCount = Math.ceil(this.flights.length/10)
       this.saveFlights = this.flights
       this.allFlights = this.flights
       this.flights =[]
@@ -451,7 +462,7 @@ export class ManageFlightComponent implements OnInit {
   setData(i:number):void{
     this.currPage=i;
     this.flights=[]
-    let temp = this.saveFlights.slice(this.currPage*5, (this.currPage*5)+5)
+    let temp = this.saveFlights.slice(this.currPage*10, (this.currPage*10)+10)
     this.flights.push(...temp)
   }
 
@@ -491,6 +502,7 @@ export class ManageFlightComponent implements OnInit {
     }
     if(flag==0){
       this.flights = this.allFlights
+      this.saveFlights = this.allFlights
     }else{
       for(let i=0; i<this.booleanAirlines.length; i++){
         if(this.booleanAirlines[i]==false)
@@ -510,7 +522,7 @@ export class ManageFlightComponent implements OnInit {
     this.currPage=0
     this.checkAirlines()
   
-    this.pageCount = Math.ceil(this.saveFlights.length/5)
+    this.pageCount = Math.ceil(this.saveFlights.length/10)
     this.setData(this.currPage)
   }
 

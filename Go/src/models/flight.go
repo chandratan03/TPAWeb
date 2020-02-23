@@ -224,7 +224,7 @@ func UpdateFlight(id int, airlineRefer int, routeIds []int, transit int,
 }
 
 
-func DeleteFlight(id int){
+func DeleteFlight(id int) Flight{
   db,err := database.Connect()
   if err != nil{
     panic(err)
@@ -237,4 +237,6 @@ func DeleteFlight(id int){
   print(flight.Id)
   db.Delete(&flight)
   print("test")
+
+  return flight
 }

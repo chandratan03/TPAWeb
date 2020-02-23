@@ -8,7 +8,7 @@ type HotelRoom struct{
   Id uint  `gorm:"primary_key"`
   HotelId int `json:"hotel_id"`
   Name string
-  //HotelRoomFacility []HotelRoomFacility `gorm:"foreignKey:hotel_id"`
+  HotelRoomFacility []HotelRoomFacility `gorm:"foreignKey:hotel_id"`
   Price float64
   Quantity int
   ImagePath string

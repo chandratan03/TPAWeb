@@ -130,7 +130,7 @@ func InsertTrainTrip(trainId int, fromRefer int, toRefer int, departure string,a
 
 }
 
-func DeleteTrainTrip(id int){
+func DeleteTrainTrip(id int)TrainTrip{
   db, err := database.Connect()
   if err!=nil{
     panic(err)
@@ -141,10 +141,49 @@ func DeleteTrainTrip(id int){
   db.Where("id = ?",id).Find(&trainTrip)
 
   db.Delete(&trainTrip)
+  print(trainTrip.Id)
 
 
 
+  return trainTrip
+}
+
+func UpdateTrainTrip(id int,trainId int, fromRefer int, toRefer int, departure string,arrival string, duration int,
+  price float64, tax float64, serviceCharge float64)TrainTrip{
+  db, error := database.Connect()
+  if error!=nil{
+    panic(error)
+  }
+  defer db.Close()
+
+
+  departureTime, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", departure)
+  if error!=nil{
+    panic(error)
+  }
+  arrivalTime, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", arrival)
+  if error!=nil{
+    panic(error)
+  }
+  var TrainTrip TrainTrip
+
+  db.Where("id = ?", id).Find(&TrainTrip)
+
+
+  TrainTrip.TrainId=       uint(trainId)
+  TrainTrip.FromRefer=     uint(fromRefer)
+  TrainTrip.ToRefer=       uint(toRefer)
+  TrainTrip.Departure=     departureTime
+  TrainTrip.Arrival=       arrivalTime
+  TrainTrip.Duration=      uint(duration)
+  TrainTrip.Price=         price
+  TrainTrip.Tax=           tax
+  TrainTrip.ServiceCharge= serviceCharge
+
+  db.Save(&TrainTrip)
+  return TrainTrip
 
 
 }
+
 

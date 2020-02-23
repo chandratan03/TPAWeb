@@ -38,6 +38,7 @@ import { ManageFlightComponent } from './components/manage-flight/manage-flight.
 import { GraphqServiceComponent } from './services/graphq-service/graphq-service.component';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { ManageTrainComponent } from './components/manage-train/manage-train.component';
+import { ManageHotelComponent } from './components/manage-hotel/manage-hotel.component';
 
 @NgModule({
   exports: [
@@ -69,6 +70,7 @@ import { ManageTrainComponent } from './components/manage-train/manage-train.com
     GraphqServiceComponent,
     PopUpComponent,
     ManageTrainComponent,
+    ManageHotelComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -120,7 +122,11 @@ import { ManageTrainComponent } from './components/manage-train/manage-train.com
       },
       {
         path: "manage/train", component: ManageTrainComponent
+      },
+      {
+        path: "manage/hotel", component: ManageHotelComponent,
       }
+
     ]),
     BrowserAnimationsModule,
     MatDialogModule,

@@ -50,6 +50,8 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Bed{})
   db.AutoMigrate(models.HotelRoomBed{}).AddForeignKey("bed_id", "beds(id)", "cascade", "cascade")
   db.AutoMigrate(models.Rating{})
+  db.AutoMigrate(models.HotelTicket{})
+
 
   db.AutoMigrate(models.TrainType{})
   db.AutoMigrate(models.TrainClass{})
@@ -61,6 +63,9 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.VendorCar{})
   db.AutoMigrate(models.Brand{})
   db.AutoMigrate(models.Car{})
+
+
+
 }
 
 func initDBUser(db *gorm.DB){
@@ -560,6 +565,7 @@ func initFlight(db *gorm.DB){
     Tax:           100000,
     ServiceCharge: 0,
   })
+
 }
 func initRoute(db *gorm.DB){
   db.Create(&models.Route{
@@ -651,7 +657,7 @@ func initHotelRoom(db *gorm.DB){
     HotelId:       3,
     Name: "Big Room",
     Quantity:      50,
-    ImagePath:     "",
+    ImagePath:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
     MaxGuest:      3,
     Space:         60,
     FreeBreakfast: true,
@@ -697,7 +703,7 @@ func initHotelRoom(db *gorm.DB){
     HotelId:       5,
     Name: "Large Room",
     Quantity:      50,
-    ImagePath:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg`",
+    ImagePath:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
     MaxGuest:      3,
     Space:         70,
     FreeBreakfast: false,
@@ -1101,6 +1107,35 @@ func initRatings(db *gorm.DB){
   })
 
 }
+
+
+func initHotelTickets(db *gorm.DB){
+  db.Create(&models.HotelTicket{
+    HotelId:   1,
+    Date:       time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+
+  })
+  db.Create(&models.HotelTicket{
+    HotelId:   2,
+    Date:       time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+
+  })
+  db.Create(&models.HotelTicket{
+    HotelId:   3,
+    Date:       time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+
+  })
+  db.Create(&models.HotelTicket{
+    HotelId:   4,
+    Date:       time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+
+  })
+  db.Create(&models.HotelTicket{
+    HotelId:   5,
+    Date:       time.Date(2020, 3, 1, 8, 00, 00, 0, time.Now().Location()),
+  })
+}
+
 
 func initTrainClass(db *gorm.DB){
   db.Create(&models.TrainClass{
@@ -1535,8 +1570,6 @@ func initCar(db *gorm.DB){
 
 
 
-
-
 func dropAllTable(db *gorm.DB){
 
     db.DropTable(
@@ -1552,6 +1585,7 @@ func dropAllTable(db *gorm.DB){
       &models.Bed{},
       &models.HotelRoom{},
       &models.Hotel{},
+      &models.HotelTicket{},
       &models.City{},
       &models.Region{},
       &models.Image{},
@@ -1567,7 +1601,7 @@ func dropAllTable(db *gorm.DB){
       &models.Brand{},
       &models.VendorCar{},
       &models.Vendor{},
-      
+
     )
 }
 
@@ -1590,6 +1624,9 @@ func initAllData(db *gorm.DB){
   initImagesForHotelRoom(db)
   initHotelRoom(db)
   initRatings(db)
+
+  initHotelTickets(db)
+  //initHotelTickets(db)
   initTrainClass(db)
   initTrainType(db)
   initTrain(db)

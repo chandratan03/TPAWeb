@@ -1,0 +1,170 @@
+
+
+.hotel-ng-container{
+    box-sizing: border-box;
+    border: 1px solid black !important;
+}
+.hotel-box{
+    box-sizing: border-box;
+    padding: 2%;
+    display:flex;
+    
+    border-radius: 10px;
+    align-items: center;
+    @media (max-width: 500px){
+        flex-wrap: wrap;
+    }
+    .hotel-box-child{
+        min-width: 250px;
+        height: 100%;
+    }
+    
+    >.hotel-mid{
+        width: 80%;
+        padding: 2%;
+        font-size: 20px;
+        >div{
+            display:flex;
+            >button{
+                margin: 0 auto;
+                color: blue;
+                width: 100%;
+            }
+        }
+        >div>.facilities-img{
+            display:block;
+            width: 50px;
+            height: 50px;
+            >img{
+                width:100%;
+                height: 100%;
+            }
+        }
+    }
+    >.hotel-left{
+        width: 20%;
+        height: 20%;
+        min-width: 200px;
+        
+        >img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .hotel-right{  
+        box-sizing: border-box;   
+        width: 20%;
+        height: 100%;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        >div{
+            margin-top: 10px;
+        }
+    }
+}
+
+
+.hotel-room{
+    display:flex;
+    border: 0.5px solid black;
+    border-top: 0;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 10px;
+    @media (max-width: 500px) {
+        flex-wrap: wrap;
+    }
+    >div{
+        width: 50%;
+        min-width: 200px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+    >.hotel-room-left{
+        >.hotel-img{
+            margin: 0 auto;
+            max-width: 150px;
+            width: 80%;
+            height: 80%;
+            >img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .hotel-room-right{
+        >div{
+            display:block;
+            >div{
+                display:flex;
+                >span{
+                    display:block;
+                    width: 50px;
+                    >img{
+                        width:100%;
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.modal{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+
+}
+
+
+
+.form{
+    width: 75%;
+    padding: 2% 4%;
+    border: 1p solid black;
+    border-radius: 20px;
+    background: rgba($color: #FFFFFF, $alpha: 1.0);
+    margin: auto;
+}
+
+.form>div{
+    >button{
+        margin-left: 5px;
+    }
+}
+
+.delete-box{
+    box-sizing: border-box;
+    background-color: #dce2e3;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+
+.hotelPage-number{
+    display:flex;
+    flex-wrap: wrap;
+    >div{
+        margin: 0 3px;
+        display:flex;
+        >button{
+            margin: 0 5px;
+        }
+    }
+}
+
+
+
+
+.hotel-container{
+    display:flex;
+}
