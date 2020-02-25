@@ -65,6 +65,8 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Car{})
 
 
+  db.AutoMigrate(models.Bank{})
+
 
 }
 
@@ -174,11 +176,12 @@ func initHotel(db *gorm.DB){
     Address:            "Jakarta Pusat",
     Quantity:           100,
     ImagePath:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
-    Longitude:          -106.819702,
+    Longitude:           106.819702,
     Latitude:            -6.209132,
     ZoomLevel:          0,
     CityId:             1,
     AreaId: 1,
+    Category:"hotel",
   })
   db.Create(&models.Hotel{
     HotelName:          "Raffles Hotel",
@@ -189,11 +192,12 @@ func initHotel(db *gorm.DB){
     Address:            "Jakarta",
     Quantity:           100,
     ImagePath:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
-    Longitude: -106.819702,
+    Longitude:  106.823975,
     Latitude:  -6.209132,
     ZoomLevel: 0,
     CityId:    1,
     AreaId: 1,
+    Category:"hotel",
   })
   db.Create(&models.Hotel{
     HotelName:          "Marina Bay Sands Hotel",
@@ -209,6 +213,7 @@ func initHotel(db *gorm.DB){
     ZoomLevel: 0,
     CityId:    4,
     AreaId: 2,
+    Category:"villa",
   })
   db.Create(&models.Hotel{
     HotelName:          "Swissôtel The Stamford",
@@ -224,6 +229,7 @@ func initHotel(db *gorm.DB){
     ZoomLevel: 0,
     CityId:    4,
     AreaId: 2,
+    Category:"hotel",
   })
   db.Create(&models.Hotel{
     HotelName:          "Hotel Miramar",
@@ -239,6 +245,7 @@ func initHotel(db *gorm.DB){
     ZoomLevel: 0,
     CityId:    4,
     AreaId: 2,
+    Category:"villa",
   })
 }
 
@@ -1567,7 +1574,17 @@ func initCar(db *gorm.DB){
     ImagePath:   "../../../assets/hotel/search/hotel-images/mobil.jpg",
   })
 }
-
+func initBank(db *gorm.DB){
+  db.Create(&models.Bank{
+    Name:      "BCA",
+  })
+  db.Create(&models.Bank{
+    Name:      "BNI",
+  })
+  db.Create(&models.Bank{
+    Name:      "BRI",
+  })
+}
 
 
 func dropAllTable(db *gorm.DB){
@@ -1636,6 +1653,9 @@ func initAllData(db *gorm.DB){
   initVendorCar(db)
   initBrand(db)
   initCar(db)
+
+  initBank(db)
+
 }
 
 func main() {
@@ -1651,7 +1671,6 @@ func main() {
   dropAllTable(db)
   migrateDB(db)
   initAllData(db)
-
 
 
 

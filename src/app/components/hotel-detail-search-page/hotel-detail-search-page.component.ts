@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { HotelRoomBed } from 'src/app/models/hotel-room-bed';
 import { Hotel } from 'src/app/models/hotel';
 import { Rating } from 'src/app/models/rating';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hotel-detail-search-page',
@@ -14,6 +15,9 @@ import { Rating } from 'src/app/models/rating';
 export class HotelDetailSearchPageComponent implements OnInit {
 
   // @ViewChild('imageSliderContainer', {static:false}) imageSliderContainer: HTMLElement
+  URL : string;
+  FACEBOOKURL: string
+
 
   isShowImageSlide: boolean;
   prevNextClicked = 0;
@@ -27,6 +31,7 @@ export class HotelDetailSearchPageComponent implements OnInit {
     this.prevNextClicked=0;
     // this.renderer.setElementStyle(element, "display","flex")
     // console.log("test");
+    
   }
 
   hotelId: number
@@ -49,7 +54,8 @@ export class HotelDetailSearchPageComponent implements OnInit {
 
   test:Date
   constructor(private hotelService: GraphqHotelService,
-    private renderer: Renderer
+    private renderer: Renderer,
+    private router: Router
     ) {
         
     }
@@ -57,6 +63,8 @@ export class HotelDetailSearchPageComponent implements OnInit {
     
     
   ngOnInit() {
+    this.URL = window.location.href+this.router.url
+    this.FACEBOOKURL = "https://www.facebook.com/sharer/sharer.php?u="+this.URL;
     this.isShowImageSlide = false;
     // let element = document.getElementById("image-slider-container")
     // console.log(element.style)
@@ -67,7 +75,29 @@ export class HotelDetailSearchPageComponent implements OnInit {
     this.getHotelRoom()
     this.getHotelById(this.hotelId)
     
+
+
+
+    // init btn
+    
+    let fbUrl = this.FACEBOOKURL
+    let fbBtn = document.getElementById("facebook");
+    fbBtn.onclick = function(){
+      window.open(fbUrl , "_blank")
+    }
+
+    let linkBtn = document.getElementById("link");
+    linkBtn.onclick = ()=>{
+      navigator.clipboard.writeText(this.URL);
+    }
+    let googleUrl = 'https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Your+Subject+here&body='+this.URL+'&ui=2&tf=1&pli=1'
+    let emailBtn = document.getElementById("email")
+    emailBtn.onclick = ()=>{
+      window.open(googleUrl, "_black")
+    }
   }
+
+
 
   getHotelRoom():void{
     this.hotelRooms$ = this.hotelService.getHotelRoomsByHotelId(this.hotelId).subscribe(async query => {

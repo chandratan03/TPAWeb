@@ -63,6 +63,9 @@ func GetHotelType() *graphql.Object{
         "ratings": &graphql.Field{
           Type:graphql.NewList(GetRatingType()),
         },
+        "category": &graphql.Field{
+            Type:graphql.String,
+        },
       },
       Description: "",
     })

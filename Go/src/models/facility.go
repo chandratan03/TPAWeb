@@ -16,7 +16,7 @@ func GetFacilities()([]Facility,error){
   if err!=nil {
     panic(err)
   }
-
+  defer db.Close()
   var facilities []Facility
   db.Find(&facilities)
   ////////////////////////////////////

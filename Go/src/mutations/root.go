@@ -249,6 +249,49 @@ func GetRoot() *graphql.Object{
         },
         Resolve:resolvers.DeleteHotelTicket,
       },
+      "deleteCartById": &graphql.Field{
+        Type:types.GetCartType(),
+        Args: graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+
+        },
+        Resolve:resolvers.DeleteCartById,
+      },
+
+      "InsertCart": &graphql.Field{
+        Type:types.GetCartType(),
+        Args: graphql.FieldConfigArgument{
+          "userId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "flightId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "quantity": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "type": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.String),
+          },
+          "date": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.String),
+          },
+        },
+        Resolve:resolvers.InsertCart,
+      },
+      "InsertHeaderTransaction": &graphql.Field{
+        Type:types.GetHeaderTransactionType(),
+        Args: graphql.FieldConfigArgument{
+          "userId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+        },
+        Resolve:resolvers.InsertHeaderTransaction,
+      },
+
+
     },
 
 

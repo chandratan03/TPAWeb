@@ -1,4 +1,219 @@
+<div class="loading-page" id="loading-page">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="map-container" id="map-container"> 
+    <div class="bread-left">
+        <div class="filter-box">
+            <h1>Filter</h1>
+            <button mat-button color="primary" (click)="resetFilter()">Reset</button>
+            <div class="star-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Stars</h3>
+                    </mat-expansion-panel-header>
+                    <div class="star star1">
+                        <input [(ngModel)]="starsBool2[0]" type="checkbox" name="" id="checkStar1"
+                            (click)="markHotel(0)">
+                        <span class="stars">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        ({{starsFilterCount[0]}})
+                    </div>
+                    <div class="star star2">
+                        <input [(ngModel)]="starsBool2[1]" type="checkbox" name="" id="checkStar2"
+                            (click)="markHotel(1)">
+                        <span class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+
+                        ({{starsFilterCount[1]}})
+                    </div>
+                    <div class="star star3">
+                        <input [(ngModel)]="starsBool2[2]" type="checkbox" name="" id="checkStar3"
+                            (click)="markHotel(2)">
+                        <span class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+                        ({{starsFilterCount[2]}})
+                    </div>
+                    <div class="star star4">
+                        <input [(ngModel)]="starsBool2[3]" type="checkbox" name="" id="checkStar4"
+                            (click)="markHotel(3)">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+
+                        ({{starsFilterCount[3]}})
+                    </div>
+                    <div class="star star5">
+                        <input [(ngModel)]="starsBool2[4]" type="checkbox" name="" id="checkStar5"
+                            (click)="markHotel(4)">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+
+                        ({{starsFilterCount[4]}})
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <br>
+            <div class="slidePrice">
+                <h3>Price</h3>
+                <mat-slider (input)="initSliderDuration($event)" ticksInterval=1000 min="0" max="15000000" step="300000"
+                    [(ngModel)]="sliderValue"></mat-slider>
+                <p>IDR {{sliderValue}}</p>
+            </div>
+            <div class="facility-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Facilities</h3>
+                    </mat-expansion-panel-header>
+                    <div class="facility" *ngFor="let hotel of hotelFacilities; let i=index">
+                        <mat-checkbox color="primary" (click)="markFacilities(i)"
+                            [(ngModel)]="hotelFacilitiesChecked2[i]">
+                            {{hotel.name}}({{facilitiesFilterCount[i]}})</mat-checkbox>
+                    </div>
+                    <div  *ngIf="allHotelFacilitiesForFilter.length>3">
+                        <button mat-button (click)="setFacilitiesFilter()">more {{allHotelFacilitiesForFilter.length -hotelFacilities}}+</button>
+                    </div>
+
+                </mat-expansion-panel>
+            </div>
+            <br>
+            <div class="area-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Areas</h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let area of areas; let i = index">
+                        <mat-checkbox [(ngModel)]="areasCheckbox2[i]" (click)="checkArea(i)" color="primary">
+                            {{area.areaName}} ({{areasFilterCount[i]}})</mat-checkbox>
+                    </div>
+                    <div *ngIf="allAreasForFilter.length>2">
+                        <button mat-button (click)="setAreasFilter()">more {{allAreasForFilter.length - areas.length}}</button>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <br>
+            <div class="category-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Categories</h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let category of categories; let i= index" class="category">
+                        <mat-checkbox [(ngModel)]="categoryBool2[i]" (click)="markCategory(i)">{{category}}({{categoryFilterCount[i]}})</mat-checkbox>
+                    </div>
+                    <div *ngIf="expression">
+
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <div class="hotelname-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>
+                            HotelName 
+                        </h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let hotel of allHotelsDataForFilter; let i= index" class="hotelMark">
+                        <mat-checkbox [(ngModel)]="hotelBool2[i]" (click)="markHotelName(i)">{{hotel.hotelName}}</mat-checkbox>
+                    </div>
+                    <div *ngIf="allHotelsData.length > 2">
+                        <button mat-button (click)="setHotelNameFilter()">more{{allHotelsData.length - allHotelsDataForFilter.length}}+</button> 
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <i class="fas fa-filter">
+            <mat-select [(ngModel)]="selectedValue" name="item">
+                <mat-option (click)="sortAscName()">
+                    SortByNameAsc
+                </mat-option>
+                <mat-option (click)="sortDscName()">
+                    SortByNameDesc
+                </mat-option>
+                <mat-option (click)="sortAscRating()">
+                    SortByRatingAsc
+                </mat-option>
+                <mat-option (click)="sortDscRating()">
+                    SortByRatingDesc
+                </mat-option>
+                <mat-option (click)="sortAscPrice()">
+                    SortByPriceAsc
+                </mat-option>
+                <mat-option (click)="sortDscPrice()">
+                    SortByPriceDesc
+                </mat-option>
+            </mat-select>
+        </i>
+        <div class="box-map" *ngFor="let hotel of hotels; let i= index">
+            <div class="content-header">
+                <div class="image-content-header">
+                    <img src={{hotel.imagePath}} alt="">
+                </div>
+                <div class="hotel-features">
+                    <span matTooltip={{hf.facility.name}} *ngFor="let hf of hotel.hotelFacilities">
+                        <img src={{hf.facility.imagePath}} alt="">
+                    </span>
+                    <span class="last-facility">
+                        <span>+4</span>
+                    </span>
+                </div>
+            </div>
+            <div class="content-detail">
+                <div class="content-specification">
+                    <h3 class="contentTitle">{{hotel.hotelName}} ({{hotel.category}})</h3>
+                    <div class="stars">
+                        <i class="fas fa-star" *ngFor="let i of [].constructor(hotel.rate)"></i>
+                    </div>
+                    <div class="locations-box">
+                        <span>{{hotel.area.areaName}}</span>,<span>{{hotel.city.cityName}}</span> - <a>BUKA DI
+                            PETA</a>
+                    </div>
+                    <!--  <div class="review-box">
+                    <img src="../../../assets/hotel/search/tripAdvisor_4.svg" alt="">
+                    <span>
+                        <img src="../../../assets/hotel/search/tiketLogo.svg" alt="">
+                        <span>fantastic 9.2/10</span>
+                    </span>
+                </div> -->
+
+                </div>
+                <div class="content-specification">
+                    <p>price:{{hotel.price}} / night </p>
+                    <p>discount(%): {{hotel.discountPercentage}} % </p>
+                    <p>discount(price): {{hotel.discountPrice}}</p>
+                    <p>After Discount(price - discount percentage - discount price):
+                        {{hotel.price - hotel.price*hotel.discountPercentage/100}}</p>
+                    <p>Hotel Left: {{hotel.quantity}}</p>
+                    <p>Total Price:
+                        {{((hotel.price -hotel.price*hotel.discountPercentage/100)-hotel.discountPrice) * this.quantityRoom*  (this.checkOutDate.getDate() - this.checkInDate.getDate())}}
+                    </p>
+                </div>
+            </div>
+            <div class="content-footer">
+                <button mat-button (click)="orderNow(i)">Order now</button>
+            </div>
+
+        </div>
+    </div>
+    <div id="map">
+    </div>
+</div>
+
 <div class="container">
+
     <div class="card-container">
         <div class="card card-contents">
             <div class="card-content">
@@ -41,57 +256,66 @@
         <div class="filter-box">
             <h1>Filter</h1>
             <button mat-button color="primary" (click)="resetFilter()">Reset</button>
-
             <div class="star-box">
-                <div class="star star1">
-                    <input [(ngModel)]="starsBool2[0]" type="checkbox" name="" id="checkStar1" (click)="markHotel(0)">
-                    <span class="stars">
-                        <i class="fas fa-star"></i>
-                    </span>
-                </div>
-                <div class="star star2">
-                    <input [(ngModel)]="starsBool2[1]" type="checkbox" name="" id="checkStar2" (click)="markHotel(1)">
-                    <span class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                </div>
-                <div class="star star3">
-                    <input [(ngModel)]="starsBool2[2]" type="checkbox" name="" id="checkStar3" (click)="markHotel(2)">
-                    <span class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                </div>
-                <div class="star star4">
-                    <input [(ngModel)]="starsBool2[3]" type="checkbox" name="" id="checkStar4" (click)="markHotel(3)">
-                    <span>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                </div>
-                <div class="star star5">
-                    <input [(ngModel)]="starsBool2[4]" type="checkbox" name="" id="checkStar5" (click)="markHotel(4)">
-                    <span>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                </div>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Stars</h3>
+                    </mat-expansion-panel-header>
+                    <div class="star star1">
+                        <input [(ngModel)]="starsBool2[0]" type="checkbox" name="" id="checkStar1"
+                            (click)="markHotel(0)">
+                        <span class="stars">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        ({{starsFilterCount[0]}})
+                    </div>
+                    <div class="star star2">
+                        <input [(ngModel)]="starsBool2[1]" type="checkbox" name="" id="checkStar2"
+                            (click)="markHotel(1)">
+                        <span class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+
+                        ({{starsFilterCount[1]}})
+                    </div>
+                    <div class="star star3">
+                        <input [(ngModel)]="starsBool2[2]" type="checkbox" name="" id="checkStar3"
+                            (click)="markHotel(2)">
+                        <span class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+                        ({{starsFilterCount[2]}})
+                    </div>
+                    <div class="star star4">
+                        <input [(ngModel)]="starsBool2[3]" type="checkbox" name="" id="checkStar4"
+                            (click)="markHotel(3)">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+
+                        ({{starsFilterCount[3]}})
+                    </div>
+                    <div class="star star5">
+                        <input [(ngModel)]="starsBool2[4]" type="checkbox" name="" id="checkStar5"
+                            (click)="markHotel(4)">
+                        <span>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </span>
+
+                        ({{starsFilterCount[4]}})
+                    </div>
+                </mat-expansion-panel>
             </div>
-            <!-- <div class="name-container">
-            <div class="name-asc-box">
-                <input type="radio" name="sort-name" id="" (click)="sortAscName()"> asc
-            </div>
-            <div class="name-des-box">
-                <input type="radio" name="sort-name" id=""  (click)="sortDscName()"> dsc
-            </div>
-        </div>   -->
             <br>
             <div class="slidePrice">
                 <h3>Price</h3>
@@ -100,19 +324,65 @@
                 <p>IDR {{sliderValue}}</p>
             </div>
             <div class="facility-box">
-                <div class="facility" *ngFor="let hotel of hotelFacilities; let i=index">
-                    <mat-checkbox color="primary" (click)="markFacilities(i)" [(ngModel)]="hotelFacilitiesChecked2[i]">
-                        {{hotel.name}}</mat-checkbox>
-                </div>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Facilities</h3>
+                    </mat-expansion-panel-header>
+                    <div class="facility" *ngFor="let hotel of hotelFacilities; let i=index">
+                        <mat-checkbox color="primary" (click)="markFacilities(i)"
+                            [(ngModel)]="hotelFacilitiesChecked2[i]">
+                            {{hotel.name}}({{facilitiesFilterCount[i]}})</mat-checkbox>
+                    </div>
+                    <div  *ngIf="allHotelFacilitiesForFilter.length>3">
+                        <button mat-button (click)="setFacilitiesFilter()">more {{allHotelFacilitiesForFilter.length -hotelFacilities}}+</button>
+                    </div>
+
+                </mat-expansion-panel>
             </div>
             <br>
             <div class="area-box">
-                <h3>Areas</h3>
-                <div *ngFor="let area of areas; let i = index" >
-                    <mat-checkbox [(ngModel)]="areasCheckbox2[i]" (click)="checkArea(i)" color="primary">{{area.areaName}}</mat-checkbox>
-                </div>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Areas</h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let area of areas; let i = index">
+                        <mat-checkbox [(ngModel)]="areasCheckbox2[i]" (click)="checkArea(i)" color="primary">
+                            {{area.areaName}} ({{areasFilterCount[i]}})</mat-checkbox>
+                    </div>
+                    <div *ngIf="allAreasForFilter.length>2">
+                        <button mat-button (click)="setAreasFilter()">more {{allAreasForFilter.length - areas.length}}</button>
+                    </div>
+                </mat-expansion-panel>
             </div>
+            <br>
+            <div class="category-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>Categories</h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let category of categories; let i= index" class="category">
+                        <mat-checkbox [(ngModel)]="categoryBool2[i]" (click)="markCategory(i)">{{category}}({{categoryFilterCount[i]}})</mat-checkbox>
+                    </div>
+                    <div *ngIf="expression">
 
+                    </div>
+                </mat-expansion-panel>
+            </div>
+            <div class="hotelname-box">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <h3>
+                            HotelName 
+                        </h3>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let hotel of allHotelsDataForFilter; let i= index" class="hotelMark">
+                        <mat-checkbox [(ngModel)]="hotelBool2[i]" (click)="markHotelName(i)">{{hotel.hotelName}}</mat-checkbox>
+                    </div>
+                    <div *ngIf="allHotelsData.length > 2">
+                        <button mat-button (click)="setHotelNameFilter()">more{{allHotelsData.length - allHotelsDataForFilter.length}}+</button> 
+                    </div>
+                </mat-expansion-panel>
+            </div>
         </div>
         <div class="information-box">
             <i class="fas fa-filter">
@@ -135,11 +405,11 @@
                     <mat-option (click)="sortDscPrice()">
                         SortByPriceDesc
                     </mat-option>
-
-
                 </mat-select>
-
             </i>
+            <div>
+                <button mat-flat-button id="showMapButton">Show map</button>
+            </div>
             <div class="box" *ngFor="let hotel of hotels; let i= index">
                 <div class="content-header">
                     <div class="image-content-header">
@@ -156,12 +426,13 @@
                 </div>
                 <div class="content-detail">
                     <div class="content-specification">
-                        <h3 class="contentTitle">{{hotel.hotelName}}</h3>
+                        <h3 class="contentTitle">{{hotel.hotelName}} ({{hotel.category}})</h3>
                         <div class="stars">
                             <i class="fas fa-star" *ngFor="let i of [].constructor(hotel.rate)"></i>
                         </div>
                         <div class="locations-box">
-                            <span>{{hotel.area.areaName}}</span>,<span>{{hotel.city.cityName}}</span> - <a>BUKA DI PETA</a>
+                            <span>{{hotel.area.areaName}}</span>,<span>{{hotel.city.cityName}}</span> - <a>BUKA DI
+                                PETA</a>
                         </div>
                         <!--  <div class="review-box">
                         <img src="../../../assets/hotel/search/tripAdvisor_4.svg" alt="">
@@ -176,9 +447,12 @@
                         <p>price:{{hotel.price}} / night </p>
                         <p>discount(%): {{hotel.discountPercentage}} % </p>
                         <p>discount(price): {{hotel.discountPrice}}</p>
-                        <p>After Discount(price - discount percentage - discount price): {{hotel.price - hotel.price*hotel.discountPercentage/100}}</p>
+                        <p>After Discount(price - discount percentage - discount price):
+                            {{hotel.price - hotel.price*hotel.discountPercentage/100}}</p>
                         <p>Hotel Left: {{hotel.quantity}}</p>
-                        <p>Total Price: {{((hotel.price -hotel.price*hotel.discountPercentage/100)-hotel.discountPrice) * this.quantityRoom*  (this.checkOutDate.getDate() - this.checkInDate.getDate())}} </p>
+                        <p>Total Price:
+                            {{((hotel.price -hotel.price*hotel.discountPercentage/100)-hotel.discountPrice) * this.quantityRoom*  (this.checkOutDate.getDate() - this.checkInDate.getDate())}}
+                        </p>
                     </div>
                 </div>
                 <div class="content-footer">

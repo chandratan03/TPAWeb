@@ -1,5 +1,5 @@
 <div class="container">
-    <div (click)="showImageSlide()" *ngIf="isShowImageSlide" id="image-slider-container" class="image-slider-container" >
+    <div (click)="showImageSlide()" *ngIf="isShowImageSlide" id="image-slider-container" class="image-slider-container">
         <div class="image-slider">
             <div class="image-box">
                 <ng-container *ngFor="let image of imagePaths; let i=index">
@@ -7,9 +7,9 @@
                         <img (click)="theImage()" src={{image}} alt="">
                     </div>
                 </ng-container>
-                
+
             </div>
-            <img (click)="prev()" src="../../../assets/image-sliders/left.png" class="prev-next prev" >
+            <img (click)="prev()" src="../../../assets/image-sliders/left.png" class="prev-next prev">
             <img (click)="next()" src="../../../assets/image-sliders/right.png" class="prev-next next">
         </div>
     </div>
@@ -132,7 +132,8 @@
                                 Discount percentage : {{hotel.discountPercentage}}
                             </div>
                             <div>
-                                TotalPrice: {{hotelRoom.price-hotel.discountPrice - (hotelRoom.price- (hotelRoom.price*hotel.discountPercentage/100))}}
+                                TotalPrice:
+                                {{hotelRoom.price-hotel.discountPrice - (hotelRoom.price- (hotelRoom.price*hotel.discountPercentage/100))}}
                             </div>
                         </div>
                         <button color="primary" mat-button>Pesan Sekarang</button>
@@ -146,7 +147,7 @@
         <h1>ULASAN</h1>
         <ng-container *ngFor="let ratings of ratingsPagination; let i=index">
             <div *ngIf="ratingPage[i]" class="hotel-rating">
-                <div class="hotel-rating-box"  *ngFor="let rating of ratings">
+                <div class="hotel-rating-box" *ngFor="let rating of ratings">
                     <div class="hotel-rating-profile">
                         <h3>Name: Anonymous</h3>
                         <h6>Date: {{rating.date | date}}</h6>
@@ -159,14 +160,26 @@
                 </div>
             </div>
         </ng-container>
-        
+
         <div class="hotel-rating-page-number">
             <button mat-button (click)="prevRating()" class="rating-page-prev rating-page-prevnext">Prev</button>
             <span class="rating-page-number-container">
-                <span (click)="ratingGotoPage(i)"  class="rating-page-number" *ngFor="let item of [].constructor(lengthOfRatingPage);let i=index">{{i+1}}</span>
-               
+                <span (click)="ratingGotoPage(i)" class="rating-page-number"
+                    *ngFor="let item of [].constructor(lengthOfRatingPage);let i=index">{{i+1}}</span>
+
             </span>
             <button mat-button (click)="nextRating()" class="rating-page-next rating-page-prevnext">Next</button>
+        </div>
+    </div>
+    <div class="share-container">
+        <div class="share" id="facebook">
+            <i class="fab fa-facebook-f"></i>
+        </div>
+        <div class="share link" id="link" >
+            <i class="fas fa-link"></i>
+        </div>
+        <div class="share email" id="email" >
+            <i class="fas fa-envelope-square"></i>
         </div>
     </div>
 

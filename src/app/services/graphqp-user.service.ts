@@ -154,6 +154,7 @@ export class GraphqpUserService {
             quantity
             longitude
             latitude
+            category
             city{
               id
               cityName

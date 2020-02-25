@@ -31,7 +31,7 @@ type Hotel struct{
   ZoomLevel int
   CityId	int `json:"city_id"`
   City City `gorm:"foreignkey:city_id"`
-
+  Category string
   ///////////////////////////////////////////////////////<<THIS
   HotelRooms[] HotelRoom `gorm:"foreignKey:hotel_id"`
 
@@ -44,7 +44,7 @@ func GetHotels()([]Hotel, error){
    db, err := database.Connect()
    if err!=nil{
      return nil, err
-   }  
+   }
 
    var hotels []Hotel
 

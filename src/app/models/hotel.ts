@@ -9,7 +9,7 @@ export class Hotel {
     address: string
     rate: number
     price: number
-    longtitude: number
+    longitude: number
     latitude: number
     city: City
     discountPrice: number
@@ -20,4 +20,5 @@ export class Hotel {
     ratings: Rating[]
     ratingNumber:  number
     area: Area
+    category: string
 }

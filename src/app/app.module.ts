@@ -39,6 +39,8 @@ import { GraphqServiceComponent } from './services/graphq-service/graphq-service
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { ManageTrainComponent } from './components/manage-train/manage-train.component';
 import { ManageHotelComponent } from './components/manage-hotel/manage-hotel.component';
+import { HotelSearchPage2Component } from './components/hotel-search-page2/hotel-search-page2.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   exports: [
@@ -71,6 +73,8 @@ import { ManageHotelComponent } from './components/manage-hotel/manage-hotel.com
     PopUpComponent,
     ManageTrainComponent,
     ManageHotelComponent,
+    HotelSearchPage2Component,
+    MapComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [

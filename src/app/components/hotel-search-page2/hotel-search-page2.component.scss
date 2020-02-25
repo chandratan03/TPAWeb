@@ -113,34 +113,7 @@
 }
 
 
-.modal{
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    background-color: rgba($color: #000000, $alpha: 0.5);
 
-}
-
-
-
-.form{
-    width: 75%;
-    padding: 2% 4%;
-    border: 1p solid black;
-    border-radius: 20px;
-    background: rgba($color: #FFFFFF, $alpha: 1.0);
-    margin: auto;
-}
-
-.form>div{
-    >button{
-        margin-left: 5px;
-    }
-}
 
 .delete-box{
     box-sizing: border-box;
@@ -175,19 +148,4 @@
 }
 .fa-star{
     color: yellow
-}
-
-
-.loading-page{
-    position: fixed;
-    top: 0;
-    left:0;
-    z-index: 100;
-    background-color: rgba($color: #000000, $alpha: 0.5);
-    width: 100%;
-    height: 100%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    
 }

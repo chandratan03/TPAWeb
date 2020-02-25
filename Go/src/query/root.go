@@ -210,6 +210,48 @@ func GetRoot() *graphql.Object{
           },
         },
       },
+      "banks":{
+        Type:graphql.NewList(types.GetBankType()),
+        Resolve:resolvers.GetBanks,
+      },
+      "carts":{
+        Type:graphql.NewList(types.GetCartType()),
+        Resolve:resolvers.GetCarts,
+      },
+      "cartsByUserId": {
+        Type: graphql.NewList(types.GetCartType()),
+        Resolve:resolvers.GetCartsByUserId,
+        Args:graphql.FieldConfigArgument{
+          "userId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+      },
+
+      "headerTransactions":{
+        Type: graphql.NewList(types.GetHeaderTransactionType()),
+        Resolve:resolvers.GetHeaderTransations,
+
+      },
+
+      "headerTransactionsByUserId":{
+        Type: graphql.NewList(types.GetHeaderTransactionType()),
+        Resolve:resolvers.GetHeaderTransactionByUserId,
+        Args:graphql.FieldConfigArgument{
+          "userId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+      },
+      "detailTransactions":{
+        Type:graphql.NewList(types.GetDetailTransactionType()),
+        Resolve:resolvers.GetDetailTransactions,
+      },
+      
+
+
+
+
     },
 
 

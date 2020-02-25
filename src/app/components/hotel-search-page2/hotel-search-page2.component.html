@@ -1,63 +1,10 @@
-<div class="loading-page" id="loading-page">
-    <mat-spinner class="loading"></mat-spinner>
-</div>
-<div class="modal" id="modal">
-    <div class="form" id="form">
-        <p>id: {{id}}</p>
-        <div class="form-city">
-            <mat-select placeholder="city" [(value)]="formCity" name="item">
-                <mat-option (click)="getHotelsAfterChooseCity(city.id)" *ngFor="let city of cities" [value]="city.id">
-                    {{city.cityName}} - ({{city.region.regionName}})
-                </mat-option>
-            </mat-select>
-        </div>
-        <br>
-        <div>
-            <mat-select placeholder="hotel" [(value)]="hotelId" name="item">
-                <mat-option (click)="getPriceAfterChooseHotel(i)" *ngFor="let hotel of formHotels; let i = index"
-                    [value]="hotel.id">
-                    {{hotel.hotelName}}
-                </mat-option>
-            </mat-select>
-        </div>
-        <br>
-        <div>
-            <mat-form-field>
-                <input matInput [(ngModel)]="price" placeholder="price" type="number">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <input matInput [(ngModel)]="quantity" placeholder="quantity" type="number">
-            </mat-form-field>
-        </div>
-        <br>
-        <div>
-            <mat-form-field>
-                <mat-label>Date</mat-label>
-                <input [(ngModel)]="date" matInput [matDatepicker]="picker1">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <div>
-            <button color="primary" (click)="insert()" mat-flat-button>insert</button>
-            <button color="primary" (click)="update()" mat-flat-button>update</button>
-        </div>
-    </div>
-</div>
 
-<app-pop-up class="pop-up-box" [isOpen]="popUpDelete">
-    <div class="delete-box">
-        <p>Are you sure want to delete? </p>
-        <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
-        <button mat-flat-button class="button" (click)="closePopUp()">No</button>
-    </div>
-</app-pop-up>
 
-<button color="primary" id="showForm" mat-flat-button>show form</button>
 <div class="container">
-    <button mat-button (click)="reset()">reset</button>
+    <div>
+        <button mat-button (click)="reset()">reset</button>
+        
+    </div>
     <div class="hotel-container">
         <div class="filter-container">
             <h1>Filter</h1>
@@ -149,6 +96,28 @@
 
 
         <div>
+            <i class="fas fa-filter">
+                <mat-select [(ngModel)]="selectedValue" name="item">
+                    <mat-option (click)="sortAscName()">
+                        SortByNameAsc
+                    </mat-option>
+                    <mat-option (click)="sortDscName()">
+                        SortByNameDesc
+                    </mat-option>
+                    <mat-option (click)="sortAscRating()">
+                        SortByRatingAsc
+                    </mat-option>
+                    <mat-option (click)="sortDscRating()">
+                        SortByRatingDesc
+                    </mat-option>
+                    <mat-option (click)="sortAscPrice()">
+                        SortByPriceAsc
+                    </mat-option>
+                    <mat-option (click)="sortDscPrice()">
+                        SortByPriceDesc
+                    </mat-option>
+                </mat-select>
+            </i>
             <ng-container class="hotel-ng-container" *ngFor="let hotelTicket of hotelTickets; let i =index">
                 <div class="hotel-box">
                     <div class="hotel-box-child hotel-left">

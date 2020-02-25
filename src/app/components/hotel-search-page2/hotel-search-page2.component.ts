@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSliderChange } from '@angular/material';
+import { Facility } from 'src/app/models/facility';
+import { Hotel } from 'src/app/models/hotel';
 import { HotelTicket } from 'src/app/models/hotel-ticket';
 import { Subscription } from 'rxjs';
-import { GraphqHotelService } from 'src/app/services/graphq-hotel.service';
 import { City } from 'src/app/models/city';
-import { Hotel } from 'src/app/models/hotel';
-import { query } from '@angular/animations';
-import { HotelFilterComponent } from '../hotel-filter/hotel-filter.component';
-import { Facility } from 'src/app/models/facility';
-import { MatSliderChange } from '@angular/material';
-import { validate } from 'graphql';
+import { GraphqHotelService } from 'src/app/services/graphq-hotel.service';
 
 @Component({
-  selector: 'app-manage-hotel',
-  templateUrl: './manage-hotel.component.html',
-  styleUrls: ['./manage-hotel.component.scss']
+  selector: 'app-hotel-search-page2',
+  templateUrl: './hotel-search-page2.component.html',
+  styleUrls: ['./hotel-search-page2.component.scss']
 })
-export class ManageHotelComponent implements OnInit {
+export class HotelSearchPage2Component implements OnInit {
 
-
+  
   allHotelTickets: HotelTicket[]
   savedHotelTickets: HotelTicket[]
   hotelTickets: HotelTicket[]
@@ -53,7 +50,6 @@ export class ManageHotelComponent implements OnInit {
     this.getHotels()
     this.formHotels=[]
     this.getCities()
-    this.setModal()
   }
   from:number=0;
   hotelPage:number;
@@ -92,30 +88,6 @@ export class ManageHotelComponent implements OnInit {
       this.hotels$.unsubscribe()
       // this.insert$.unsubscribe()
       
-  }
-
-  setModal():void{
-    let modal = document.getElementById("modal")
-    let btn = document.getElementById("showForm")
-    btn.onclick =()=>{
-      this.formCity = -1
-      
-      this.hotelId = null
-      // init routes
-      
-      //
-      
-      this.date = null
-      this.price = 0
-      this.quantity = null
-      modal.style.display = "flex"
-    }
-    window.onclick = (event)=>{
-      if(event.target == modal){
-        
-        modal.style.display=  "none"
-      }
-    }
   }
 
   getCities():void{
@@ -174,10 +146,13 @@ export class ManageHotelComponent implements OnInit {
       this.hotelPage = Math.ceil(this.savedHotelTickets.length/this.SLICEBY)
       console.log(this.savedHotelTickets)
       this.setData()
+
+
+      
+
+
       this.setFilter()
-    },null, ()=>{
-      document.getElementById("loading-page").style.display="none"}
-      )
+    })
   }
 
   insert():void{
@@ -510,5 +485,67 @@ export class ManageHotelComponent implements OnInit {
       }
     }
   }
+
+  sortAscPrice():void{
+    this.allHotelTickets.sort((a,b)=>{
+      if(a.price < b.price)return -1;
+      else if(a.price>b.price)return 1
+      else return 0
+    })
+    this.validateAllFilter()
+  }
   
+  sortDscPrice():void{
+    this.allHotelTickets.sort((a,b)=>{
+      if(a.price > b.price)return -1;
+      else if(a.price<b.price)return 1
+      else return 0
+    })
+    
+    this.validateAllFilter()
+  }
+
+  sortAscRating(): void {
+    // this.AscOrDscName = 1
+    this.allHotelTickets.sort((a, b) => {
+      if (a.hotel.rate< b.hotel.rate) return -1;
+      else if (a.hotel.rate > b.hotel.rate) return 1;
+      else return 0;
+    });
+    this.from=0;
+    this.validateAllFilter()
+  }
+    
+  sortDscRating(): void {
+    // this.AscOrDscName = 1
+    this.allHotelTickets.sort((a, b) => {
+      if (a.hotel.rate> b.hotel.rate) return -1;
+      else if (a.hotel.rate < b.hotel.rate) return 1;
+      else return 0;
+    })
+    
+    this.validateAllFilter()
+  }
+  sortAscName(): void {
+    // this.AscOrDscName = 1
+    this.allHotelTickets.sort((a, b) => {
+      if (a.hotel.hotelName < b.hotel.hotelName) return -1;
+      else if (a.hotel.hotelName > b.hotel.hotelName) return 1;
+      else return 0;
+    });
+    
+    this.validateAllFilter()
+  }
+
+  sortDscName(): void {
+    // this.AscOrDscName = 2
+    this.hotelTickets.sort((a, b) => {
+      if (a.hotel.hotelName > b.hotel.hotelName) return -1;
+      else if (a.hotel.hotelName < b.hotel.hotelName) return 1;
+      else return 0;
+    });
+    
+    this.validateAllFilter()
+  }
+
 }

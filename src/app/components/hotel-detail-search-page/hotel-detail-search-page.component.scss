@@ -294,3 +294,20 @@
 .rating-page-number-container{
     margin: 0 20px;
 }
+
+
+.share-container{
+    box-sizing: border-box  ;
+    margin: 2%;
+    display:flex;   
+    >.share{
+        box-sizing: border-box  ;
+        margin-left: 10px;
+        border: 0.5px solid black;
+        padding: 10px;
+        border-radius: 20px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

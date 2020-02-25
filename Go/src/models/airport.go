@@ -27,10 +27,6 @@ func GetAirports()([]Airport, error){
   for i,_ := range airports{
     db.Model(&airports[i]).Related(&airports[i].City).Model(&airports[i].City).Related(&airports[i].City.Region)
   }
-
-
-
-
   defer db.Close()
   return airports, nil
 }
