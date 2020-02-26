@@ -23,4 +23,6 @@ export class Flight {
     timeDepature: Time
     timeArrival: Time    
     airlineFacilities: AirlineFacility[]
+    total:number
+    classPrice:number
 }

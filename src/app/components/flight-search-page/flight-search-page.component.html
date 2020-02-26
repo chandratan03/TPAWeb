@@ -203,7 +203,7 @@
                         </div>
                         <div class="flight-detail-right">
                             <p>IDR {{flight.price + (flight.price*classPrice)}}/pax</p>
-                            <button>PILIH</button>
+                            <button mat-flat-button color="accent" (click)="checkOut(i)">Pilih</button>
                         </div>
 
                     </div>

@@ -66,10 +66,27 @@ func migrateDB(db *gorm.DB) {
 
 
   db.AutoMigrate(models.Bank{})
+  db.AutoMigrate(models.HeaderTransaction{})
+  db.AutoMigrate(models.DetailTransaction{})
+  db.AutoMigrate(models.Cart{})
 
-
+  db.AutoMigrate(models.PromoCode{})
 }
 
+func initPromoCodes(db *gorm.DB){
+  db.Create(&models.PromoCode{
+    Code:               "AAAAA",
+    DiscountPercentage: 10,
+  })
+  db.Create(&models.PromoCode{
+    Code:               "CCCCC",
+    DiscountPercentage: 10,
+  })
+  db.Create(&models.PromoCode{
+    Code:               "DDDDD",
+    DiscountPercentage: 10,
+  })
+}
 func initDBUser(db *gorm.DB){
   db.Create(&models.User{
     //ID:          0,
@@ -81,6 +98,7 @@ func initDBUser(db *gorm.DB){
     Email:       "chandra@email.com",
     Password:    "chandra",
     PhoneNumber: "+628123123123",
+    Nationality: "Indonesia",
   })
 }
 
@@ -1592,6 +1610,12 @@ func dropAllTable(db *gorm.DB){
     db.DropTable(
       &models.User{},
       &models.HotelFacility{},
+
+      &models.Bank{},
+      &models.DetailTransaction{},
+      &models.HeaderTransaction{},
+      &models.Cart{},
+
       &models.Route{},
       &models.AirlineFacility{},
       &models.Facility{},
@@ -1618,7 +1642,7 @@ func dropAllTable(db *gorm.DB){
       &models.Brand{},
       &models.VendorCar{},
       &models.Vendor{},
-
+      &models.PromoCode{},
     )
 }
 
@@ -1655,7 +1679,7 @@ func initAllData(db *gorm.DB){
   initCar(db)
 
   initBank(db)
-
+  initPromoCodes(db)
 }
 
 func main() {
@@ -1696,6 +1720,8 @@ func main() {
   })
   ////
   wrapped := middleware.CorsMiddleware(h)
+  r:= middleware.NewRoutes()
+  r.Handle("/API", wrapped)
 
   // for handling routing/
   //
@@ -1703,8 +1729,8 @@ func main() {
   //router.HandleFunc("/register", handlers.RegisterHandler).Methods("POST")
   //fmt.Println("port serve at localhost:8000")
   //http.Handle("/", router)
-  fmt.Println("Success listen to port 8000")
-  log.Fatal(http.ListenAndServe(":8000", wrapped))
+  fmt.Println("Success listen to port 8000/API")
+  log.Fatal(http.ListenAndServe(":8000", r))
   //http.ListenAndServe(":80")
 //
 

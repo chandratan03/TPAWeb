@@ -318,7 +318,7 @@ export class GraphqpUserService {
             duration
             price
             tax
-            
+            serviceCharge
             airline{
               id 
               name

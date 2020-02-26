@@ -29,6 +29,9 @@ func GetRoot() *graphql.Object{
           "phoneNumber" : &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
           },
+          "nationality": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
         },
         Resolve: resolvers.CreateUser,
       },

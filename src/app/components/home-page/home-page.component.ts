@@ -43,5 +43,8 @@ export class HomePageComponent implements OnInit {
     }
   }
 
+  sendMessage():void{
+    window.open("https://api.whatsapp.com/send?phone=082172207470", "")
+  }
 
 }

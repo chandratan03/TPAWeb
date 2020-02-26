@@ -12,7 +12,7 @@ func GetHeaderTransations(params graphql.ResolveParams)(interface{}, error){
 
 func GetHeaderTransactionByUserId(params graphql.ResolveParams)(interface{}, error){
   userId := params.Args["userId"].(int)
-  rows := models.InsertHeaderTransaction(userId)
+  rows := models.GetHeaderTransactionByUserId(userId)
   return rows,nil
 }
 

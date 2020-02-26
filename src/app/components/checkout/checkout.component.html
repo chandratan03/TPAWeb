@@ -1,0 +1,127 @@
+<div class="countdown-box">
+    COUNTDOWN {{timerMinutes}}:{{timerSeconds}}
+</div>
+<app-pop-up [isOpen]="isTimeOut">
+    <div class="pop-up">
+        YOUR TIME IS UP
+    </div>
+</app-pop-up>
+<div class="container">
+
+    <div class="form">
+        <div class="user-form">
+            <h2>User detail</h2>
+            <br>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-error *ngIf="title==  ''"> </mat-error>
+                    <mat-select [(ngModel)]="title" placeholder="Title" name="item">
+                        <mat-option [value]="tuan">
+                            Tuan.
+                        </mat-option>
+                        <mat-option [value]="nyonya">
+                            Nyonya.
+                        </mat-option>
+                        <mat-option [value]="none">
+                            None.
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-error *ngIf="name ==  ''"></mat-error>
+                    <mat-label>Nama Lengkap</mat-label>
+                    <input [(ngModel)]="name" matInput placeholder="Name Lengkap">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-error *ngIf="email==  ''"></mat-error>
+                        <mat-label>Email</mat-label>
+                        <input [(ngModel)]="email" matInput placeholder="Email">
+                </mat-form-field>
+            </div>
+            <div>
+
+                <mat-form-field appearance="outline">
+
+                    <mat-error *ngIf="nationality ==  ''"></mat-error>
+                    <mat-select placeholder="Nationality" [(ngModel)]="nationality" name="item">
+                        <mat-option *ngFor="let nationality of nationalities" [value]="nationality.name">
+                            {{nationality.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-error *ngIf="true"></mat-error>
+
+                    <mat-label>
+                        Phonenumber
+                    </mat-label>
+                    <input [(ngModel)]="phoneNumber" matInput placeholder="Phonenumber">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="passenger-form-container">
+            <h2>Passenger Detail</h2>
+            <br>
+            <div class="passenger-form" *ngFor="let n of [].constructor(quantity); let i= index">
+                <h4>Passenger {{i+1}}</h4>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Title" [(ngModel)]="passengers[i].title" name="item">
+                            <mat-option [value]="tuan">
+                                Tuan.
+                            </mat-option>
+                            <mat-option [value]="nyonya">
+                                Nyonya.
+                            </mat-option>
+                            <mat-option [value]="none">
+                                None.
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nama Lengkap</mat-label>
+                        <input matInput placeholder="Name Lengkap" [(ngModel)]="passengers[i].title">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="Nationality" [(ngModel)]="passengers[i].nationality" name="item">
+                            <mat-option *ngFor="let nationality of nationalities" [value]="nationality.name">
+                                {{nationality.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="button-div">
+            <button mat-flat-button>Lanjutkan</button>
+        </div>
+    </div>
+    <div class="flight-container">
+        <h1>Penerbangan</h1>
+        <div>
+            <div class="flight-info">
+                <img src={{flight.airline.path}} alt="">
+                {{flight.from.city.cityName}} -> {{flight.to.city.cityName}} ( {{flight.departure}} -
+                {{flight.arrival}})
+            </div>
+            <p>price: {{flight.price}}</p>
+            <p>tax: {{flight.tax}}</p>
+            <p>service charge: {{flight.serviceCharge}}</p>
+            <p>quantity:{{quantity}}</p>
+            <p>class: {{selectedClass}}</p>
+            <h4>Total: {{flight.total}}</h4>
+        </div>
+    </div>
+</div>

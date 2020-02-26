@@ -129,6 +129,7 @@ export class FlightSearchPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(sessionStorage.getItem("checkoutFlight"))
     this.classes = [
       "ekonomi",
       "premium ekonomi",
@@ -175,27 +176,41 @@ export class FlightSearchPageComponent implements OnInit {
       }
     }.bind(this)
     this.getCities();
-
-
-
-
-
-
-
-
-    
   }
+
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.flights$.unsubscribe()
-    this.flights2$.unsubscribe()
+    // this.flights2$.unsubscribe()
     this.airlineFacilitiesSubscription$.unsubscribe()
     this.cities$.unsubscribe()
   }
 
   //card
+  checkOut(i:number):void{
+    // this.selectedFromId = json["fromId"]
+    // this.selectedToId = json["toId"]
+    // this.fromDate = new Date(json["fromDate"])
+    // this.backDate = new Date(json["backDate"])
+    // this.manyPassenger = json["manyPassenger"]
+    // this.selectedClass  = json["class"]
+    // this.selectedClass = this.selectedClass.toLowerCase()
+    sessionStorage.removeItem("flightQuery")
+    
+    let quantity = this.manyPassenger
+    let flight = this.flights[i]
+    let selectClass= this.selectedClass
 
+    let json = {
+      "flight": flight,
+      "quantity": quantity,
+      "selectClass": selectClass
+    }
+    let stringiJson = JSON.stringify(json)
+    sessionStorage.setItem("checkoutFlight", stringiJson)
+    this.router.navigateByUrl("cart/checkout")
+  }
 
   flightSearchPage():void{
     if(this.selectedFromId == null){

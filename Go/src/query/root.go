@@ -247,11 +247,19 @@ func GetRoot() *graphql.Object{
         Type:graphql.NewList(types.GetDetailTransactionType()),
         Resolve:resolvers.GetDetailTransactions,
       },
-      
-
-
-
-
+      "promoCodeByCode":{
+          Type:types.GetPromoCodeType(),
+          Resolve:resolvers.GetPromoByCode,
+          Args:graphql.FieldConfigArgument{
+            "code": &graphql.ArgumentConfig{
+              Type:graphql.String,
+            },
+          },
+      },
+      "promoCodes":{
+         Type: graphql.NewList(types.GetPromoCodeType()),
+         Resolve:resolvers.GetPromos,
+      },
     },
 
 

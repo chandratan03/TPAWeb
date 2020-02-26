@@ -134,3 +134,16 @@
     width: 100%;
     background-color:  rgba($color: black, $alpha: 0.7); 
 }
+
+.whatsapp-box{
+    position: fixed;
+    z-index: 1000;
+    width: 200px;
+    height: 200px;
+    right: 0;
+    bottom: 0;
+    >.fa-whatsapp{
+        width: 200px;
+        height: 200px;
+    }
+}

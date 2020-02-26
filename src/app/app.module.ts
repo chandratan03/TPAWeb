@@ -41,6 +41,8 @@ import { ManageTrainComponent } from './components/manage-train/manage-train.com
 import { ManageHotelComponent } from './components/manage-hotel/manage-hotel.component';
 import { HotelSearchPage2Component } from './components/hotel-search-page2/hotel-search-page2.component';
 import { MapComponent } from './components/map/map.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ChatPageComponent } from './components/chat-page/chat-page.component';
 
 @NgModule({
   exports: [
@@ -75,6 +77,8 @@ import { MapComponent } from './components/map/map.component';
     ManageHotelComponent,
     HotelSearchPage2Component,
     MapComponent,
+    CheckoutComponent,
+    ChatPageComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -129,6 +133,12 @@ import { MapComponent } from './components/map/map.component';
       },
       {
         path: "manage/hotel", component: ManageHotelComponent,
+      },
+      {
+        path: "cart/checkout", component: CheckoutComponent,
+      },
+      {
+        path:'chatPage', component:ChatPageComponent,
       }
 
     ]),
@@ -146,7 +156,7 @@ export class AppModule {
     httpLink: HttpLink
   ){
     apollo.create({
-      link: httpLink.create({uri:'http://localhost:8000'}),
+      link: httpLink.create({uri:'http://localhost:8000/API'}),
       cache: new InMemoryCache()
     })
   }
