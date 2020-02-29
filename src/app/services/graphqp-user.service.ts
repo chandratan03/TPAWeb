@@ -19,13 +19,32 @@ export class GraphqpUserService {
   getUserById(id: number): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
-      query getUser($id: ID!){
-        user(id: $id){
+      query getUser($id: Int!){
+        userById(id: $id){
+          
+          firstName
+          lastName
+          phoneNumber
           email
-
           id
-          password
-        }
+          address
+          gender
+          nationality
+          emailVerified
+          phoneVerified
+          city{
+            cityCode
+            cityName
+            id
+            region{
+              regionName
+
+              id
+            }
+
+          }
+          cityId
+          postCode   }
       }`,
       variables: {
         "id": id
@@ -58,11 +77,26 @@ export class GraphqpUserService {
       query: gql`
         query getUserByEmail($email: String!){
         userByEmail(email: $email){
-          email
           firstName
-          lastName
-          password
-          phoneNumber
+            lastName
+            phoneNumber
+            email
+            gender
+            id
+            address
+            city{
+              cityCode
+              cityName
+              id
+              region{
+                regionName
+
+                id
+              }
+
+            }
+            cityId
+            postCode   
         }
       }`,
       variables: {
@@ -96,11 +130,26 @@ export class GraphqpUserService {
       query: gql`
         query getUserByEmailAndPassword($email: String!, $password: String!){
           userByEmailAndPassword(email: $email, password: $password){
-            email
             firstName
             lastName
-            password
             phoneNumber
+            email
+            id
+            address
+            gender
+            city{
+              cityCode
+              cityName
+              id
+              region{
+                regionName
+
+                id
+              }
+
+            }
+            cityId
+            postCode   
           }
         }
       `,
@@ -137,6 +186,77 @@ export class GraphqpUserService {
       }
     })
   }
+
+  updateUserById(id:number, firstName:string, 
+    lastName:string, email:string, phoneNumber:string, 
+    nationality:string, address:string, cityId:number, 
+    postCode:string, gender:string):Observable<any>{
+      return this.apollo.mutate<any>({
+        mutation:gql`
+        mutation updateUserById($id:Int!, $firstName:String!,
+          $lastName:String!, $email:String!, $phoneNumber:String!,
+          $nationality:String!, $address:String!, $cityId:Int!, 
+          $postCode:String!, $gender:String!
+        ){
+          UpdateUserById(id:$id, firstName:$firstName,
+            lastName:$lastName, email:$email,
+            phoneNumber:$phoneNumber, nationality:$nationality,
+            address:$address, cityId:$cityId, postCode:$postCode,
+            gender:$gender
+            
+          ){
+            id
+          }
+        }
+        `,
+        variables:{
+          "id":id,
+          "firstName":firstName,
+          "lastName":lastName,
+          "email":email,
+          "phoneNumber":phoneNumber,
+          "nationality":nationality,
+          "address": address,
+          "cityId":cityId,
+          "postCode":postCode,
+          "gender": gender
+        }
+      })
+  }
+
+
+  updateEmailVerified(id:number):Observable<any>{
+    return this.apollo.mutate({
+      mutation:gql`
+        mutation updateVerifiedEmail($id:Int!){
+          updateVerifiedEmail(id:$id){
+            id
+          }
+        }
+      `,variables:{
+        "id":id
+      }
+    })
+  }
+  updatePhoneVerified(id:number):Observable<any>{
+    return this.apollo.mutate({
+      mutation:gql`
+        mutation updateVerifiedPhone($id:Int!){
+          updateVerifiedPhone(id:$id){
+            id
+          }
+        }
+      `
+      ,variables:{
+        "id":id
+      }
+    })
+  }
+
+
+
+
+
 
   getHotels(): Observable<Query> {
     return this.apollo.query<Query>({

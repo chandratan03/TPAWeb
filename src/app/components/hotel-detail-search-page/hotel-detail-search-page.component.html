@@ -1,3 +1,47 @@
+
+<div class="map-container" id="map-container"> 
+    <div class="bread-left">
+        <div class="box-map" *ngFor="let hotel of hotels; let i= index">
+            <div class="content-header">
+                <div class="image-content-header">
+                    <img src={{hotel.imagePath}} alt="">
+                </div>
+                
+            </div>
+            <div class="content-detail">
+                <div class="content-specification">
+                    <h3 class="contentTitle">{{hotel.hotelName}} ({{hotel.category}})</h3>
+                    <div class="stars">
+                        <i class="fas fa-star" *ngFor="let i of [].constructor(hotel.rate)"></i>
+                    </div>
+                    <div class="locations-box">
+                        <span>{{hotel.area.areaName}}</span>,<span>{{hotel.city.cityName}}</span> - <a>BUKA DI
+                            PETA</a>
+                    </div>
+                </div>
+                <div class="content-specification">
+                    <p>price:{{hotel.price}} / night </p>
+                    <p>discount(%): {{hotel.discountPercentage}} % </p>
+                    <p>discount(price): {{hotel.discountPrice}}</p>
+                    <p>After Discount(price - discount percentage - discount price):
+                        {{hotel.price - hotel.price*hotel.discountPercentage/100}}</p>
+                    <p>Hotel Left: {{hotel.quantity}}</p>
+                    <!-- <p>Total Price:
+                        {{((hotel.price -hotel.price*hotel.discountPercentage/100)-hotel.discountPrice) * this.quantityRoom*  (this.checkOutDate.getDate() - this.checkInDate.getDate())}}
+                    </p> -->
+                </div>
+            </div>
+            <div class="content-footer">
+                <button mat-button (click)="orderNow(i)">Order now</button>
+            </div>
+
+        </div>
+    </div>
+    <div id="map">
+    </div>
+</div>
+
+
 <div class="container">
     <div (click)="showImageSlide()" *ngIf="isShowImageSlide" id="image-slider-container" class="image-slider-container">
         <div class="image-slider">
@@ -13,35 +57,38 @@
             <img (click)="next()" src="../../../assets/image-sliders/right.png" class="prev-next next">
         </div>
     </div>
-
+    
 
 
     <div class="hotel-box">
         <div class="hotel-images-box">
             <div class="hotel-images-box-child hotel-image-left">
-                <img src="../../../assets/hotel/search/hotel-images/shinchan-image.jpg" alt="">
+                <img src={{imagePaths[0]}} alt="">
             </div>
             <div class="hotel-images-box-child hotel-image-right-box">
                 <div class="hotel-images-right-top hotel-images-right-child">
-                    <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                    <img src={{imagePaths[1]}} alt="">
                 </div>
                 <div class="hotel-images-right-bottom hotel-images-right-child">
                     <div class="hotel-images-right-bottom-left hotel-images-right-bottom-child">
-                        <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                        <img src={{imagePaths[2]}} alt="">
                     </div>
                     <div class="hotel-images-right-bottom-right hotel-images-right-bottom-child ">
                         <div class="read-more-box" (click)="showImageSlide()">
                             <span>Read More+</span>
                         </div>
-                        <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                        <img src={{imagePaths[3]}} alt="">
                     </div>
                 </div>
             </div>
         </div>
+        <div>
+            <button mat-flat-button color="primary" id="showMapButton">Show nearest with map</button>
+        </div>
         <div class="hotel-detail">
             <div class="hotel-detail-top">
                 <div>
-                    {{hotel.city.region.regionName}} > {{hotel.city.cityName}}
+                    {{hotel.city.region.regionName}} > {{hotel.city.cityName}} > {{hotel.area.areaName}}
                 </div>
                 <div>
                     <span>
@@ -169,6 +216,12 @@
 
             </span>
             <button mat-button (click)="nextRating()" class="rating-page-next rating-page-prevnext">Next</button>
+        </div>
+
+        <div class="nearest-hotel-container">
+            <div class="nearest-hotel-container">
+
+            </div>
         </div>
     </div>
     <div class="share-container">

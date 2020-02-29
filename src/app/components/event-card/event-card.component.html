@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="card card-header">
+        <div class="ticket-logo">
+            <i class="fas fa-ticket-alt"></i>
+        </div>
+        <div>
+            <h3>Pengalaman Tak Terlupakan Mulai Dari sini</h3>
+        </div>
+    </div>
+    <div class="card card-detail">
+        <div class="city-search card-search-category">
+            <br>
+            <mat-select placeholder="Semua" [(ngModel)]="selectedCategory" name="item">
+                <mat-option *ngFor="let category of categories; let i=index" [(value)]="category">
+                    {{category}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="city-search card-search-destination">
+            <div class="card-search-destination-input">
+                <mat-form-field>
+                    <input (click)="dropDownBoolean= !dropDownBoolean" matInput placeholder="Cari berdasarkan tujuan, events, attractions, dsb..." [(ngModel)]="selectedCity.cityName">
+                </mat-form-field>
+            </div>
+            <div  class="card-search-destination-dropDown"
+             *ngIf="dropDownBoolean">
+                <div class="card-search-destination-left">
+                    <ng-container   *ngFor="let region of regions; let i =index">
+                        <div class="card-destination-box" (click)="getCitiesByRegion(i)" >
+                            {{region.regionName}}
+                        </div>
+                    </ng-container>
+                    
+                 
+                </div>
+                <div class="card-search-destination-right">
+                    <div class="city-box" *ngFor="let city of cities; let i =index" (click)="selectACity(i)">
+                        <img src="../../../assets/hotel/search/hotel-images/shinchan-image2.jpg" alt="">
+                        <p>
+                            {{city.cityName}}
+                        </p>
+                        <div class="city-box-color">
+
+                        </div>
+                    </div>  
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-footer">
+        <button color="primary" (click)="searchPage()" mat-flat-button>Cari Destination</button>
+    </div>
+</div>

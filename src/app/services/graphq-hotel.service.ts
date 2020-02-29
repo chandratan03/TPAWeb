@@ -11,7 +11,7 @@ export class GraphqHotelService {
 
   constructor(private apollo: Apollo) { }
 
-  
+
   getHotelRoomsByHotelId(hotelId: number): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
@@ -49,7 +49,7 @@ export class GraphqHotelService {
     })
   }
 
-  getHotelById(hotelId: number): Observable<Query> { 
+  getHotelById(hotelId: number): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
       query getHotelById($hotelId: Int){
@@ -129,9 +129,9 @@ export class GraphqHotelService {
       },
     })
   }
-  
 
-  getHotelTickets():Observable<Query>{
+
+  getHotelTickets(): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
       query getHotelTickets{
@@ -219,9 +219,9 @@ export class GraphqHotelService {
       `
     })
   }
-  getHotelTicketById(id:number):Observable<any>{
+  getHotelTicketById(id: number): Observable<any> {
     return this.apollo.query<any>({
-      query:gql`
+      query: gql`
       query getHotelTicketById($id){
         hotelTicketById(id:$id){
           id
@@ -309,16 +309,16 @@ export class GraphqHotelService {
     })
   }
 
-  insertHotelTicket(hotelId:number, date:string, quantity:number, price:number):Observable<any>{
+  insertHotelTicket(hotelId: number, date: string, quantity: number, price: number): Observable<any> {
     return this.apollo.mutate<any>({
-        mutation: gql`
+      mutation: gql`
         mutation insertHotelTicket($hotelId:Int!,$date:String!, $quantity:Int!, $price:Float!){
           insertHotelTicket(hotelId:$hotelId, date:$date, quantity:$quantity, price:$price){
             id      
           }
         }
         `
-      ,variables:{
+      , variables: {
         "hotelId": hotelId,
         "date": date,
         "quantity": quantity,
@@ -327,16 +327,16 @@ export class GraphqHotelService {
     })
   }
 
-  updateHotelTicket(id:number,hotelId:number, date:string, quantity:number, price:number):Observable<any>{
+  updateHotelTicket(id: number, hotelId: number, date: string, quantity: number, price: number): Observable<any> {
     return this.apollo.mutate<any>({
-        mutation: gql`
+      mutation: gql`
         mutation updateHotelTicket($id:Int!,$hotelId:Int!,$date:String!, $quantity:Int!, $price:Float!){
           updateHotelTicket(id:$id,hotelId:$hotelId, date:$date, quantity:$quantity, price:$price){
             id      
           }
         }
         `
-      ,variables:{
+      , variables: {
         "id": id,
         "hotelId": hotelId,
         "date": date,
@@ -345,24 +345,24 @@ export class GraphqHotelService {
       }
     })
   }
-  deleteHotelTicket(id:number):Observable<any>{
+  deleteHotelTicket(id: number): Observable<any> {
     return this.apollo.mutate<any>({
-        mutation: gql`
+      mutation: gql`
         mutation deleteHotelTicket($id:Int!){
           deleteHotelTicket(id:$id){
             id      
           }
         }
         `
-      ,variables:{
+      , variables: {
         "id": id,
       }
     })
   }
-  getCities():Observable<Query>{
+  getCities(): Observable<Query> {
     return this.apollo.query<Query>({
       query: gql`
-      query getCitiess{
+      query getCities{
         cities{
           id
           cityName
@@ -373,6 +373,19 @@ export class GraphqHotelService {
           }
         }
       }
+      `
+    })
+  }
+
+  getRegions(): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+        query getRegions{
+          regions{ 
+            id
+            regionName
+          }
+        }
       `
     })
   }
@@ -457,4 +470,90 @@ export class GraphqHotelService {
       `
     })
   }
+  getNearestHotel(longitude:number, latitude:number):Observable<Query>{
+    return this.apollo.query<Query>({
+      query: gql`
+      query nearestHotels($longitude:Float, $latitude:Float) {
+        nearestHotels(longitude:$longitude, latitude:$latitude){
+          id
+                  hotelName
+                  rate
+                  address
+                  imagePath
+                  price
+                  discountPercentage
+                  discountPrice
+                  quantity
+                  longitude
+                  latitude
+                  city{
+                    id
+                    cityName
+                    region{
+                      id
+                      regionName
+                    }
+                  }
+                  
+                  hotelFacilities{
+                    id
+                    hotelId
+                    facility{
+                      id
+                      name
+                      imagePath
+                    }
+                  }
+                  ratings{
+                    id
+                    hotelId
+                    date
+                    description
+                    rateScore
+                  }
+                  hotelRooms{
+                    id
+                    hotelId
+                    name
+                    maxGuest
+                    price
+                    quantity
+                    space
+                    freeWifi
+                    freeBreakFast
+                    hotelRoomBeds{
+                      id
+                      hotelRoomId
+                      bed{
+                        id
+                        bedName
+                      }
+                    }
+                  }
+                  area{
+                    areaName
+                    id
+                    city{
+                      id
+                      cityCode
+                      cityName
+                      region{
+                        regionName
+                        id
+                      
+                      }
+                    }
+                  }
+        }
+      }
+      
+      `,
+      variables:{
+        "longitude": parseFloat(longitude.toString()),
+        "latitude": parseFloat(latitude.toString()),
+      }
+    })
+  }
+
+
 }

@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="slider">
+        <app-event-slider></app-event-slider>
+    </div>
+    <div class="card-container">
+        <div>
+            <app-event-card></app-event-card>
+        </div>
+    </div>
+    <div class="thumbnail">
+        <img src={{thumbnail}} alt="">
+    </div>
+    <div class="page-container">
+        
+        <div class="page-filter">
+            <div class="filter-category">
+                <h2>Category</h2>
+                <div>
+                    <mat-checkbox (click)="markActivities()" [(ngModel)]="activitiesBoolean2">Activities</mat-checkbox>
+                </div>
+                <div>
+                    <mat-checkbox (click)="markAttractions()" [(ngModel)]="attractionsBoolean2">Attractions</mat-checkbox>
+                </div>
+                <div>
+                    <mat-checkbox (click)="markEvents()" [(ngModel)]="eventsBoolean2">Events</mat-checkbox>
+                </div>
+            </div>
+            <div class="filter-price">
+                <h2>
+                    Price
+                </h2>
+                <mat-slider [(ngModel)]="sliderPrice" (input)="initSliderPrice($event)" max={{maxPrice}} ></mat-slider>
+                <h3>IDR: {{sliderPrice}}</h3>
+            </div>
+            <div class="filter-date">
+                <h2>
+                    Date
+                </h2>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="startDate"  [matDatepicker]="picker" placeholder="start-date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="endDate" [matDatepicker]="picker2" placeholder="end-date">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <div>
+                    <button mat-button (click)="searchByDate()">Search by date</button>
+                </div>
+            </div>
+        </div>
+        <div class="page-data-container">
+            <i class="fas fa-filter">
+                <mat-select [(ngModel)]="selectedValue" name="item">
+                    <mat-option (click)="sortByPriceAsc()">
+                        Low to High price
+                    </mat-option>
+                    <mat-option (click)="sortByPriceDsc()">
+                        High to low price
+                    </mat-option>
+                    <mat-option (click)="sortByRecommended()">
+                        sort by recommended
+                    </mat-option>
+                    <mat-option (click)="sortByNewest()">
+                        sort by newest()
+                    </mat-option>
+                   
+                </mat-select>
+
+            </i>
+            <div class="page-data">
+                <div class="event-box" *ngFor="let entertainmentTicket of entertainmentTickets">
+                    <div class="image-box">
+                        <img src={{entertainmentTicket.entertainment.image}} alt="">
+                    </div>
+                    <div class="event-detail">
+                        <h3>Name: {{entertainmentTicket.entertainment.name}}</h3>
+                        <p>Location: {{entertainmentTicket.entertainment.city.cityName}}}</p>
+                        <p>Discount: 0%</p>
+                        <p>Price: {{entertainmentTicket.entertainment.price}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

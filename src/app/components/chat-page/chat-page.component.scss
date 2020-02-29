@@ -1,0 +1,59 @@
+
+
+
+
+.page-container{
+    display:flex;
+    justify-content: center;
+}
+.chat-container{
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+    min-width: 345px;
+    height: 600px;
+    border: 1px solid black;
+    padding: 10px;
+    box-sizing: border-box;
+    
+}
+
+.chat-header{
+    height:10%;
+}
+.chat-box{
+    height: 80%;
+    overflow-x: auto; 
+}
+.button-textbox{
+    box-sizing: border-box;
+    display:flex;
+    height: 10%;
+    justify-content: space-between;
+    >mat-form-field{
+        width: 70%;
+        margin-right: 10%;
+    }
+    div>button{
+        box-sizing: border-box;
+    }
+    >div{
+        width: 20%;
+    }
+    >div>*{
+        margin: 2px;    
+
+    }
+
+}
+
+
+
+.pYou{
+    background-color:#34eb77;
+    color: white;word-wrap: break-word;   
+}
+.pOther{
+    background-color: darkgrey;
+    color:black;word-wrap: break-word;   
+}

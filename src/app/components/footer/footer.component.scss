@@ -8,11 +8,22 @@
     display:flex;
     flex-direction: row;
     margin-bottom: 5%;
+    box-sizing: border-box;
+    
 }
 .footer-top-child{
-    width: 100%;
+    width: 20%;
+    min-width: 150px;
 }
 
+@media (max-width: 880px){
+    .footer-top{
+        flex-wrap: wrap;
+    }
+    .contact-whatsapp{
+        flex-wrap: wrap;
+    }
+}
 // Contact
 .info-title{
     display: flex;
@@ -78,14 +89,27 @@
     width: 100%;
 }
 
+@media (max-width: 1050px){
+    .footer-bottom{
+        flex-wrap: wrap;
+    }
+    .footer-img{
+        margin-left: 2px;
+    }
+
+}
+
 
 .footer-bottom-contents{
     width: 25%;
+    min-width: 250px;
+    box-sizing: border-box;
     justify-items: center;
 }
 
 .footer-bottom-contents>p{
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 .wonderfulIndonesia{

@@ -49,6 +49,7 @@ func GetUserByEmailAndPassword(p graphql.ResolveParams)(i interface{}, e error){
     return res, nil
   }
   return nil, nil
-
-
 }
+
+
+

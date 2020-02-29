@@ -260,6 +260,97 @@ func GetRoot() *graphql.Object{
          Type: graphql.NewList(types.GetPromoCodeType()),
          Resolve:resolvers.GetPromos,
       },
+      "passengers":{
+         Type:graphql.NewList(types.GetPassengerType()),
+         Resolve:resolvers.GetPassengers,
+      },
+      "entertainments":{
+        Type:graphql.NewList(types.GetEntertainmentType()),
+        Resolve:resolvers.GetEntertainments,
+      },
+      "entertainmentTickets":{
+        Type:graphql.NewList(types.GetEntertainmentTicketType()),
+        Resolve:resolvers.GetEntertainmentTickets,
+      },
+      "entertainmentsTicketsByCategory":{
+        Type:graphql.NewList(types.GetEntertainmentTicketType()),
+        Resolve:resolvers.GetEntertainmentTicketsByCategory,
+        Args:graphql.FieldConfigArgument{
+          "category": &graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+        },
+      },
+      "entertainmentsTicketsByCategoryAndCityId":{
+        Type:graphql.NewList(types.GetEntertainmentTicketType()),
+        Resolve:resolvers.GetEntertainmentTicketsByCategoryAndCityId,
+        Args:graphql.FieldConfigArgument{
+          "category": &graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "cityId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+      },
+      "entertainmentsTicketsByCityId":{
+        Type:graphql.NewList(types.GetEntertainmentTicketType()),
+        Resolve:resolvers.GetEntertainmentTicketsByCityId,
+        Args:graphql.FieldConfigArgument{
+          "cityId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+
+      },
+      "allMessages":{
+        Type:graphql.NewList(types.GetMessageType()),
+        Resolve:resolvers.GetAllMessages,
+      },
+      "allMessagesBySenderAndReceiver":{
+        Type:graphql.NewList(types.GetMessageType()),
+        Resolve:resolvers.GetAllMessagesBySenderAndReceiver,
+        Args:graphql.FieldConfigArgument{
+          "from": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+          "to": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+      },
+      "blogs":{
+        Type: graphql.NewList(types.GetBlogType()),
+        Resolve:resolvers.GetBlogs,
+      },
+      "trendingBlogs":{
+        Type: graphql.NewList(types.GetBlogType()),
+        Resolve:resolvers.GetTrendingBlogs,
+      },
+      "blogById":{
+        Type: types.GetBlogType(),
+        Resolve:resolvers.GetBlogById,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+
+      },
+      "nearestHotels":{
+        Type: graphql.NewList(types.GetHotelType()) ,
+        Resolve:resolvers.GetNearestHotels,
+        Args:graphql.FieldConfigArgument{
+          "longitude": &graphql.ArgumentConfig{
+            Type:graphql.Float,
+          },
+          "latitude": &graphql.ArgumentConfig{
+            Type: graphql.Float,
+          },
+
+        },
+      },
+
     },
 
 

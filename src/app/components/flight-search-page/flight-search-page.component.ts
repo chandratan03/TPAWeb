@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { GraphqpUserService } from '../../services/graphqp-user.service';
 import { Flight } from '../../models/flight';
 import { Subscription } from 'rxjs';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange, MatStepper } from '@angular/material';
 import { Airline } from 'src/app/models/airline';
 import { Facility } from 'src/app/models/facility';
 import { City } from 'src/app/models/city';
 import { Router } from '@angular/router';
-
+import {CalendarView, CalendarEvent} from 'angular-calendar'
 @Component({
   selector: 'app-flight-search-page',
   templateUrl: './flight-search-page.component.html',
@@ -24,6 +24,9 @@ export class FlightSearchPageComponent implements OnInit {
   TakedTimeFlights: Flight[]
   transits: boolean[]
   modelTransits: boolean[]
+
+  
+
 
 
   boolDetailPriceBox: boolean[]
@@ -186,9 +189,19 @@ export class FlightSearchPageComponent implements OnInit {
     this.airlineFacilitiesSubscription$.unsubscribe()
     this.cities$.unsubscribe()
   }
+  
+  selectedFlight:Flight = null
+  selectedFlightI: number = -1
+  choose(i:number, stepper: MatStepper){
+    this.selectedFlight = this.flights[i]
+    this.selectedFlightI = i
+    stepper.next()
+  }
+
 
   //card
-  checkOut(i:number):void{
+  checkOut():void{
+    let i = this.selectedFlightI
     // this.selectedFromId = json["fromId"]
     // this.selectedToId = json["toId"]
     // this.fromDate = new Date(json["fromDate"])
@@ -892,6 +905,19 @@ export class FlightSearchPageComponent implements OnInit {
     this.from = 0
     this.setData()
   }
+
+/////////////////////ANGULAR CALENDAR
+
+
+
+view: CalendarView = CalendarView.Month;
+viewDate: Date = new Date();
+
+  events: CalendarEvent[]
+
+
+
+
 
 
 }

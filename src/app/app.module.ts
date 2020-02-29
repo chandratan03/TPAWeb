@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes, Router} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule, MatStepperModule, MatRadioModule} from '@angular/material';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { QuickCardComponent } from './components/quick-card/quick-card.component';
 import {ApolloModule, Apollo} from 'apollo-angular';
@@ -43,6 +43,18 @@ import { HotelSearchPage2Component } from './components/hotel-search-page2/hotel
 import { MapComponent } from './components/map/map.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ChatPageComponent } from './components/chat-page/chat-page.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EventPageComponent } from './components/event-page/event-page.component';
+import { EventSearchComponent } from './components/event-search/event-search.component';
+import { EventCardComponent } from './components/event-card/event-card.component';
+import { EventSliderComponent } from './components/event-slider/event-slider.component';
+import { UserPageComponent } from './components/user-page/user-page.component';
+import { BlogPageComponent } from './components/blog-page/blog-page.component';
+import { NewPostBlogComponent } from './components/new-post-blog/new-post-blog.component';
+import { DetailBlogComponent } from './components/detail-blog/detail-blog.component';
+import { SafePipe } from './pipe/safe.pipe';
 
 @NgModule({
   exports: [
@@ -79,6 +91,16 @@ import { ChatPageComponent } from './components/chat-page/chat-page.component';
     MapComponent,
     CheckoutComponent,
     ChatPageComponent,
+    LoadingComponent,
+    EventPageComponent,
+    EventSearchComponent,
+    EventCardComponent,
+    EventSliderComponent,
+    UserPageComponent,
+    BlogPageComponent,
+    NewPostBlogComponent,
+    DetailBlogComponent,
+    SafePipe,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -103,6 +125,10 @@ import { ChatPageComponent } from './components/chat-page/chat-page.component';
     MatTooltipModule,
     MatButtonModule,
     MatExpansionModule,
+    MatStepperModule,
+    MatRadioModule,
+    CalendarModule,
+    
     RouterModule.forRoot([
       {
         path: '', component:HomePageComponent
@@ -118,6 +144,9 @@ import { ChatPageComponent } from './components/chat-page/chat-page.component';
       },
       {
         path: 'hotel/search/detail', component: HotelDetailSearchPageComponent
+      },
+      {
+        path: 'hotel/search/detail/:id', component: HotelDetailSearchPageComponent
       },
       {
         path: 'train/search', component: TrainSearchPageComponent
@@ -139,14 +168,44 @@ import { ChatPageComponent } from './components/chat-page/chat-page.component';
       },
       {
         path:'chatPage', component:ChatPageComponent,
-      }
-
+      },
+      {
+        path:'event', component:EventPageComponent,
+      },
+      {
+        path:'event/search', component:EventSearchComponent,
+      },
+      {
+        path:'event/search/:category', component: EventSearchComponent,
+      },
+      {
+        path:'event/search/:category/:id', component: EventSearchComponent,
+      },
+      {
+        path:'user', component:UserPageComponent,
+      },
+      {
+        path:'blog', component:BlogPageComponent,
+      },
+      {
+        path:'blog/new', component:NewPostBlogComponent
+      },
+      {
+        path:'blog/detail', component:DetailBlogComponent
+      },
+      {
+        path: 'blog/detail/:id', component:DetailBlogComponent
+      },
+      
     ]),
     BrowserAnimationsModule,
     MatDialogModule,
+    CalendarModule.forRoot({ 
+      provide: DateAdapter, useFactory: adapterFactory 
+    }),
   ],
   providers: [
-   
+   SafePipe,
   ],
   bootstrap: [AppComponent],
 })

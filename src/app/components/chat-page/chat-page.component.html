@@ -1,7 +1,40 @@
 <div class="container">
-    <p>TEST</p>
+    <div class="page-container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h1>
+                    CHATROOM
+                </h1>
+            </div>
+            <div class="chat-box">
+                <ng-container *ngFor="let message of messages">
+                    <div *ngIf="message.to == user.id && message.from ==  user.id" class="pYou">
+                        <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
+                        <p >
+                            {{message.fromUser.firstName}} {{message.fromUser.lastName}}: {{message.message}}
+                        </p>
 
+                    </div>
+                    <div *ngIf="message.to !=  user.id  || message.from !=  user.id" class="pOther">
+                        <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
+                        <p >
+                            {{message.fromUser.firstName}} {{message.fromUser.lastName}}: {{message.message}}
+                        </p>
+                    </div>
+                </ng-container> 
+            </div>
 
-
-    <input type="text" [(ngModel)]="message">
+            <div class="button-textbox">
+                <mat-form-field>
+                    <input matInput placeholder="Input message here" [(ngModel)]="message" 
+                        value="value">
+                </mat-form-field>
+                <div>
+                    <i (click)="fileInput.click()" class="fas fa-image"></i>
+                    <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                    <button mat-flat-button color="primary" (click)="send()">text</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -71,11 +71,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    padding: 1%;
     .card-content{
-        width: 100%;
+        min-width: 250px;
         box-sizing: border-box;
-        border-left: 0.5px solid darkgrey;
-        padding: 0 2%;
+        padding: 5px;
     }
     
   
@@ -144,4 +145,10 @@
 }
 .filter-train-box{
     padding: 2%;    
+}
+
+@media(max-width:  455px){
+    .page-container{
+        flex-wrap: wrap;
+    }
 }

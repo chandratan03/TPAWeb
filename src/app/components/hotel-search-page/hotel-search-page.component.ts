@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { City } from 'src/app/models/city';
 import { Area } from 'src/app/models/area';
 import * as L from 'leaflet';
+import { GraphqHotelService } from 'src/app/services/graphq-hotel.service';
 
 @Component({
   selector: 'app-hotel-search-page',
@@ -64,7 +65,8 @@ export class HotelSearchPageComponent implements OnInit {
 
   constructor(
     private myService: GraphqpUserService,
-    private router: Router
+    private router: Router,
+    private hotelService: GraphqHotelService
   ) {
   }
   hotels$: Subscription
@@ -180,6 +182,29 @@ export class HotelSearchPageComponent implements OnInit {
       }.bind(this))
       this.markers.push(marker)
     }
+    
+    
+    // this.map.on('moveend', function(){
+
+    //   let latitude = parseFloat(this.map.getCenter().lat)
+    //   let longitude = parseFloat( this.map.getCenter().lng)
+
+    //   this.hotelService.getHotelsNearby(latitude,
+    //     longitude).subscribe( async (result) => {
+    //       this.getNewData(result);
+
+    //   })
+    // }.bind(this))
+    this.map.on("moveend", ()=>{
+      let latitude = parseFloat(this.map.getCenter().lat)
+      let longitude = parseFloat( this.map.getCenter().lng)
+      this.hotelService.getNearestHotel(longitude, latitude).subscribe( q =>{
+        this.hotels = q.data.nearestHotels
+        console.log(q.data)
+        console.log(this.hotels)
+      })
+
+    })
   }
 
 
@@ -198,9 +223,7 @@ export class HotelSearchPageComponent implements OnInit {
       }
     }
   }
-  showMap(){
-    
-  }
+ 
 
 
   ngOnDestroy(): void {
@@ -724,8 +747,8 @@ export class HotelSearchPageComponent implements OnInit {
 
   orderNow(i: number): void {
     let id = this.hotels[i].id
-    sessionStorage.setItem("hotelId", id.toString())
-    this.router.navigateByUrl("hotel/search/detail")
+    // sessionStorage.setItem("hotelId", id.toString())
+    this.router.navigate(["hotel/search/detail", id])
   }
 
 

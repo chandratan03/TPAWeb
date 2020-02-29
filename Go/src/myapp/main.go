@@ -64,13 +64,20 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Brand{})
   db.AutoMigrate(models.Car{})
 
-
   db.AutoMigrate(models.Bank{})
   db.AutoMigrate(models.HeaderTransaction{})
   db.AutoMigrate(models.DetailTransaction{})
   db.AutoMigrate(models.Cart{})
-
   db.AutoMigrate(models.PromoCode{})
+  db.AutoMigrate(models.Passenger{})
+
+  db.AutoMigrate(models.Entertainment{})
+  db.AutoMigrate(models.EntertainmentTicket{})
+  db.AutoMigrate(models.ImageEntertainment{})
+
+  db.AutoMigrate(models.Message{})
+
+  db.AutoMigrate(models.Blog{})
 }
 
 func initPromoCodes(db *gorm.DB){
@@ -99,6 +106,26 @@ func initDBUser(db *gorm.DB){
     Password:    "chandra",
     PhoneNumber: "+628123123123",
     Nationality: "Indonesia",
+    Address:     "Kemanggisan",
+    CityId:      1,
+    Gender:"male",
+    PostCode:    "25555",
+    PhoneVerified: false,
+    EmailVerified:false,
+  })
+  db.Create(&models.User{
+    FirstName:"Jose",
+    LastName:"Armando",
+    Email:"josearmando@email.com",
+    Password:"josearmando",
+    PhoneNumber:"+621823123123",
+    Nationality:"Indonesia",
+    Address:     "Kemanggisan",
+    CityId:      1,
+    Gender:"male",
+    PostCode:    "25555",
+    PhoneVerified:false,
+    EmailVerified:false,
   })
 }
 
@@ -126,6 +153,7 @@ func initCity(db *gorm.DB){
     CityName:  "Jakarta",
     CityCode:  "JKT",
     RegionId:  1,
+    Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
     //Region:    models.Region{},
     //Locations: nil,
   })
@@ -133,16 +161,19 @@ func initCity(db *gorm.DB){
     CityName: "Bali",
     RegionId: 1,
     CityCode: "BLI",
+    Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
   })
   db.Create(&models.City{
     CityName: "Batam",
     RegionId: 1,
     CityCode: "BTH",
+    Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
   })
   db.Create(&models.City{
     CityName: "Singapore",
     RegionId: 2,
     CityCode: "SGP",
+    Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
   })
 }
 
@@ -1605,9 +1636,342 @@ func initBank(db *gorm.DB){
 }
 
 
+func initEntertainments(db *gorm.DB){
+  //jakrta
+  db.Create(&models.Entertainment{
+    Name:      "Explore Pulau Tidung, Kepulauan Seribu",
+    Price:      368500,
+    Category:  "activity",
+    Longitude:  106.5238,
+    Latitude:    -5.8032,
+    CityId:1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Entertainment{
+    Name:      "Wisata Pulau Kelor, Pulau Cipir, Pulau Onrust",
+    Price:     82500,
+    Category:  "activity",
+    Longitude:106.7357,
+    Latitude:  -6.0394,
+    CityId:    1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Entertainment{
+    Name:      "Wisata Pulau Tidung, Kepulauan Seribu",
+    Price:     110000,
+    Category:  "activity",
+    Longitude:  106.5226904,
+    Latitude:  -5.803365,
+    CityId:    1,
+
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+  //
+  db.Create(&models.Entertainment{
+    Name:      "Pintu Gerbang Utama Ancol Taman Impian",
+    Price:     22000,
+    Category:  "attraction",
+    Longitude: 106.8328709,
+    Latitude:   -6.1295934,
+    CityId:    1,
+
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Entertainment{
+    Name:      "Trans Studio Cibubur",
+    Price:     275000,
+    Category:  "attraction",
+    Longitude: 106.9011596,
+    Latitude:  -6.375825,
+    CityId:    1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Entertainment{
+    Name:      "Taman Legenda Keong Emas TMII",
+    Price:     95000,
+    Category:  "attraction",
+    Longitude: 106.8936219,
+    Latitude:   -6.3039042,
+    CityId:    1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+  //
+  db.Create(&models.Entertainment{
+    Name:      "B of You Asia Tour 2020 “Best of You”",
+    Price:     800000,
+    Category:  "event",
+    Longitude:  106.8004543,
+    Latitude:  -6.2192714,
+    CityId:    1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Entertainment{
+    Name:      "Asian Sound Syndicate Vol. 2",
+    Price:     575000,
+    Category:  "event",
+    Longitude:  106.8001032,
+    Latitude:   -6.2149343,
+    CityId:    1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Entertainment{
+    Name:      "Seminar Medical Preneur dan Creative Preneur to Face Industry 4.0",
+    Price:     125000,
+    Category:  "event",
+    Longitude: 106.8056639,
+    Latitude:   -6.2202283,
+    CityId:    1,
+    IsTrending:true,
+    Image:     "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+}
+
+func initEntertainmentTickets(db *gorm.DB){
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    1,
+    Price:              368500,
+    DiscountPercentage: 0,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    2,
+    Price:              82500,
+    DiscountPercentage: 10,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    3,
+    Price:              110000,
+    DiscountPercentage: 0,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    4,
+    Price:              22000,
+    DiscountPercentage: 10,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    5,
+    Price:              275000,
+    DiscountPercentage: 0,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    6,
+    Price:             95000,
+    DiscountPercentage: 10,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    7,
+    Price:              800000,
+    DiscountPercentage: 0,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    8,
+    Price:              575000,
+    DiscountPercentage: 0,
+  })
+  db.Create(&models.EntertainmentTicket{
+    Date:               time.Date(2020, 03, 02, 18, 0, 0, 0, time.Now().Location()),
+    EntertainmentId:    9,
+    Price:              125000,
+    DiscountPercentage: 0,
+  })
+}
+func initImageEntertainment(db *gorm.DB){
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 1,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 1,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 1,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 1,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+  //
+
+
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 2,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 2,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 2,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 2,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+//
+
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 3,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 3,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 3,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 3,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+
+//
+
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 4,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 4,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 4,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 4,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+//
+
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 5,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 5,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 5,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 5,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+
+//
+
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 6,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 6,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 6,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 6,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+//
+
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 7,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 7,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 7,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 7,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+
+//
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 8,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 8,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 8,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 8,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+
+//
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 9,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 9,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 9,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.ImageEntertainment{
+    EntertainmentId: 9,
+    Path:            "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
+}
+
+
+
 func dropAllTable(db *gorm.DB){
 
     db.DropTable(
+      //&models.Blog{},
       &models.User{},
       &models.HotelFacility{},
 
@@ -1615,6 +1979,9 @@ func dropAllTable(db *gorm.DB){
       &models.DetailTransaction{},
       &models.HeaderTransaction{},
       &models.Cart{},
+      &models.ImageEntertainment{},
+      &models.Entertainment{},
+      &models.EntertainmentTicket{},
 
       &models.Route{},
       &models.AirlineFacility{},
@@ -1643,8 +2010,11 @@ func dropAllTable(db *gorm.DB){
       &models.VendorCar{},
       &models.Vendor{},
       &models.PromoCode{},
+
     )
+
 }
+
 
 
 func initAllData(db *gorm.DB){
@@ -1680,6 +2050,10 @@ func initAllData(db *gorm.DB){
 
   initBank(db)
   initPromoCodes(db)
+
+  initEntertainments(db)
+  initEntertainmentTickets(db)
+  initImageEntertainment(db)
 }
 
 func main() {

@@ -38,4 +38,15 @@ func GetPromoByCode(code string)PromoCode{
   return promoCode
 }
 
+func DeletePromoByCode(code string)PromoCode{
+  db, err := database.Connect()
 
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  var promoCode PromoCode
+  db.Where("code = ?", code).Find(&promoCode)
+  db.Delete(&promoCode)
+  return promoCode
+}

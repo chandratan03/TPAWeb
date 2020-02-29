@@ -1,0 +1,7 @@
+<div class="slider" >
+    <div class="slides" *ngFor="let path of paths; let i = index" [@sliding]=imageState>
+        <img [src]="path" alt="" *ngIf="i==imageIndex" >
+    </div>     
+     <img src="../../../assets/image-sliders/left.png" class="prev" (click)="changeImageStateLeft()">
+     <img src="../../../assets/image-sliders/right.png" class="next" (click)="changeImageStateRight()">
+ </div>

@@ -2,6 +2,7 @@ package models
 
 import (
   "Connect/database"
+  "strconv"
   "time"
 )
 
@@ -114,6 +115,68 @@ func GetHotelById(id uint)(Hotel, error){
   return hotel, nil
 
 
+}
+//db.Where("(3959 * acos( cos(radians(?)) * cos(radians("+
+//"latitude)) * cos(radians(longitude) - radians(?)) + sin(radians("+
+//"?))* sin(radians(latitude))))"+
+//"< 25", latitude, longitude, latitude).
+//Limit(10).
+//Order("(3959 * acos( cos(radians(" + latitudeString + ")) * cos(" +
+//"radians(" +
+//"latitude)) * cos(radians(longitude) - radians(" +
+//"" + longitudeString + ")) + sin(radians(" +
+//"" + latitudeString + "))* sin(radians(latitude))))").
+//Joins("JOIN coordinates ON coordinates.id = hotels.coordinate_refer").
+//Find(&hotel)
+
+func GetNearestHotel(longitude float64, latitude float64)([]Hotel ,error){
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+defer db.Close()
+  var hotels []Hotel
+
+
+  latitudeString:= strconv.FormatFloat(latitude, 'f',2, 32)
+  longitudeString:=strconv.FormatFloat(longitude, 'f',2, 32)
+
+  db.Where("(3959 * acos( cos(radians(?)) * cos(radians("+
+    "latitude)) * cos(radians(longitude) - radians(?)) + sin(radians("+
+    "?))* sin(radians(latitude))))"+
+    "< 25", latitude, longitude, latitude).
+    Limit(10).
+    Order("(3959 * acos( cos(radians(" + latitudeString + ")) * cos(" +
+      "radians(" +
+      "latitude)) * cos(radians(longitude) - radians(" +
+      "" + longitudeString + ")) + sin(radians(" +
+      "" + latitudeString + "))* sin(radians(latitude))))").
+    Find(&hotels).Limit(12)
+
+  for i:= range hotels{
+    //db.Model(&hotels[i]).Related(&hotels[i].AvailableDates, "hotel_id")
+    db.Model(&hotels[i]).
+      Related(&hotels[i].City).Model(&hotels[i].City).Related(&hotels[i].City.Region).
+      Model(&hotels[i]).Related(&hotels[i].HotelFacilities, "HotelId").
+      Model(&hotels[i]).Related(&hotels[i].HotelRooms, "hotel_id").
+      Model(&hotels[i]).Related(&hotels[i].Ratings).
+      Model(&hotels[i]).Related(&hotels[i].Area, "area_id").
+      Model(&hotels[i].Area).Related(&hotels[i].Area.City).
+      Model(&hotels[i].Area.City).Related(&hotels[i].Area.City.Region)
+    //println(hotels[i].Facilities[0].HotelId)
+    for j, _ := range hotels[i].HotelFacilities{
+      db.Model(&hotels[i].HotelFacilities[j]).Related(&hotels[i].HotelFacilities[j].Facility, "facility_id")
+      //println(hotels[i].HotelFacilities[j].Facility.Name)
+    }
+    for j, _ := range hotels[i].HotelRooms{
+      db.Model(&hotels[i].HotelRooms[j]).Related(&hotels[i].HotelRooms[j].HotelRoomBeds, "hotel_room_id")
+      for k, _:= range hotels[i].HotelRooms[j].HotelRoomBeds{
+        db.Model(&hotels[i].HotelRooms[j].HotelRoomBeds[k]).Related(&hotels[i].HotelRooms[j].HotelRoomBeds[k].Bed)
+      }
+    }
+  }
+  println(hotels[0].HotelName)
+  return hotels, nil
 }
 
 

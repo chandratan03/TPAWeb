@@ -21,6 +21,9 @@ func GetCityType() *graphql.Object{
         "cityCode": &graphql.Field{
             Type:graphql.String,
         },
+        "thumbnail": &graphql.Field{
+            Type:graphql.String,
+        },
 
 
       },

@@ -17,6 +17,13 @@ type User struct {
   Password string `json:"password" db:"password"`
   PhoneNumber string `json:"phonenumber" db:"phonenumber"`
   Nationality string
+  Address string
+  CityId int `json:"city_id"`
+  City City `gorm:"ForeingKey:city_id"`
+  PostCode string
+  Gender string
+  EmailVerified bool
+  PhoneVerified bool
 }
 
 
@@ -43,6 +50,12 @@ func GetUser(userId uint)([]User, error){
   db.Where(&User{
    ID:userId,
   }).First(&user)
+
+  for i:= range user{
+    db.Model(&user[i]).Related(&user[i].City).
+      Model(&user[i].City).Related(&user[i].City.Region)
+  }
+
   //fmt.Print((user).ID)
   return user, nil
 }
@@ -55,6 +68,9 @@ func GetUserByEmail(email string)(i interface{}, e error){
     var user User
   defer db.Close()
     db.Where("email = ?", email).First(&user)
+
+  db.Model(&user).Related(&user.City).
+      Model(&user.City).Related(&user.City.Region)
     //fmt.Print(()
     fmt.Println(user)
     //fmt.Print("hallo")
@@ -72,6 +88,9 @@ func GetUserByEmailAndPassword(email string, password string)(i interface{}, e e
   db.Where("email = ? and password = ? ", email, password).Or("phone_number=? and password = ?", email,password).First(&user)
   //fmt.Print(()
   fmt.Println(user)
+  db.Model(&user).Related(&user.City).
+    Model(&user.City).Related(&user.City.Region)
+
   //fmt.Print("hallo")
   return user, nil
 
@@ -95,6 +114,8 @@ func CreateUser(firstName string, lastName string, password string,  email strin
     Password:    password,
     PhoneNumber: phoneNumber,
     Nationality:nationality,
+    // tembak manual, 1 itu jakarta
+    CityId: 1,
   })
 
   var user User
@@ -103,5 +124,63 @@ func CreateUser(firstName string, lastName string, password string,  email strin
 }
 
 
+func UpdateUserById(id int, firstName string,
+  lastName string,email string,
+  phoneNumber string, nationality string,
+  address string, cityId int, postCode string,
+  gender string)User{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+
+  defer db.Close()
+  var  user  User
+  db.Where("id = ?", id).Find(&user)
+  user.FirstName = firstName
+  user.LastName = lastName
+  user.Email = email
+  user.PhoneNumber = phoneNumber
+  user.Nationality = nationality
+  user.Address = address
+  user.CityId = cityId
+  user.PostCode = postCode
+  user.Gender = gender
+  db.Save(&user)
+
+  return user
+}
 
 
+func UpdateVerifyPhone(id int)User{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  var  user  User
+  db.Where("id = ?", id).Find(&user)
+
+  user.PhoneVerified = true
+  db.Save(&user)
+  return user
+
+}
+
+
+
+func UpdateVerifyEmail(id int)User{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+
+  var  user  User
+  db.Where("id = ?", id).Find(&user)
+
+  user.EmailVerified= true
+  db.Save(&user)
+  return user
+
+}

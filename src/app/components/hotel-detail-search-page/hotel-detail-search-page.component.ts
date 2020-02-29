@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { HotelRoomBed } from 'src/app/models/hotel-room-bed';
 import { Hotel } from 'src/app/models/hotel';
 import { Rating } from 'src/app/models/rating';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import * as L from 'leaflet';
 @Component({
   selector: 'app-hotel-detail-search-page',
   templateUrl: './hotel-detail-search-page.component.html',
@@ -17,6 +17,17 @@ export class HotelDetailSearchPageComponent implements OnInit {
   // @ViewChild('imageSliderContainer', {static:false}) imageSliderContainer: HTMLElement
   URL : string;
   FACEBOOKURL: string
+
+  map:L.Map=null
+  
+  hotels: Hotel[]
+  markers =  []
+  iconMarker = L.divIcon({
+    class:"marker",
+    html: "<img src='../../../assets/map/marker-icon.png' alt=''>" ,
+    iconSize: [20, 20],
+    iconAnchor: [20,20],
+  })
 
 
   isShowImageSlide: boolean;
@@ -55,7 +66,8 @@ export class HotelDetailSearchPageComponent implements OnInit {
   test:Date
   constructor(private hotelService: GraphqHotelService,
     private renderer: Renderer,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
     ) {
         
     }
@@ -63,7 +75,8 @@ export class HotelDetailSearchPageComponent implements OnInit {
     
     
   ngOnInit() {
-    this.URL = window.location.href+this.router.url
+    
+    this.URL = window.location.href
     this.FACEBOOKURL = "https://www.facebook.com/sharer/sharer.php?u="+this.URL;
     this.isShowImageSlide = false;
     // let element = document.getElementById("image-slider-container")
@@ -71,7 +84,7 @@ export class HotelDetailSearchPageComponent implements OnInit {
     // this.renderer.setElementStyle(element, "display","none")
     this.indexImg=0;
     this.imagePaths = []
-    this.hotelId = Number.parseInt(sessionStorage.getItem("hotelId"))
+    this.hotelId =+this.route.snapshot.paramMap.get("id")
     this.getHotelRoom()
     this.getHotelById(this.hotelId)
     
@@ -95,10 +108,78 @@ export class HotelDetailSearchPageComponent implements OnInit {
     emailBtn.onclick = ()=>{
       window.open(googleUrl, "_black")
     }
+   
+  }
+
+  getHotelByNearest():void{
+    this.hotel
+    this.hotelService.getNearestHotel(this.hotel.longitude, this.hotel.latitude).subscribe(q=>{
+      this.hotels =q.data.nearestHotels
+      this.setModal()
+    })
+  }
+  
+
+  setModal(){
+    let mapContainer = document.getElementById("map-container")
+    let btn = document.getElementById("showMapButton")
+    btn.onclick =()=>{
+      this.setMarkerHotel() 
+      mapContainer.style.display=  "flex"
+      ////////INI MENGATUR KLO DI MODAL SIZENYA RUSAK (MAPNYA YANG RUSAK)
+      this.map.invalidateSize();
+    }
+    window.onclick = (event)=>{
+      if(event.target == mapContainer){
+        mapContainer.style.display=  "none"
+      }
+    }
+  }
+
+  
+  setMarkerHotel():void{
+    
+    if(this.map!=null){
+      this.map.off()
+      this.map.remove()
+    }
+    this.map = L.map('map').setView([this.hotels[0].latitude, this.hotels[0].longitude], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }, {icon: this.iconMarker}).addTo(this.map);
+    var marker;
+    for(let i=0; i<this.hotels.length;i++){
+      console.log(this.hotels[i].longitude, this.hotels[i].latitude)
+      
+      marker = L.marker([this.hotels[i].latitude, this.hotels[i].longitude]).addTo(this.map).
+      bindPopup("<p>"+this.hotels[i].hotelName+" </p> <p>"+
+       this.hotels[i].ratingNumber+"</p> <p>"+
+       this.hotels[i].price+
+       "</p> <div> <button mat-button id='orderNowBtn' onclick=\"orderNow("+i+")\">Order now</button></div>").on("click",function(e){
+          let btn= document.getElementById('orderNowBtn');
+          btn.onclick= ()=>{
+            let id = this.hotels[i].id
+            sessionStorage.setItem("hotelId", id.toString())
+            this.router.navigateByUrl("hotel/search/detail")
+          }
+          
+      }.bind(this))
+      this.markers.push(marker)
+    }
+    this.map.on("moveend", ()=>{
+      let latitude = parseFloat(this.map.getCenter().lat)
+      let longitude = parseFloat( this.map.getCenter().lng)
+      this.hotelService.getNearestHotel(longitude, latitude).subscribe( q =>{
+        this.hotels = q.data.nearestHotels
+        console.log(q.data)
+        console.log(this.hotels)
+      })
+
+    })
   }
 
 
-
+ 
   getHotelRoom():void{
     this.hotelRooms$ = this.hotelService.getHotelRoomsByHotelId(this.hotelId).subscribe(async query => {
        this.hotelRooms = query.data.hotelRoomByHotelId as HotelRoom[]
@@ -143,6 +224,8 @@ export class HotelDetailSearchPageComponent implements OnInit {
         this.ratingsPagination[i] = []
         this.ratingsPagination[i].push(...this.ratings.slice(i*2, 2*(i+1)))
       }
+      this.getHotelByNearest()
+      // this.setModal()
     })
   }
 
@@ -208,5 +291,11 @@ export class HotelDetailSearchPageComponent implements OnInit {
       this.currentRatingPage++
     }
     this.ratingPage[this.currentRatingPage] = true;
+  }
+
+  orderNow(i: number): void {
+    let id = this.hotels[i].id
+    // sessionStorage.setItem("hotelId", id.toString())
+    this.router.navigate(["hotel/search/detail", id])
   }
 }

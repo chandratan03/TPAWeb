@@ -1,0 +1,25 @@
+<div id="modal" class="modal">
+    <div class="form">
+        <app-new-post-blog></app-new-post-blog>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="new-post-button">
+        <button id="showForm" color="accent" mat-flat-button>
+            +
+        </button>
+    </div>
+    <div class="page-container">
+        <div (click)="toDetailPage(i)" class="story-box" *ngFor="let blog of blogs; let i=index"  >
+            <div class="story-img">
+                <img src="{{blog.image}}" alt="">
+            </div>
+            <div class="story-title">
+                <h1>{{blog.title}}</h1>
+            </div>
+        </div>
+        
+    </div>
+</div>

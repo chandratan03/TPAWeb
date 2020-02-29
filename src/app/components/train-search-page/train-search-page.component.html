@@ -2,7 +2,6 @@
     <div class="card-container">
         <div class="card card-contents">
             <div class="card-content card-content-from">
-                
                 <mat-select placeholder="Dari" [(ngModel)]="selectedFromId" name="item">
                     <mat-option *ngFor="let station of stations" [value]="station.id">
                         {{station.area.city.cityCode}} - {{station.stationCode}}
@@ -70,6 +69,12 @@
                     </mat-option>
                     <mat-option (click)="sortAscByDuration()">
                         Duration
+                    </mat-option>
+                    <mat-option (click)="sortByType()">
+                        Train Type
+                    </mat-option>
+                    <mat-option (click)="sortByClass()">
+                        Classs Type
                     </mat-option>
                     
                 </mat-select>

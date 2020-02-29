@@ -1,0 +1,33 @@
+
+.slider{
+    box-sizing: border-box;
+    position: relative;
+    justify-content: center;
+    background-color: #0064D2;
+    height: 20%;
+    overflow: hidden;
+}   
+
+
+.slides{
+    
+    box-sizing: border-box;
+    height: 100%;
+    display:flex;
+    position: relative;
+    justify-content: center;
+    // border: 1px solid black;
+}
+
+.next, .prev{
+    cursor: pointer;
+    position: absolute;
+    top: 40%; 
+}
+.next{
+    right: 10%;
+}
+.prev{
+    left: 10%;
+}
+

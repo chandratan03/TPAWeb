@@ -18,6 +18,7 @@
     font-weight: bold;
 }
 .flight-detail{
+    min-width: 450px;
     box-sizing: border-box;
     display:flex;
     width: 100%;
@@ -28,37 +29,64 @@
         display:flex;
         align-items: center;
         justify-content: center;
+        min-width: 180px;
         .flight-image{
             box-sizing: border-box;
             // border: 2px solid black;
             padding: 2% 4%;
+            min-width: 90px;
             width: 50%;
             height: 60%;
+            
             img{
                 width: 100%;
                 height: 100%;
             }
         
         }
-        border-right: 1px solid darkgray
+        // border-right: 1px solid darkgray
     }
     .flight-detail-mid{
         width: 65%;
+        min-width: 150px;
         box-sizing: border-box;
         // border-left: 1px solid darkgray;
         margin-left: 1%;
         display:flex;
         flex-direction: column;
         justify-content: center;
-        border-right: 1px solid darkgray;
+        // border-right: 1px solid darkgray;
     }
     .flight-detail-right{
         box-sizing: border-box;
+        min-width: 110px;
         width: 15%;
         display:flex;
-        padding: 2% 4%;
+        padding: 5px 10px;
         flex-direction: column;
         justify-content: flex-end;
+    }
+}
+
+@media (max-width: 710px){
+    .page-container{
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 485px){
+    .flight-detail{
+        flex-wrap: wrap;
+        // flex-direction: row;
+        justify-content: center;
+        min-width: 200px;        
+    }
+    .flight-detail-left{
+        border: none;
+    }
+    
+    .flight-detail-mid{
+        border: none;
     }
 }
 
@@ -119,9 +147,7 @@
             height: 100%;
         }
     }
-    &>mat-checkbox{
-        
-    }   
+    
 }
 .flight-facility{
     display: inline-block;
@@ -145,17 +171,21 @@
 .cards{
     padding: 2% 4%;
     // z-index: 20;
+    box-sizing: border-box;
     min-width: 1000px;
 }
 
 .card-contents{
+    min-width: 360px;
     border: 1px solid black;
     box-sizing: border-box;
     display:flex;
-    
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .card-content{
-    width: 100%;
+    width: auto;
+    min-width: 100px;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -257,4 +287,15 @@
 .filter-box:hover{
     cursor: pointer;
     user-select: none;
+}
+
+
+
+.flight-step2-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.flight-infomartion-box{
+    
 }

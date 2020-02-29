@@ -32,7 +32,7 @@ func GetDetailTransactions()[]DetailTransaction{
 
 
 
-func InsertDetailTransaction(HeaderId int, FlightId int, Quantity int, Type string)DetailTransaction{
+func  InsertDetailTransaction(HeaderId int, FlightId int, Quantity int, Type string)DetailTransaction{
 
   db, error := database.Connect()
   if error!=nil{

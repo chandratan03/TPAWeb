@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="slider">
+        <app-event-slider></app-event-slider>
+    </div>
+    <div class="card-search-event">
+        <div>
+            <app-event-card></app-event-card>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="trending-container">
+            <h1>BEST OFFER</h1>
+            <div class="trending-top">
+                <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
+                <div class="trending-event">
+                    <button  mat-button>Jelajahi disini</button>
+                </div>
+            </div>
+            <div class="trending-bottom">
+                <div class="trending-box" *ngFor="let activity of bestOfferEntertainments">
+                    <div class="trending-box-img">
+                        <img src={{activity.image}} alt="">
+                    </div>
+                    <div class="trending-detail">
+                        <h3>{{activity.name}}</h3>
+                        <p>Location: {{activity.city.cityName}}</p>
+                        <p>Start from: {{activity.price}} </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <!-- activities -->
+        <div class="trending-container">
+            <h1>ACTIVITIES</h1>
+            <div class="trending-top">
+                <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
+                <div class="trending-event">
+                    <button  mat-button>Jelajahi disini</button>
+                </div>
+            </div>
+            <div class="trending-bottom">
+                <div class="trending-box" *ngFor="let activity of activityEntertainments">
+                    <div class="trending-box-img">
+                        <img src={{activity.image}} alt="">
+                    </div>
+                    <div class="trending-detail">
+                        <h3>{{activity.name}}</h3>
+                        <p>Location: {{activity.city.cityName}}</p>
+                        <p>Start from: {{activity.price}} </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- attractions -->
+        <div class="trending-container">
+            <h1>ATTRACTIONS</h1>
+            <div class="trending-top">
+                <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
+                <div class="trending-event">
+                    <button  mat-button>Jelajahi disini</button>
+                </div>
+            </div>
+            <div class="trending-bottom">
+                <div class="trending-box" *ngFor="let attraction of attractionEntertainments">
+                    <div class="trending-box-img">
+                        <img src={{attraction.image}} alt="">
+                    </div>
+                    <div class="trending-detail">
+                        <h3>{{attraction.name}}</h3>
+                        <p>Location: {{attraction.city.cityName}}</p>
+                        <p>Start from: {{attractionPrice}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <!-- events -->
+        <div class="trending-container">
+            <h1>EVENTS</h1>
+            <div class="trending-top">
+                <img src="../../../assets/hotel/search/hotel-images/the_papandayan.jpg" alt="">
+                <div class="trending-event">
+                    <button  mat-button>Jelajahi disini</button>
+                </div>
+            </div>
+            <div class="trending-bottom">
+                <div class="trending-box" *ngFor="let event of eventEntertainments">
+                    <div class="trending-box-img" >
+                        <img src={{event.image}} alt="">
+                    </div>
+                    <div class="trending-detail">
+                        <h3>{{event.name}}</h3>
+                        <p>Location: {{event.city.cityName}}</p>
+                        <p>Start from: {{event.price}}</p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+        
+    </div>
+</div>

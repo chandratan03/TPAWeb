@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="social-buttons">
+        <button (click)="shareFacebook()" color="primary" mat-flat-button>Facebook</button>
+        
+        <button (click)="shareLine()" class="line" mat-flat-button>Line</button>
+        <button (click)="shareWhatsapp()" class="whatsapp" mat-flat-button>Whatsapp</button>
+    </div>
+    <div class="page-container">
+        <div class="image-container">
+            <div class="image-box">
+                <img src={{blog.image}} alt="">
+            </div>
+        </div>
+        <div class="title-box">
+            <h1>{{blog.title}}</h1>
+        </div>
+        <div class="view-box">
+            <h3>View: {{blog.viewerNumber}}</h3>
+        </div>
+        <div class="content-box">
+            {{blog.description}}
+        </div>
+    </div>
+    <div class="page-container2">
+        <div (click)="toDetailPage(i)" class="story-box" *ngFor="let b of blogs; let i=index"  >
+            <div class="story-img">
+                <img src={{b.image}} alt="">
+            </div>
+            <div class="story-title">
+                <h1>{{b.title}}</h1>
+            </div>
+        </div>
+        
+    </div>
+</div>

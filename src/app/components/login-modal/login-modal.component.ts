@@ -37,13 +37,16 @@ export class LoginModalComponent implements OnInit {
 
   googleButton:HTMLElement = document.getElementById('googleBtn')
   ngOnInit() {
-    this.user = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      phoneNumber:""
-    }
+    // this.user = {
+    //   id:0,
+    //   firstName: "",
+    //   lastName: "",
+    //   email: "",
+    //   password: "",
+    //   phoneNumber:"",
+    //   gender:"",
+    //   nationality:""
+    // }
 
     this.route.fragment.subscribe((fragment) => {
       console.log(fragment)

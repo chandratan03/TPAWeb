@@ -1,0 +1,29 @@
+
+.container{
+    display:flex;
+    justify-content: center;
+}
+.form-box{
+    box-sizing: border-box;
+    min-width: 300px;
+    padding: 3% 4%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 5px;
+    >div{
+        >mat-form-field{
+            width: 100%;
+
+        }
+    }
+}
+
+@media (max-width: 930px){
+    .container{
+        flex-wrap: wrap;
+    }
+    .form-box{
+        margin-left: 0px;
+        margin-bottom: 10px;
+    }
+}

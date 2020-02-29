@@ -22,3 +22,16 @@ func GetHotelById(p graphql.ResolveParams)(i interface{}, err error){
   }
   return res,nil
 }
+
+
+
+func GetNearestHotels (p graphql.ResolveParams)(i interface{}, err error){
+  longitude := p.Args["longitude"].(float64)
+  latitude := p.Args["latitude"].(float64)
+  hotels, err := models.GetNearestHotel(longitude, latitude)
+  if err!=nil{
+
+    return nil, err
+  }
+  return hotels, nil
+}

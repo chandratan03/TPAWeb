@@ -10,6 +10,16 @@ type HeaderTransaction  struct{
   UserId int `json:"user_id"`
   User User `gorm:"foreignKey:user_id"`
   DetailTransactions []DetailTransaction
+  Passengers []Passenger
+
+  Title string
+  Name string
+  Email string
+  Nationality string
+  PhoneNumber string
+  bankId int
+  bankNumber string
+
   Date time.Time
   CreatedAt time.Time
   UpdatedAt time.Time
@@ -32,6 +42,7 @@ func GetHeaderTransctions()[]HeaderTransaction {
         Model(&headerTransactions[i].DetailTransactions[j].Flight).Related(&headerTransactions[i].DetailTransactions[j].Flight.From).
         Model(&headerTransactions[i].DetailTransactions[j].Flight).Related(&headerTransactions[i].DetailTransactions[j].Flight.To)
     }
+    db.Where("header_id = ?", headerTransactions[i].Id).Find(&headerTransactions[i].Passengers)
   }
   return headerTransactions
 }
@@ -54,6 +65,7 @@ func GetHeaderTransactionByUserId(userId int)[]HeaderTransaction {
         Model(&headerTransactions[i].DetailTransactions[j].Flight).Related(&headerTransactions[i].DetailTransactions[j].Flight.From).
         Model(&headerTransactions[i].DetailTransactions[j].Flight).Related(&headerTransactions[i].DetailTransactions[j].Flight.To)
     }
+    db.Where("header_id = ?", headerTransactions[i].Id).Find(&headerTransactions[i].Passengers)
   }
   return headerTransactions
 }
@@ -63,21 +75,28 @@ func GetHeaderTransactionByUserId(userId int)[]HeaderTransaction {
 //User User `gorm:"foreignKey:user_id"`
 //DetailTransactions []DetailTransaction
 //Date time.Time
-func InsertHeaderTransaction(userId int)HeaderTransaction{
+func InsertHeaderTransaction(userId int, Title string,Name string,Email string,Nationality string,PhoneNumber string, bankId int, bankNumber string)HeaderTransaction{
   //date by time.now() aja
   db, error := database.Connect()
   if error!=nil{
     panic(error)
   }
   defer db.Close()
+
   db.Create(&HeaderTransaction{
     UserId:             userId,
+    Title: Title,
+    Name: Name,
+    Email:Email,
+    Nationality: Nationality,
+    PhoneNumber:PhoneNumber,
+    bankId:bankId,
+    bankNumber:bankNumber,
     Date:               time.Now(),
   })
   var ht HeaderTransaction
   db.Last(&ht)
   return ht
 }
-
 
 

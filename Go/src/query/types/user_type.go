@@ -24,9 +24,39 @@ func GetUserType() *graphql.Object{
           "email": &graphql.Field{
               Type: graphql.String,
             },
+        //Address:     "Kemanggisan",
+        //CityId:      1,
+        //PostCode:    "25555",
           "phoneNumber": &graphql.Field{
             Type:graphql.String,
+          },
+          "address": &graphql.Field{
+            Type: graphql.String,
+          },
+          "cityId": &graphql.Field{
+            Type: graphql.Int,
+          },
+          "city": &graphql.Field{
+            Type:GetCityType(),
+          },
+          "postCode":&graphql.Field{
+            Type: graphql.String,
+          },
+          "gender": &graphql.Field{
+              Type:graphql.String,
+          },
+            "nationality": &graphql.Field{
+                  Type:graphql.String,
+            },
+
+            "phoneVerified": &graphql.Field{
+                    Type:graphql.Boolean,
+            },
+
+        "emailVerified": &graphql.Field{
+          Type:graphql.Boolean,
         },
+
 
       },
       //Description: "",

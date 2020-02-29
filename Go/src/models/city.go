@@ -8,6 +8,7 @@ type City struct{
   CityCode string
   RegionId uint `json:"region_id" `
   Region Region `gorm: foreignkey:"region_id"`
+  Thumbnail string
   Locations[] Location `json:"locations" gorm: foreignkey:"location_id"`
 }
 

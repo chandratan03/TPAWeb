@@ -12,12 +12,12 @@ func GetBankType() *graphql.Object{
         "id": &graphql.Field{
           Type:graphql.Int,
         },
-        "Name": &graphql.Field{
+        "name": &graphql.Field{
           Type:graphql.String,
         },
 
       },
-      Description: "Get Bed type",
+      Description: "Get bank type",
     })
 
 
