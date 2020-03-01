@@ -149,7 +149,7 @@
 
 
         <div>
-            <ng-container class="hotel-ng-container" *ngFor="let hotelTicket of hotelTickets; let i =index">
+            <div class="hotel-ng-container" *ngFor="let hotelTicket of hotelTickets; let i =index">
                 <div class="hotel-box">
                     <div class="hotel-box-child hotel-left">
                         <img src="../../../assets/hotel/search/hotel-images/shinchan-image.jpg" alt="">
@@ -174,9 +174,8 @@
                                 class="facilities-img"><img src={{hotelFacility.facility.imagePath}} alt=""></span>
 
                         </div>
-                        <div>
-                            <button mat-flat-button class="hotel-mid-hotel-room">Hotel room</button>
-                        </div>
+                        <p>Date: {{hotelTicket.date|date:'dd-MM-yy'}}</p>
+                        
                     </div>
                     <div class="hotel-box-child hotel-right">
                         <div>
@@ -209,7 +208,7 @@
 
                     </mat-expansion-panel>
                 </div>
-            </ng-container>
+            </div>
         </div>
 
         <br>

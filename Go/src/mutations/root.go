@@ -530,11 +530,21 @@ func GetRoot() *graphql.Object{
           },
         },
       },
+      "deleteEntertainmentTicketByEntertainmentId":&graphql.Field{
+        Type: types.GetEntertainmentTicketType(),
+        Resolve:resolvers.DeleteEntertainmentTicketByEntertainmentId,
+        Args:graphql.FieldConfigArgument{
+          "entertainmentId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+        },
+      },
+
       "deleteEntertainmentTicketById":&graphql.Field{
         Type: types.GetEntertainmentTicketType(),
         Resolve:resolvers.DeleteEntertainmentTicketById,
         Args:graphql.FieldConfigArgument{
-          "entertainmentId": &graphql.ArgumentConfig{
+          "id": &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.Int),
           },
         },
@@ -562,6 +572,9 @@ func GetRoot() *graphql.Object{
             Type: graphql.NewNonNull(graphql.String),
           },
           "description": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "terms": &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
           },
         },
@@ -592,6 +605,9 @@ func GetRoot() *graphql.Object{
             Type: graphql.NewNonNull(graphql.String),
           },
           "description": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "terms": &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
           },
         },

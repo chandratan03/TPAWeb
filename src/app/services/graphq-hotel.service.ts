@@ -140,6 +140,7 @@ export class GraphqHotelService {
           price
           quantity
           hotelId
+          date
           hotel{
             id
             hotelName

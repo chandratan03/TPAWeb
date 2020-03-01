@@ -10,4 +10,19 @@ io.on('connection', (socket)=>{
     socket.on('waitForNewBlog', (message)=>{
         io.emit('waitForNewBlog', message)
     })
+    socket.on('waitForNewEvent', (message)=>{
+        io.emit('waitForNewEvent', message)
+    })
+    socket.on('waitForNewFlight', (message)=>{
+        io.emit('waitForNewFlight', message)
+    })
+    socket.on('waitForNewHotel', (message)=>{
+        io.emit('waitForNewHotel', message)
+    })
+    socket.on('waitForNewTrain', (message)=>{
+        io.emit('waitForNewTrain', message)
+    })
+    socket.on('waitForNewCar', (message)=>{
+        io.emit('waitForNewCar', message)
+    })
 })

@@ -9,6 +9,11 @@ import { HotelFilterComponent } from '../hotel-filter/hotel-filter.component';
 import { Facility } from 'src/app/models/facility';
 import { MatSliderChange } from '@angular/material';
 import { validate } from 'graphql';
+import { User } from 'src/app/models/user';
+import { ChatServiceService } from 'src/app/services/chat-service.service';
+import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
+import { Route } from 'src/app/models/route';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-hotel',
@@ -45,15 +50,61 @@ export class ManageHotelComponent implements OnInit {
   SLICEBY: number=10
   
   popUpDelete:boolean = false
-  constructor(private hotelService: GraphqHotelService) { }
+  constructor(private hotelService: GraphqHotelService,
+    private chatService: ChatServiceService,
+    private userService: GraphqpUserService,
+    private router:Router
+) { }
 
-  ngOnInit() {
+  user: User
+  user$:Subscription
+  getUser(): void {
+    if (sessionStorage.getItem("user") == null) {
+      alert("you must be a admin or login first")
+      this.router.navigateByUrl('/')
+    }
+    let temp = JSON.parse(sessionStorage.getItem("user"))
+    if (temp.isAdmin == false) {
+      alert("you must be a admin or login first")
+      this.router.navigateByUrl('/')
+
+    }
+    this.user$ = this.userService.getUserById(temp.id).subscribe(
+      q => {
+        this.user = q.data.userById
+        if (this.user.id != 0) {
+         // DO SOMETHING HERE
+
+        }
+        else {
+          alert("not valid user")
+          this.router.navigateByUrl('')
+        }
+      }
+    )
+  }
+  ngOnInit() { 
+    this.getUser()
+
+
+
     this.id=-1
     this.getAllHotelTickets()
     this.getHotels()
     this.formHotels=[]
     this.getCities()
     this.setModal()
+    setTimeout(()=>{
+      document.getElementById("loading-page").style.display="none"
+    },3000)
+
+    this.chatService.listen('waitForNewHotel').subscribe(msg => {
+      alert("NEW HOTEL IS COMINGG RELOAD TO SEE THAT")
+      console.log('test')
+    })
+  }
+  emitNewEvent(): void {
+    this.chatService.emit("waitForNewHotel", "hehe")
   }
   from:number=0;
   hotelPage:number;
@@ -136,6 +187,8 @@ export class ManageHotelComponent implements OnInit {
       query=>{
         // console.log(query.data)
         this.hotels = query.data.hotels
+        console.log(this.hotels)
+        console.log(query.data)
       }
     )
   }
@@ -175,9 +228,7 @@ export class ManageHotelComponent implements OnInit {
       console.log(this.savedHotelTickets)
       this.setData()
       this.setFilter()
-    },null, ()=>{
-      document.getElementById("loading-page").style.display="none"}
-      )
+    } )
   }
 
   insert():void{
@@ -208,6 +259,9 @@ export class ManageHotelComponent implements OnInit {
       let temp = query.data.insertHotelTicket
       if(temp.id ==0 || temp== null){
         alert("fail to insert")
+      }else{
+        alert("sucess")
+        this.emitNewEvent()
       }
     })
   }
@@ -243,6 +297,8 @@ export class ManageHotelComponent implements OnInit {
         alert("fail to insert")
       }else{
         alert("success")
+      
+        this.emitNewEvent()
       }
     })
   }

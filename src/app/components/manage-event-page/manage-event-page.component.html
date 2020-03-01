@@ -1,7 +1,141 @@
+<div class="modal" id="modal">
+    <div class="form" id="form">
+        <div class="field-container">
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="title" [(ngModel)]="title">
+                    <mat-hint *ngIf="title.length<10" style="color: red;">title length must be > 10</mat-hint>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input matInput type="number" placeholder="price" [(ngModel)]="inputPrice">
+                    <mat-hint *ngIf="inputPrice<=0" style="color: red;">insert valid price</mat-hint>
+                    
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-select placeholder="Location" [(ngModel)]="city" name="item">
+                        <mat-option *ngFor="let city of cities" [(value)]="city">
+                            {{city.cityName}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="city==null" style="color: red;">please select city</mat-hint>
+                
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <mat-select placeholder="category" [(ngModel)]="category" name="item">
+                        <mat-option *ngFor="let c of categories; let i=index" [(value)]="c">
+                            {{c}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="category==''" style="color: red;">please seelect category</mat-hint>
+                
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="inputStartDate" [matDatepicker]="inputPicker" placeholder="start-date">
+                    <mat-datepicker-toggle matSuffix [for]="inputPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #inputPicker></mat-datepicker>
+                    <mat-hint *ngIf="inputStartDate == null" style="color: red;">please select your start date</mat-hint>
+                
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="inputEndDate" [matDatepicker]="inputPicker2" placeholder="end-date">
+                    <mat-datepicker-toggle matSuffix [for]="inputPicker2"></mat-datepicker-toggle>
+                    <mat-datepicker #inputPicker2></mat-datepicker>
+                    <mat-hint *ngIf="inputEndDate == null" style="color: red;">please select your end date</mat-hint>
+                    
+                </mat-form-field>
+            </div>
+            <div>
+                <h3>
+                    Description
+                </h3>
+                <div class="tools-container">
+                    <button class="tool" (click)="initButtons('bold')">
+                        <i class="fas fa-bold"></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('italic')">
+                        <i class=' fas fa-italic'></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('underline')">
+                        <i class=' fas fa-underline'></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('justifyLeft')">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('justifyCenter')">
+                        <i class=' fas fa-align-center'></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('justifyRight')">
+                        <i class=' fas fa-align-right'></i>
+                    </button>
+                </div>
+                <div>
+
+                    <div class="content" id="description" contenteditable="true">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3>
+                    Terms & conditions
+                </h3>
+                <div class="tools-container">
+                    <button class="tool" (click)="initButtons('bold')">
+                        <i class="fas fa-bold"></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('italic')">
+                        <i class=' fas fa-italic'></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('underline')">
+                        <i class=' fas fa-underline'></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('justifyLeft')">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('justifyCenter')">
+                        <i class=' fas fa-align-center'></i>
+                    </button>
+                    <button class="tool" (click)="initButtons('justifyRight')">
+                        <i class=' fas fa-align-right'></i>
+                    </button>
+                </div>
+                <div>
+                    <div class="content" id="terms" contenteditable="true">
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div id="post-box" class="post-box">
+                <button (click)="fileInput.click()" mat-button><i class="fas fa-image"></i>
+                </button>
+
+                <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                <button mat-flat-button (click)="save()" color="accent">Save</button>
+                <span *ngIf="image!=''">already insert photo</span>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
 <div class="container">
- 
+    <div>
+        <button id="showForm" color="primary" mat-flat-button>Show form</button>
+    </div>
     <div class="page-container">
-        
         <div class="page-filter">
             <div class="filter-category">
                 <h2>Category</h2>
@@ -9,7 +143,8 @@
                     <mat-checkbox (click)="markActivities()" [(ngModel)]="activitiesBoolean2">Activities</mat-checkbox>
                 </div>
                 <div>
-                    <mat-checkbox (click)="markAttractions()" [(ngModel)]="attractionsBoolean2">Attractions</mat-checkbox>
+                    <mat-checkbox (click)="markAttractions()" [(ngModel)]="attractionsBoolean2">Attractions
+                    </mat-checkbox>
                 </div>
                 <div>
                     <mat-checkbox (click)="markEvents()" [(ngModel)]="eventsBoolean2">Events</mat-checkbox>
@@ -19,7 +154,7 @@
                 <h2>
                     Price
                 </h2>
-                <mat-slider [(ngModel)]="sliderPrice" (input)="initSliderPrice($event)" max={{maxPrice}} ></mat-slider>
+                <mat-slider [(ngModel)]="sliderPrice" (input)="initSliderPrice($event)" max={{maxPrice}}></mat-slider>
                 <h3>IDR: {{sliderPrice}}</h3>
             </div>
             <div class="filter-date">
@@ -27,7 +162,7 @@
                     Date
                 </h2>
                 <mat-form-field>
-                    <input matInput [(ngModel)]="startDate"  [matDatepicker]="picker" placeholder="start-date">
+                    <input matInput [(ngModel)]="startDate" [matDatepicker]="picker" placeholder="start-date">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -57,12 +192,12 @@
                     <mat-option (click)="sortByNewest()">
                         sort by newest()
                     </mat-option>
-                   
+
                 </mat-select>
 
             </i>
             <div class="page-data">
-                <div class="event-box" *ngFor="let entertainmentTicket of entertainmentTickets">
+                <div class="event-box" *ngFor="let entertainmentTicket of entertainmentTickets; let i =index">
                     <div class="image-box">
                         <img src={{entertainmentTicket.entertainment.image}} alt="">
                     </div>
@@ -73,9 +208,27 @@
                         <p>Price: {{entertainmentTicket.entertainment.price}}</p>
                         <p>Date: {{entertainmentTicket.date}}</p>
                     </div>
+                    <div class="event-buttons">
+                        <button color="accent" (click)="showUpdateModal(i)" mat-flat-button>Update</button>
+                        <button color="accent" (click)="openPopUp(entertainmentTicket.id)" mat-flat-button>Delete</button>
+                    </div>
                 </div>
-                
+
             </div>
         </div>
+        
     </div>
+</div>
+
+<app-pop-up class="pop-up-box"  [isOpen]="popUpDelete">
+    <div class="delete-box">
+        <p>Are you sure want to delete? </p>
+        <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
+        <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+    </div>
+</app-pop-up>
+
+
+<div class="loading-page" id="loading-page">
+    <mat-spinner></mat-spinner>
 </div>

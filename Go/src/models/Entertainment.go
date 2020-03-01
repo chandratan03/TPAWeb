@@ -18,6 +18,7 @@ type Entertainment struct{
   Image string
   ImageEntertainments []ImageEntertainment
   Description string
+  Terms string
   CreatedAt time.Time
   UpdatedAt time.Time
   DeletedAt *time.Time `sql:"index"`
@@ -44,7 +45,7 @@ func GetEntertainments()[]Entertainment{
 
 func InsertEntertainment(name string, price float64, category string,
   isTrending bool,
-  cityId int, image string, description string)Entertainment{
+  cityId int, image string, description string, terms string)Entertainment{
   db, error:= database.Connect()
 
   if error!=nil{
@@ -62,6 +63,8 @@ func InsertEntertainment(name string, price float64, category string,
     CityId:              cityId,
     Image:               image,
     Description:         description,
+    Terms: terms,
+
   })
 
   db.Last(&entertainment)
@@ -78,7 +81,7 @@ func InsertEntertainment(name string, price float64, category string,
 
 func UpdateEntertainment(id int,name string, price float64, category string,
   isTrending bool,
-  cityId int, image string, description string)Entertainment{
+  cityId int, image string, description string, terms string)Entertainment{
   db, error:= database.Connect()
 
   if error!=nil{
@@ -96,7 +99,7 @@ func UpdateEntertainment(id int,name string, price float64, category string,
   entertainment.CityId= cityId
   entertainment.Image = image
   entertainment.Description = description
-
+  entertainment.Terms = terms
   db.Save(&entertainment)
 
 

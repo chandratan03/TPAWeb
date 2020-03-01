@@ -7,7 +7,7 @@
         <div class="form-train-box">
             <mat-select placeholder="Train" [(value)]="trainId" >
                 <mat-option *ngFor="let train of formTrains" [value]="train.id">
-                    {{train.name}}
+                    {{train.trainType.name}} : {{train.name}}
                 </mat-option>
             </mat-select>
         </div>
@@ -78,7 +78,8 @@
 </div>
 
 
-<button mat-button id="showForm">showForm</button>
+<br>
+<button mat-flat-button color="primary" id="showForm">Show Form for insert</button>
 
 
 
@@ -227,3 +228,9 @@
 
 
 </div>
+
+
+<div class="loading-page" id="loading-page">
+    <mat-spinner></mat-spinner>
+</div>
+

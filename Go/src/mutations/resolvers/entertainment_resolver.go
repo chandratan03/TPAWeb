@@ -13,10 +13,12 @@ func InsertEntertainment(p graphql.ResolveParams)(interface{}, error){
   cityId:= p.Args["cityId"].(int)
   image := p.Args["image"].(string)
   description:= p.Args["description"].(string)
+  terms:= p.Args["terms"].(string)
+
 
   row := models.InsertEntertainment(name,
     price, category, isTrending, cityId,
-    image,description)
+    image,description,terms)
   return row,nil
 }
 
@@ -30,10 +32,11 @@ func UpdateEntertainment(p graphql.ResolveParams)(interface{}, error){
   cityId:= p.Args["cityId"].(int)
   image := p.Args["image"].(string)
   description:= p.Args["description"].(string)
+  terms:= p.Args["terms"].(string)
 
   row := models.UpdateEntertainment(id,name,
     price, category, isTrending, cityId,
-    image,description)
+    image,description,terms)
   return row,nil
 }
 

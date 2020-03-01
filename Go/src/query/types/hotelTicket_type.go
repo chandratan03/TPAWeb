@@ -31,6 +31,9 @@ func GetHotelTicketType() *graphql.Object{
         "quantity": &graphql.Field{
           Type:graphql.Int,
         },
+        "date": &graphql.Field{
+            Type:graphql.DateTime,
+        },
 
       },
       Description: "Get hotel Room type",

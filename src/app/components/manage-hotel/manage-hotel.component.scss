@@ -3,6 +3,7 @@
 .hotel-ng-container{
     box-sizing: border-box;
     border: 1px solid black !important;
+    
 }
 .hotel-box{
     box-sizing: border-box;
@@ -64,6 +65,17 @@
     }
 }
 
+@media (max-width: 1135px){
+    .hotel-box{
+        justify-content: center;
+        flex-wrap:wrap;
+    }
+}
+@media(max-width:790px){
+    .hotel-container{
+        flex-wrap: wrap;
+    }
+}
 
 .hotel-room{
     display:flex;
@@ -113,6 +125,10 @@
 }
 
 
+
+mat-expansion-panel{
+    width: 100%;
+}
 .modal{
     display: none;
     position: fixed;

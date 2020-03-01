@@ -13,4 +13,6 @@ export class Entertainment {
     city:City
     isTrending:boolean
     imageEntertainments:ImageEntertainment[]
+    description: string
+    terms:string
 }

@@ -116,7 +116,7 @@ func InsertEntertainmentTicket(Date string, EntertainmentId int, Price float64, 
     panic(error)
   }
 
-  db.Create(EntertainmentTicket{
+  db.Create(&EntertainmentTicket{
     Date:               d,
     EntertainmentId:    EntertainmentId,
     Price:              Price,
@@ -135,7 +135,22 @@ func DeleteEntertainmentTicket(entertainmentId int)[]EntertainmentTicket{
   defer db.Close()
   var entertainmentTickets []EntertainmentTicket
 
-  db.Where("entertainment_id").Find(&entertainmentTickets)
+  db.Where("entertainment_id =?",entertainmentId).Find(&entertainmentTickets)
+
+  db.Delete(&entertainmentTickets)
+
+  return entertainmentTickets
+}
+
+func DeleteEntertainmentTicketById(id int)EntertainmentTicket{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  var entertainmentTickets EntertainmentTicket
+
+  db.Where("id= ?",id).Find(&entertainmentTickets)
 
   db.Delete(&entertainmentTickets)
 

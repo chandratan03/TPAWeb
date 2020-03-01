@@ -54,6 +54,12 @@ func GetEntertainmentType() *graphql.Object{
         "isTrending": &graphql.Field{
            Type:graphql.Boolean,
         },
+        "description": &graphql.Field{
+           Type:graphql.String,
+        },
+        "terms": &graphql.Field{
+          Type:graphql.String,
+        },
       },
     })
   }

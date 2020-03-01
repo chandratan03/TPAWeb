@@ -9,6 +9,7 @@ import { Airline } from 'src/app/models/airline';
 import { Airport } from 'src/app/models/airport';
 import { Routes } from '@angular/router';
 import { Facility } from 'src/app/models/facility';
+import { ChatServiceService } from 'src/app/services/chat-service.service';
 
 @Component({
   selector: 'app-manage-flight',
@@ -81,7 +82,9 @@ export class ManageFlightComponent implements OnInit {
   constructor(
     private flightService: GraphqFlightService,
     private formBuilder: FormBuilder,
-    private userService: GraphqpUserService
+    private userService: GraphqpUserService,
+    private chatService: ChatServiceService,
+
     ) {
      
 
@@ -98,6 +101,17 @@ export class ManageFlightComponent implements OnInit {
     this.getAirports()
     this.getAirlines()
     this.setModal()
+    setTimeout(()=>{
+      document.getElementById("loading-page").style.display="none"
+    },2000)
+
+    this.chatService.listen('waitForNewFlight').subscribe(msg => {
+      alert("NEW EVENT IS COMINGG RELOAD TO SEE THAT")
+      console.log('test')
+    })
+  }
+  emitNewEvent(): void {
+    this.chatService.emit("waitForNewFlight", "hehe")
   }
   closePopUp(){
     console.log("helo")
@@ -305,6 +319,7 @@ export class ManageFlightComponent implements OnInit {
     console.log("hehe")
     console.log(this.arrivalTime)
     // console.log(arrDate)  
+    this.emitNewEvent()
   }
 
   setModal():void{
@@ -454,7 +469,9 @@ export class ManageFlightComponent implements OnInit {
 
     this.updateFlight$ = this.flightService.updateFlight(this.id,this.airlineRefer, 
       this.routeId, this.transit, this.fromRefer, this.toRefer,
-      depDate, arrDate, duration,this.price,this.tax, this.serviceCharge).subscribe()
+      depDate, arrDate, duration,this.price,this.tax, this.serviceCharge).subscribe(m=>{
+        this.emitNewEvent()
+      })
 
   }
 

@@ -9,6 +9,9 @@ import { NumberFormatStyle } from '@angular/common';
 import { truncateSync } from 'fs';
 import { Train } from 'src/app/models/train';
 import { timingSafeEqual } from 'crypto';
+import { ChatServiceService } from 'src/app/services/chat-service.service';
+import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-manage-train',
@@ -18,7 +21,10 @@ import { timingSafeEqual } from 'crypto';
 export class ManageTrainComponent implements OnInit {
 
   constructor(private service: GraphqTrainService,
-    private router: Router
+    private router: Router,
+    private chatService: ChatServiceService,
+    private userService: GraphqpUserService,
+
   ) { }
 
   trainTrips$: Subscription
@@ -57,7 +63,12 @@ export class ManageTrainComponent implements OnInit {
 
 
   //
+  user:User
+  user$:Subscription
   ngOnInit() {
+
+    this.getUser()
+
     this.trainTripId = -1
     this.getStations()
     this.getTrainTrips()
@@ -77,8 +88,46 @@ export class ManageTrainComponent implements OnInit {
     }
     let modal = document.getElementById("modal")
   
-    
+    this.chatService.listen('waitForNewTrain').subscribe(msg => {
+      alert("NEW EVENT IS COMINGG RELOAD TO SEE THAT")
+      console.log('test')
+    })
+    setTimeout(()=>{
+      document.getElementById("loading-page").style.display="none"
+    },2000)
+
+
+  }   
+  
+ emitNewEvent(): void {
+  this.chatService.emit("waitForNewTrain", "hehe")
+}
+  getUser(): void {
+    if (sessionStorage.getItem("user") == null) {
+      alert("you must be a admin or login first")
+      this.router.navigateByUrl('')
+    }
+    let temp = JSON.parse(sessionStorage.getItem("user"))
+    if (temp.isAdmin == false) {
+      alert("you must be a admin or login first")
+      this.router.navigateByUrl('')
+
+    }
+    this.user$ = this.userService.getUserById(temp.id).subscribe(
+      q => {
+        this.user = q.data.userById
+        if (this.user.id != 0) {
+         // DO SOMETHING HERE
+
+        }
+        else {
+          alert("not valid user")
+          this.router.navigateByUrl('')
+        }
+      }
+    )
   }
+
   from:number = 0;
   trainPage:number =0 ;
 
@@ -483,7 +532,7 @@ export class ManageTrainComponent implements OnInit {
            alert("fail")
          }else{
            alert("insert success!!! reload the page")
-
+            this.emitNewEvent()
          }
        })
   }
@@ -546,7 +595,8 @@ export class ManageTrainComponent implements OnInit {
     this.insertTrainTrip$ = this.service.updateTrainTrip(this.trainTripId,
       this.trainId, this.fromRefer, this.toRefer, this.departure.toString(),
       this.arrival.toString(), duration, parseFloat(this.price.toString()), parseFloat(this.tax.toString()), parseFloat(this.serviceCharge.toString())).subscribe()
-    alert("insert success!!! reload the page")
+      this.emitNewEvent()
+      alert("insert success!!! reload the page")
   }
 
   closePopUp() {

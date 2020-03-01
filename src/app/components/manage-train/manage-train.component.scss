@@ -183,6 +183,7 @@
     left: 0;
     background-color: rgba($color: #000000, $alpha: 0.5);
 
+    overflow-x: auto;
 }
 
 .form{
@@ -195,6 +196,7 @@
     >button{
         margin-left: 2px;
     }
+    overflow-x: auto;
 }
 //////////////////
 
@@ -228,4 +230,32 @@
             margin: 0 5px;
         }
     }
+}
+
+@media(max-width:450px){
+    .page-container{
+        flex-wrap: wrap;
+    }
+    .train-info-box{
+        text-align: center;
+    }
+    .train-info-right>div{
+        
+        display:flex;
+        justify-content: center;
+    }
+}
+
+.loading-page{
+    position: fixed;
+    top: 0;
+    left:0;
+    z-index: 100;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    width: 100%;
+    height: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
 }

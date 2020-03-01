@@ -27,6 +27,8 @@ export class EventServiceService {
           latitude
           cityId
           isTrending
+          description
+          terms
           city{
             id
             cityCode
@@ -64,10 +66,13 @@ export class EventServiceService {
           name
           price
           category
+          
           image
           longitude
           latitude
           cityId
+          terms
+          description
           city{
             id
             cityCode
@@ -103,6 +108,8 @@ export class EventServiceService {
           id
           price
           entertainment{
+          description
+          terms
           id
           name
           price
@@ -151,6 +158,8 @@ export class EventServiceService {
           id
           price
           entertainment{
+            description
+          terms
           id
           name
           price
@@ -200,6 +209,8 @@ export class EventServiceService {
           id
           price
           entertainment{
+            description
+          terms
           id
           name
           price
@@ -239,14 +250,14 @@ export class EventServiceService {
 
 
 
-  insertEntertainment(name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string): Observable<any> {
+  insertEntertainment(name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string, terms:string): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`
         mutation insertEntertainment($name: String!, $price:Float!, $category:String!, $isTrending:Boolean!, $cityId:Int!, 
-          $image:String!, $description:String!
+          $image:String!, $description:String!, $terms:String!
         ){
           insertEntertainment(name:$name, price:$price, category:$category, isTrending:$isTrending,
-            cityId:$cityId, image:$image, description:$description){
+            cityId:$cityId, image:$image, description:$description,terms:$terms){
             id
             name
           }
@@ -260,18 +271,19 @@ export class EventServiceService {
         "isTrending": isTrending,
         "cityId": cityId,
         "image": image,
-        "description": description
+        "description": description,
+        "terms": terms
       }
     })
   }
-  updateEntertainment(id: number, name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string): Observable<any> {
+  updateEntertainment(id: number, name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string, terms:string): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`
       mutation updateEntertainment($id:Int!,$name: String!, $price:Float!, $category:String!, $isTrending:Boolean!, $cityId:Int!, 
-        $image:String!, $description:String!
+        $image:String!, $description:String!, $terms:String!
       ){
         updateEntertainmentById(id:$id,name:$name, price:$price, category:$category, isTrending:$isTrending,
-          cityId:$cityId, image:$image, description:$description){
+          cityId:$cityId, image:$image, description:$description,terms:$terms){
            id
           name
         }
@@ -286,7 +298,8 @@ export class EventServiceService {
         "isTrending": isTrending,
         "cityId": cityId,
         "image": image,
-        "description": description
+        "description": description,
+        "terms": terms
       }
     })
   }
@@ -328,18 +341,18 @@ export class EventServiceService {
     })
   }
 
-  deleteEntertainmentTicket( entertainmentId:number): Observable<any> {
+  deleteEntertainmentTicket( id:number): Observable<any> {
     return this.apollo.mutate({
       mutation: gql`
-      mutation deleteEntertainmentTicketById( $entertainmentId:Int!){
-        deleteEntertainmentTicketById(entertainmentId:$entertainmentId){
+      mutation deleteEntertainmentTicketById( $id:Int!){
+        deleteEntertainmentTicketById(id:$id){
           id
           entertainmentId
         }
       }
       `,
       variables: {
-        "entertainmentId": entertainmentId,
+        "id": id,
       }
     })
   }
