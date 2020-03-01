@@ -16,7 +16,10 @@
                 <mat-label>
                     Password
                 </mat-label>
-                <input [(ngModel)]="password" class="input2 inputPassword" name="password" type="password" placeholder="Password" matInput>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                 </button>
+                <input [(ngModel)]="password" class="input2 inputPassword" name="password" [type]="hide ? 'password' : 'text'" placeholder="Password" matInput>
             </mat-form-field>
         <!-- </span> -->
         <input type="submit" class="next-btn" (click)="login()" value="LANJUTKAN">

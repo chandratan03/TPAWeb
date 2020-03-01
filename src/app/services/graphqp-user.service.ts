@@ -32,6 +32,8 @@ export class GraphqpUserService {
           nationality
           emailVerified
           phoneVerified
+          language
+          isAdmin
           city{
             cityCode
             cityName
@@ -84,6 +86,8 @@ export class GraphqpUserService {
             gender
             id
             address
+            language
+            isAdmin
             city{
               cityCode
               cityName
@@ -137,6 +141,8 @@ export class GraphqpUserService {
             id
             address
             gender
+            language
+            isAdmin
             city{
               cityCode
               cityName
@@ -190,19 +196,19 @@ export class GraphqpUserService {
   updateUserById(id:number, firstName:string, 
     lastName:string, email:string, phoneNumber:string, 
     nationality:string, address:string, cityId:number, 
-    postCode:string, gender:string):Observable<any>{
+    postCode:string, gender:string, language:string):Observable<any>{
       return this.apollo.mutate<any>({
         mutation:gql`
         mutation updateUserById($id:Int!, $firstName:String!,
           $lastName:String!, $email:String!, $phoneNumber:String!,
           $nationality:String!, $address:String!, $cityId:Int!, 
-          $postCode:String!, $gender:String!
+          $postCode:String!, $gender:String!, $language:String!
         ){
           UpdateUserById(id:$id, firstName:$firstName,
             lastName:$lastName, email:$email,
             phoneNumber:$phoneNumber, nationality:$nationality,
             address:$address, cityId:$cityId, postCode:$postCode,
-            gender:$gender
+            gender:$gender, language:$language
             
           ){
             id
@@ -219,7 +225,8 @@ export class GraphqpUserService {
           "address": address,
           "cityId":cityId,
           "postCode":postCode,
-          "gender": gender
+          "gender": gender,
+          "language": language,
         }
       })
   }

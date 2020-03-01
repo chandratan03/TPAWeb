@@ -1,3 +1,11 @@
+<div class="modal" id="modal">
+    <div id="form" class="form">
+        <div class="image-modal-box">
+            <img id="image-modal" src="" alt="">
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="page-container">
         <div class="chat-container">
@@ -7,19 +15,52 @@
                 </h1>
             </div>
             <div class="chat-box">
-                <ng-container *ngFor="let message of messages">
-                    <div *ngIf="message.to == user.id && message.from ==  user.id" class="pYou">
-                        <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
-                        <p >
-                            {{message.fromUser.firstName}} {{message.fromUser.lastName}}: {{message.message}}
-                        </p>
+                <ng-container *ngFor="let message of messages; let i =index">
+                    <div *ngIf="message.from == user.id" class="pYou">
+                        <div *ngIf="message.message.length>0">
+                            <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
+                            <p >
+                                {{message.fromUser.firstName}} {{message.fromUser.lastName}}: {{message.message}}
+                            </p>
+                        </div>
+                        <div *ngIf="message.image.length>0">
+                            <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
+                            <p >
+                                {{message.fromUser.firstName}} {{message.fromUser.lastName}}: 
+                            </p>
+                            <div>
+                                <div (click)="showModal(i)"  class="image-box">
+                                    <img src={{message.image}} alt=""> 
+                                </div>
+                                <a href={{message.image}} download>
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
 
+                        </div>
                     </div>
-                    <div *ngIf="message.to !=  user.id  || message.from !=  user.id" class="pOther">
-                        <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
-                        <p >
-                            {{message.fromUser.firstName}} {{message.fromUser.lastName}}: {{message.message}}
-                        </p>
+                    <div *ngIf="message.from !=  user.id  " class="pOther">
+                        <div *ngIf="message.message.length>0">
+                            <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
+                            <p >
+                                {{message.fromUser.firstName}} {{message.fromUser.lastName}}: {{message.message}}
+                            </p>
+
+                        </div>
+                        <div  *ngIf="message.image.length>0">
+                            <p>{{message.date.getHours()}}:{{message.date.getMinutes()}}</p>
+                            <p >
+                                {{message.fromUser.firstName}} {{message.fromUser.lastName}}:
+                            </p>
+                            <div>
+                                <div (click)="showModal(i)" class="image-box">
+                                    <img src={{message.image}} alt=""> 
+                                </div>
+                                <a href={{message.image}} download>
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </ng-container> 
             </div>
@@ -32,7 +73,7 @@
                 <div>
                     <i (click)="fileInput.click()" class="fas fa-image"></i>
                     <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-                    <button mat-flat-button color="primary" (click)="send()">text</button>
+                    <button mat-flat-button color="primary" [disabled]="message.length==0" (click)="send()">text</button>
                 </div>
             </div>
         </div>

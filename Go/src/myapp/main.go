@@ -78,6 +78,71 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Message{})
 
   db.AutoMigrate(models.Blog{})
+  db.AutoMigrate(models.Promo{})
+}
+
+func initPromos(db *gorm.DB){
+  db.Create(&models.Promo{
+    Name:           "Nginep Hotel Terkenal, Sangat Murah Ternyata",
+    PromoPrice:     200000,
+    PromoCode:      "AAAAA",
+    AvailableUntil: time.Date(2020, 03, 010, 18, 0, 0, 0, time.Now().Location()),
+    Platform:       "android",
+    PromoFor:       "hotel",
+    Description:    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, neque maiores. Sequi deserunt iure, ducimus eligendi nostrum repellat consectetur fuga fugiat totam minus aliquam sunt dignissimos suscipit, alias beatae expedita! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa possimus modi dolore voluptatum porro unde, voluptatem hic numquam nihil harum quia velit natus corrupti, consequuntur aut quos sint dolorum?",
+    Image:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Promo{
+    Name:           "Nginep Hotel Terkenal 2, Sangat Murah Ternyata",
+    PromoPrice:     200000,
+    PromoCode:      "MAHAL",
+    AvailableUntil: time.Date(2020, 03, 010, 18, 0, 0, 0, time.Now().Location()),
+    Platform:       "android",
+    PromoFor:       "hotel",
+    Description:    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, neque maiores. Sequi deserunt iure, ducimus eligendi nostrum repellat consectetur fuga fugiat totam minus aliquam sunt dignissimos suscipit, alias beatae expedita! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa possimus modi dolore voluptatum porro unde, voluptatem hic numquam nihil harum quia velit natus corrupti, consequuntur aut quos sint dolorum?",
+    Image:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Promo{
+    Name:           "Nginep Hotel Terkenal 3, Sangat Murah Ternyata",
+    PromoPrice:     200000,
+    PromoCode:      "MURAH",
+    AvailableUntil: time.Date(2020, 03, 010, 18, 0, 0, 0, time.Now().Location()),
+    Platform:       "android",
+    PromoFor:       "hotel",
+    Description:    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, neque maiores. Sequi deserunt iure, ducimus eligendi nostrum repellat consectetur fuga fugiat totam minus aliquam sunt dignissimos suscipit, alias beatae expedita! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa possimus modi dolore voluptatum porro unde, voluptatem hic numquam nihil harum quia velit natus corrupti, consequuntur aut quos sint dolorum?",
+    Image:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Promo{
+    Name:           "Nginep Hotel Terkenal 4, Sangat Murah Ternyata",
+    PromoPrice:     200000,
+    PromoCode:      "DDDDD",
+    AvailableUntil: time.Date(2020, 03, 010, 18, 0, 0, 0, time.Now().Location()),
+    Platform:       "android",
+    PromoFor:       "hotel",
+    Description:    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, neque maiores. Sequi deserunt iure, ducimus eligendi nostrum repellat consectetur fuga fugiat totam minus aliquam sunt dignissimos suscipit, alias beatae expedita! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa possimus modi dolore voluptatum porro unde, voluptatem hic numquam nihil harum quia velit natus corrupti, consequuntur aut quos sint dolorum?",
+    Image:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Promo{
+    Name:           "Nginep Hotel Terkenal 5, Sangat Murah Ternyata",
+    PromoPrice:     200000 ,
+    PromoCode:      "ABCAD",
+    AvailableUntil: time.Date(2020, 03, 010, 18, 0, 0, 0, time.Now().Location()),
+    Platform:       "android",
+    PromoFor:       "hotel",
+    Description:    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, neque maiores. Sequi deserunt iure, ducimus eligendi nostrum repellat consectetur fuga fugiat totam minus aliquam sunt dignissimos suscipit, alias beatae expedita! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa possimus modi dolore voluptatum porro unde, voluptatem hic numquam nihil harum quia velit natus corrupti, consequuntur aut quos sint dolorum?",
+    Image:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+  db.Create(&models.Promo{
+    Name:           "Pesawat Terkenal dan bagus itu jarang sekali dengan harga murah",
+    PromoPrice:     200000,
+    PromoCode:      "BBBBB",
+    AvailableUntil: time.Date(2020, 03, 010, 18, 0, 0, 0, time.Now().Location()),
+    Platform:       "ios",
+    PromoFor:       "pesawat",
+    Description:    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, neque maiores. Sequi deserunt iure, ducimus eligendi nostrum repellat consectetur fuga fugiat totam minus aliquam sunt dignissimos suscipit, alias beatae expedita! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet culpa possimus modi dolore voluptatum porro unde, voluptatem hic numquam nihil harum quia velit natus corrupti, consequuntur aut quos sint dolorum?",
+    Image:          "../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+  })
+
 }
 
 func initPromoCodes(db *gorm.DB){
@@ -112,6 +177,8 @@ func initDBUser(db *gorm.DB){
     PostCode:    "25555",
     PhoneVerified: false,
     EmailVerified:false,
+    Language: "Indonesia",
+    IsAdmin:true,
   })
   db.Create(&models.User{
     FirstName:"Jose",
@@ -126,6 +193,8 @@ func initDBUser(db *gorm.DB){
     PostCode:    "25555",
     PhoneVerified:false,
     EmailVerified:false,
+    Language:"Indonesia",
+    IsAdmin:true,
   })
 }
 
@@ -154,6 +223,8 @@ func initCity(db *gorm.DB){
     CityCode:  "JKT",
     RegionId:  1,
     Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+    Latitude: -6.1818,
+    Longitude: 106.8223,
     //Region:    models.Region{},
     //Locations: nil,
   })
@@ -162,18 +233,24 @@ func initCity(db *gorm.DB){
     RegionId: 1,
     CityCode: "BLI",
     Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+    Latitude: -8.23566,
+    Longitude: 115.12239,
   })
   db.Create(&models.City{
     CityName: "Batam",
     RegionId: 1,
     CityCode: "BTH",
     Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+    Latitude: -0.15478,
+    Longitude: 104.58037,
   })
   db.Create(&models.City{
     CityName: "Singapore",
     RegionId: 2,
     CityCode: "SGP",
     Thumbnail:"../../../assets/hotel/search/hotel-images/shinchan-image.jpg",
+    Latitude: 1.290270,
+    Longitude:103.851959,
   })
 }
 
@@ -1972,7 +2049,9 @@ func dropAllTable(db *gorm.DB){
 
     db.DropTable(
       //&models.Blog{},
+      &models.Message{},
       &models.User{},
+
       &models.HotelFacility{},
 
       &models.Bank{},
@@ -2010,7 +2089,7 @@ func dropAllTable(db *gorm.DB){
       &models.VendorCar{},
       &models.Vendor{},
       &models.PromoCode{},
-
+      &models.Promo{},
     )
 
 }
@@ -2054,6 +2133,7 @@ func initAllData(db *gorm.DB){
   initEntertainments(db)
   initEntertainmentTickets(db)
   initImageEntertainment(db)
+  initPromos(db)
 }
 
 func main() {

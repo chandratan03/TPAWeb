@@ -5,5 +5,5 @@ export class Blog {
     description:string
     viewerNumber:number
     image:string
-
+    category:string
 }

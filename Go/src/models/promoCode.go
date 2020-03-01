@@ -9,12 +9,13 @@ type PromoCode struct{
   Id int `gorm :"primary_key"`
   Code string
   DiscountPercentage int
+
   CreatedAt time.Time
   UpdatedAt time.Time
   DeletedAt *time.Time `sql:"index"`
 }
 
-func GetPromos()[]PromoCode{
+func GetPromoCodes()[]PromoCode{
   db, err := database.Connect()
 
   if err!=nil{

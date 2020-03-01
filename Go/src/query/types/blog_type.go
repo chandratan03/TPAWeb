@@ -34,6 +34,9 @@ func GetBlogType() *graphql.Object{
         "image": &graphql.Field{
           Type:graphql.String,
         },
+        "category": &graphql.Field{
+            Type:graphql.String,
+        },
 
       },
     })

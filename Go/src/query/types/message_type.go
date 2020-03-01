@@ -25,6 +25,9 @@ func GetMessageType() *graphql.Object{
         "date": &graphql.Field{
           Type:graphql.String,
         },
+        "image": &graphql.Field{
+          Type:graphql.String,
+        },
 
       },
     })

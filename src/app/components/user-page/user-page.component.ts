@@ -6,6 +6,7 @@ import { GraphqHotelService } from 'src/app/services/graphq-hotel.service';
 import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-page',
@@ -31,6 +32,8 @@ export class UserPageComponent implements OnInit {
   user$: Subscription
   titles:string[]
 
+  language: string = ""
+  languages:string[]
 
   email:string
   phoneNumber:string
@@ -48,9 +51,16 @@ export class UserPageComponent implements OnInit {
       'mr',
       'mrs',
     ]
+    this.languages = [
+      "indonesia",
+      "english",
+      "melayu", 
+      "chinese",
 
-
+    ]
+  
     this.user = JSON.parse(sessionStorage.getItem("user")) 
+    
     // this.city = this.user.city
     // console.log(this.user)
     // this.firstName = this.user.firstName
@@ -87,12 +97,12 @@ export class UserPageComponent implements OnInit {
       return
     } 
   
-    if(this.firstName  == "" || this.firstName ==null){
+    if(this.firstName  == '' || this.firstName ==null){
       alert("please insert first name")
       return
     }
-    if(this.firstName.length<5){
-      alert("plase insert your first name minimal 5(length)")
+    if(this.firstName.length<3){
+      alert("plase insert your first name minimal 3(length)")
       return
     }
 
@@ -101,7 +111,7 @@ export class UserPageComponent implements OnInit {
       return
     }
     
-    if(this.lastName.length<5){
+    if(this.lastName.length<3){
       alert("plase insert your last name minimal 5(length)")
       return
     }
@@ -142,11 +152,12 @@ export class UserPageComponent implements OnInit {
       this.user.id,this.firstName,this.lastName,
       this.user.email, this.user.phoneNumber, 
       this.user.nationality, this.address,
-      this.city.id, this.postCode, gender
+      this.city.id, this.postCode, gender, this.language
     ).subscribe(m =>{
       let id = m.data.UpdateUserById
       console.log(id.id)
       console.log(id)
+      location.reload()
       this.getUserById(id.id)
     })
     
@@ -168,6 +179,11 @@ export class UserPageComponent implements OnInit {
         this.title = this.titles[0]
       }else{
         this.title = this.titles[1]
+      }
+      for(let i=0; i<this.languages.length; i++){
+        if(this.user.language.toLowerCase() == this.languages[i].toLowerCase()){
+          this.language =  this.languages[i]
+        }
       }
       this.getCities()
       // location.reload()

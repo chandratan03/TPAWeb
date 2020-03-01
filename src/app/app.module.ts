@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes, Router} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule, MatStepperModule, MatRadioModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule, MatStepperModule, MatRadioModule, MatIconModule} from '@angular/material';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { QuickCardComponent } from './components/quick-card/quick-card.component';
 import {ApolloModule, Apollo} from 'apollo-angular';
@@ -55,6 +55,9 @@ import { BlogPageComponent } from './components/blog-page/blog-page.component';
 import { NewPostBlogComponent } from './components/new-post-blog/new-post-blog.component';
 import { DetailBlogComponent } from './components/detail-blog/detail-blog.component';
 import { SafePipe } from './pipe/safe.pipe';
+import { PromoPageComponent } from './components/promo-page/promo-page.component';
+import { ManageEventPageComponent } from './components/manage-event-page/manage-event-page.component';
+import { ManageBlogComponent } from './components/manage-blog/manage-blog.component';
 
 @NgModule({
   exports: [
@@ -101,6 +104,9 @@ import { SafePipe } from './pipe/safe.pipe';
     NewPostBlogComponent,
     DetailBlogComponent,
     SafePipe,
+    PromoPageComponent,
+    ManageEventPageComponent,
+    ManageBlogComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -128,7 +134,7 @@ import { SafePipe } from './pipe/safe.pipe';
     MatStepperModule,
     MatRadioModule,
     CalendarModule,
-    
+    MatIconModule,
     RouterModule.forRoot([
       {
         path: '', component:HomePageComponent
@@ -196,6 +202,15 @@ import { SafePipe } from './pipe/safe.pipe';
       {
         path: 'blog/detail/:id', component:DetailBlogComponent
       },
+      {
+        path: 'promo', component:PromoPageComponent
+      },
+      {
+        path: 'manage/blog', component:ManageBlogComponent
+      },
+      {
+        path:'manage/event', component:ManageEventPageComponent,
+      }
       
     ]),
     BrowserAnimationsModule,

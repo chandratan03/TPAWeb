@@ -14,6 +14,7 @@ type Blog struct{
   Title string
   Description string
   ViewerNumber int
+  Category string
   UserId int
   Image string
 }
@@ -34,7 +35,7 @@ func GetBlogs() []Blog{
 
 
 
-func InsertBlog(title string, description string, userId int, image string)Blog {
+func InsertBlog(title string, description string, userId int, image string, category string)Blog {
   db, err := database.Connect()
 
   if err!=nil{
@@ -49,6 +50,7 @@ func InsertBlog(title string, description string, userId int, image string)Blog 
     Description:  description,
     ViewerNumber: 0,
     UserId:       userId,
+    Category:category,
     Image:image,
   })
   db.Last(&blog)
@@ -56,6 +58,40 @@ func InsertBlog(title string, description string, userId int, image string)Blog 
 
 }
 
+func UpdateBlogById(id int,title string, description string, userId int, image string, category string)Blog {
+  db, err := database.Connect()
+
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  var blog Blog
+  db.Where("id = ? ", id).Find(&blog)
+  blog.Title = title
+  blog.Description = description
+  blog.UserId = userId
+  blog.Image = image
+  blog.Category = category
+  db.Save(&blog)
+
+  return blog
+
+}
+
+
+func DeleteBlogById(id int)Blog {
+  db, err := database.Connect()
+
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  var blog Blog
+  db.Where("id = ? ", id).Find(&blog)
+  db.Delete(&blog)
+  //db.Save(&blog)
+  return blog
+}
 
 
 func UpdateBlogViewer(id int)Blog{

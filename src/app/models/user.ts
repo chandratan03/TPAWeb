@@ -14,6 +14,7 @@ export class User {
     city: City
     emailVerified:boolean
     phoneVerified:boolean
-    
+    language: string
+    isAdmin:boolean
 }
 

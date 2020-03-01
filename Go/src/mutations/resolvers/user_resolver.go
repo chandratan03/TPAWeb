@@ -29,8 +29,8 @@ func UpdateUserById(params graphql.ResolveParams)(interface{}, error) {
   cityId := params.Args["cityId"].(int)
   postCode := params.Args["postCode"].(string)
   gender := params.Args["gender"].(string)
-
-  row := models.UpdateUserById(id, firstName, lastName, email, phoneNumber, nationality, address, cityId, postCode, gender)
+  language:=params.Args["language"].(string)
+  row := models.UpdateUserById(id, firstName, lastName, email, phoneNumber, nationality, address, cityId, postCode, gender, language)
   return row, nil
 }
 

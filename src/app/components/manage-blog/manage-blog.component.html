@@ -1,0 +1,90 @@
+<div id="modal" class="modal">
+    <div class="form">
+        <app-new-post-blog></app-new-post-blog>
+    </div>
+</div>
+
+<app-pop-up class="pop-up-box"  [isOpen]="popUpDelete">
+    <div class="delete-box">
+        <p>Are you sure want to delete? </p>
+        <button mat-flat-button class="button" (click)="sureDelete()">Yes</button>
+        <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
+    </div>
+</app-pop-up>
+<div id="modal2" class="modal">
+    <div class="form">
+        <div class="container-update">
+            <div class="tools-container">
+                <button class="tool"  (click)="initButtons('bold')" >
+                    <i class="fas fa-bold"></i>
+                </button>
+                <button class="tool"  (click)="initButtons('italic')" >
+                    <i class=' fas fa-italic'></i>
+                </button>
+                <button  class="tool"  (click)="initButtons('underline')" >
+                    <i class=' fas fa-underline'></i>
+                </button>
+                <button  class="tool"  (click)="initButtons('justifyLeft')" >
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <button class="tool"  (click)="initButtons('justifyCenter')" >
+                    <i class=' fas fa-align-center'></i>
+                </button>
+                <button  class="tool"  (click)="initButtons('justifyRight')" >
+                    <i class=' fas fa-align-right'></i>
+                </button>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="title" [(ngModel)]="title" >
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input matInput placeholder="category" [(ngModel)]="category">
+                </mat-form-field>
+            </div>
+            <div class="content" id="content" contenteditable="true">
+        
+            </div>
+            <div id="post-box" class="post-box">
+                <button (click)="fileInput.click()"  mat-button><i class="fas fa-image"></i>
+                </button>
+                
+                <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                <button mat-flat-button (click)="post()" color="accent">POST</button>
+        
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="container">
+    <div class="new-post-button">
+        <button id="showForm" color="accent" mat-flat-button>
+            +
+        </button>
+    </div>
+    <div class="page-container">
+        <div  class="story-box" *ngFor="let blog of blogs; let i=index"  >
+            <div (click)="toDetailPage(i)" class="story-img">
+                <img src="{{blog.image}}" alt="">
+            </div>
+            <div class="story-title">
+                <h3>Title: {{blog.title}}</h3>
+                <h3>Category:  {{blog.category}}</h3>
+            </div>
+            <div calss="story-buttons">
+                <button color="primary" (click)="showUpdateForm(i)" mat-flat-button>Update</button>
+                <button color="primary" (click)="openPopUp(blogs[i].id)" mat-flat-button>Delete</button>
+            </div>
+        </div>
+        
+    </div>
+   
+</div>
+
+<div class="loading-page" id="loading-page">
+    <mat-spinner></mat-spinner>
+</div>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BlogServiceService } from 'src/app/services/blog-service.service';
 import { Subscription } from 'rxjs';
 import { ChatServiceService } from 'src/app/services/chat-service.service';
-import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
 
 @Component({
   selector: 'app-new-post-blog',
@@ -18,20 +17,17 @@ export class NewPostBlogComponent implements OnInit {
   title:string=""
   userId:number;
   image:string=""
+  category:string=""
   ngOnInit() {
-    
-    let temp =  JSON.parse(sessionStorage.getItem("user"))
+    let temp = JSON.parse(sessionStorage.getItem("user"))
     this.userId = temp.id
   }
   initButtons(cmd: any) {
 
-    if (cmd === 'createlink') {
-      let url = prompt("Enter the link here: ", "http:\/\/");
-      document.execCommand(cmd, false, url);
-    } else {
       document.execCommand(cmd, false, null);
-    }
+    
   }
+
   
   blogService$:Subscription
   post():void{
@@ -49,8 +45,12 @@ export class NewPostBlogComponent implements OnInit {
       alert("please select a picture")
       return
     }
-      this.blogService$ = this.blogService.insertPost(this.title,temp, this.userId,this.image).subscribe(m=>{
-        alert("success")
+      this.blogService$ = this.blogService.insertPost(this.title,temp, this.userId,this.image, this.category).subscribe(m=>{
+        if(m.data.insertBlog.id != 0){
+          alert("success")
+        }else{
+          alert("fail")
+        }
         this.emitNewBlog()
         location.reload()
       })

@@ -1,0 +1,57 @@
+<div class="big-container">
+
+    <div class="big-image-container">
+        <div class="big-image-box">
+            <img src={{promo.image}} alt="">
+        </div>
+    </div>
+    <div class="share-buttons">
+        <button color="primary" (click)="shareFacebook()" class="facebook-btn" mat-flat-button>Facebook</button>
+        <button color="primary" (click)="shareWhatsapp()" class="whatsapp-btn" mat-flat-button>Whatsapp</button>
+        <button color="primary" (click)="copyLink()" class="copylink-btn" mat-flat-button>Copy link</button>
+    </div>
+    <div class="container">
+        
+        <div class="page-container">
+            <div class="promo-content">
+                <div class="promo-detail">
+                    <h1>{{promo.name}}</h1>
+                    <p>
+                        {{promo.description}}
+                    </p>
+                </div>
+                <div class="promo-platform">
+                    <div class="promo-platform-child">Periode promo</div>
+                    <div class="promo-platform-child">{{promo.availableUntil | date:'yyyy-MM-dd'}}</div>
+                    <div class="promo-platform-child">Platform</div>
+                    <div class="promo-platform-child">{{promo.platform}}</div>
+                    <div class="promo-platform-child">Berlaku untuk</div>
+                    <div class="promo-platform-child">{{promo.promoFor}}</div>
+                </div>
+                <div class="promo-code">
+                    <h2>
+                        Promo price: {{promo.promoPrice}}
+                    </h2>
+                    <h2>
+                        Promo code: {{promo.promoCode}}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="other-promo-container">
+            <div class="other-promo-box" *ngFor="let p of promos">
+                <div class="promo-thumbnail" >
+                    <img src={{p.image}} alt="">
+                </div>
+                <div class="promo-title">
+                    <h3>{{p.name}}</h3>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+
+
+</div>

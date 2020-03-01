@@ -12,11 +12,11 @@ export class BlogServiceService {
   constructor(private apollo: Apollo) { }
 
   
-  insertPost(title:string, description:string, userId:number, image:string):Observable<any>{
+  insertPost(title:string, description:string, userId:number, image:string, category:string):Observable<any>{
     return this.apollo.mutate<any>({
       mutation: gql`
-      mutation insertBlog($title:String!, $description:String!, $userId:Int!, $image:String!){
-        insertBlog(title:$title, description:$description, userId:$userId, image:$image){
+      mutation insertBlog($title:String!, $description:String!, $userId:Int!, $image:String!, $category:String){
+        insertBlog(title:$title, description:$description, userId:$userId, image:$image, category:$category){
           id
           userId
           title
@@ -29,8 +29,51 @@ export class BlogServiceService {
         "title":title,
         "description":description,
         "userId":userId,
-        "image":image
+        "image":image,
+        "category": category
       },
+    })
+  }
+
+  updatePost(id:number,title:string, description:string, userId:number, image:string, category:string):Observable<any>{
+    return this.apollo.mutate<any>({
+      mutation: gql`
+      mutation updateBlog($id:Int!,$title:String!, $description:String!, $userId:Int!, $image:String!, $category:String){
+        updateBlogById(id:$id,title:$title, description:$description, userId:$userId, image:$image, category:$category){
+          id
+          userId
+          title
+          image
+
+        }
+      }
+      `,
+      variables:{
+        "id": id,
+        "title":title,
+        "description":description,
+        "userId":userId,
+        "image":image,
+        "category": category
+      },
+    })
+  }
+  deletePost(id:number):Observable<any>{
+    return this.apollo.mutate<any>({
+      mutation: gql`
+      mutation deleteBlog($id:Int!){
+        deleteBlogById(id:$id){
+          id
+          userId
+          title
+          image
+
+        }
+      }
+      `,
+      variables:{
+        "id": id,
+        },
     })
   }
 
@@ -45,6 +88,7 @@ export class BlogServiceService {
             description
             viewerNumber
             image
+            category
 
           }
         }
@@ -62,7 +106,7 @@ export class BlogServiceService {
             description
             viewerNumber
             image
-
+            category
           }
         }
       `
@@ -80,7 +124,7 @@ export class BlogServiceService {
           description
           viewerNumber
           image
-
+          category
         }
       }
       `,

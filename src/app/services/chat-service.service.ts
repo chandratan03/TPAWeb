@@ -41,6 +41,7 @@ export class ChatServiceService {
           from
           to
           message
+          image
         }
       
       
@@ -49,24 +50,26 @@ export class ChatServiceService {
     })
   }
 
-  insertMessages(from:number, to:number, message:string):Observable<any>{
+  insertMessages(from:number, to:number, message:string, image:string):Observable<any>{
     return this.apollo.mutate<any>(
       {
         mutation:gql`
-        mutation insertMessage($from:Int!, $to:Int!, $message:String!){
-          insertMessage(from:$from, to:$to, message:$message){
+        mutation insertMessage($from:Int!, $to:Int!, $message:String, $image:String){
+          insertMessage(from:$from, to:$to, message:$message, image:$image){
             id
             date
             from
             to
             message
+            image
           }
         }
         `,
         variables:{
           "from":from,
           "to":to,
-          "message": message
+          "message": message,
+          "image": image
         }
       }
     )

@@ -1,0 +1,134 @@
+.big-container{
+    width: 100%;
+}
+
+
+.container{
+    display:flex;
+    box-sizing: border-box;
+}
+
+
+.page-container{
+    width: 70%;
+    box-sizing: border-box;
+    min-width: 480px;
+    .promo-content{
+        padding: 2% 4%;    
+        box-sizing: border-box;
+        
+        .promo-detail{
+            border-radius: 10px;
+            box-sizing: border-box;
+            >h1{
+                margin-bottom: 2%;
+            }
+        }
+        .promo-platform{
+            border-radius: 10px;
+            box-sizing: border-box;
+            margin-top: 10px;    
+            color: #333333;    
+        }
+        p{
+            color: #333333;
+        }
+    }
+
+    .promo-platform{
+        padding: 2% 4%;
+        display:grid;
+        box-sizing: border-box;
+        border-top: 1px solid #545454;
+        margin-top: 20px;
+        grid-template-columns: auto auto;
+        row-gap:10px;
+    ;
+    }
+
+
+    
+}
+
+
+.other-promo-container{
+    width: 20%;
+    min-width: 200px;
+    
+}
+.other-promo-box{
+    padding: 2%;
+    box-sizing: border-box;
+    border: 1px solid #595959;
+    border-radius: 5px;
+    min-width: 150px;
+    width: 100%;
+    max-width: 200px;
+    height: auto;   ;
+    margin: 10px 0;
+    .promo-thumbnail{
+        height: 80%;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+
+
+.big-image-container{
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 600px;
+    .big-image-box{
+        min-height: 300px;
+        width: 50%;
+        min-width: 320px;
+        max-height: 600px;
+        display:flex;
+        justify-content: center;
+        position: relative;
+        >img{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+}
+
+
+@media (max-width: 700px){  
+    .container{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-container{
+        min-width: 300px
+    }
+    
+}
+
+
+
+
+
+.share-buttons{
+    display:flex;
+    flex-direction: row-reverse;
+    button{
+        box-sizing: border-box;
+        margin: 0 10px; 
+    }
+}
+
+.whatsapp-btn{
+    background-color: #00873f;
+}
+.copylink-btn{
+    background-color: #6e6e6e;
+}

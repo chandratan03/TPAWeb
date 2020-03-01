@@ -12,12 +12,20 @@
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="email" [(ngModel)]="email">
+                
             </mat-form-field>
             verified: {{user.emailVerified}}
             <button mat-button>VERIFY</button>
         
         </div>
-
+        <div>
+            <h3>Language</h3>
+            <mat-select placeholder="languages" [(ngModel)]="language" name="item">
+                <mat-option *ngFor="let l of languages" [value]="l">
+                    {{l}}
+                </mat-option>
+            </mat-select>
+        </div>
     </div>
     <div class="form-box">
         <div>
@@ -27,22 +35,26 @@
                     <mat-option *ngFor="let title of titles" [(value)]="title">
                         {{title|titlecase}}
                     </mat-option>
+                    <mat-hint *ngIf="this.title == '' || this.title == null">ERORR</mat-hint>
                 </mat-select>
             </mat-form-field>
         </div>
         <div>
             <mat-form-field appearance="outline">
+                <mat-hint *ngIf="this.firstName  == '' || this.firstName ==null  || this.firstName.length<3">plase insert your first name minimal 3(length)</mat-hint>
                 <input matInput placeholder="nama depan" [(ngModel)]="firstName">
             </mat-form-field>
         </div>
         <div>
             <mat-form-field appearance="outline">
+                <mat-hint *ngIf="this.lastName  == '' || this.lastName ==null || this.lastName.length<3">plase insert your last name minimal 5(length)</mat-hint>
                 <input matInput placeholder="nama belakang" [(ngModel)]="lastName">
             </mat-form-field>
         </div>
 
         <div>
             <mat-form-field appearance="outline">
+                <mat-hint *ngIf="this.city == null">please select your city</mat-hint>
                 <mat-select placeholder="kota" [(ngModel)]="city" name="item">
                     <mat-option *ngFor="let city of cities" [(value)]="city">
                         {{city.cityName}}
@@ -52,6 +64,7 @@
         </div>
         <div>
             <mat-form-field appearance="outline">
+                <mat-hint *ngIf="this.address == null || this.address.length < 7">please insert your address minimal 7 length</mat-hint>
                 <input matInput placeholder="address"  [(ngModel)]="address">
             </mat-form-field>
 
@@ -59,6 +72,7 @@
 
         <div>
             <mat-form-field appearance="outline">
+                <mat-hint *ngIf="this.postCode.length < 5 || this.postCode == null">please input post code, min length 5</mat-hint>
                 <input matInput placeholder="kode pos" maxlength="5" [(ngModel)]="postCode">
             </mat-form-field>
 

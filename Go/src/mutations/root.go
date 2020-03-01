@@ -32,6 +32,7 @@ func GetRoot() *graphql.Object{
           "nationality": &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
           },
+
         },
         Resolve: resolvers.CreateUser,
       },
@@ -381,7 +382,10 @@ func GetRoot() *graphql.Object{
             Type:graphql.NewNonNull(graphql.Int),
           },
           "message": &graphql.ArgumentConfig{
-            Type:graphql.NewNonNull(graphql.String),
+            Type:graphql.String,
+          },
+          "image": &graphql.ArgumentConfig{
+            Type:graphql.String,
           },
         },
         Resolve:resolvers.InsertMessage,
@@ -418,6 +422,9 @@ func GetRoot() *graphql.Object{
           },
           "gender": &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.String),
+          },
+          "language": &graphql.ArgumentConfig{
+              Type:graphql.NewNonNull(graphql.String),
           },
         },
         Resolve:resolvers.UpdateUserById,
@@ -456,7 +463,44 @@ func GetRoot() *graphql.Object{
            "image": &graphql.ArgumentConfig{
              Type: graphql.NewNonNull(graphql.String),
            },
+           "category": &graphql.ArgumentConfig{
+             Type: graphql.String,
+           },
          },
+      },
+      "updateBlogById":&graphql.Field{
+        Type: types.GetBlogType(),
+        Resolve:resolvers.UpdateBlogById,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "title": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "description": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "userId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "image": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "category": &graphql.ArgumentConfig{
+            Type: graphql.String,
+          },
+        },
+      },
+      "deleteBlogById":&graphql.Field{
+        Type: types.GetBlogType(),
+        Resolve:resolvers.DeleteBlogById,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+
+        },
       },
       "updateBlogViewer":&graphql.Field{
         Type: types.GetBlogType(),
@@ -468,6 +512,101 @@ func GetRoot() *graphql.Object{
 
         },
       },
+      "insertEntertainmentTicket":&graphql.Field{
+        Type: types.GetEntertainmentTicketType(),
+        Resolve:resolvers.InsertEntertainmentTicket,
+        Args:graphql.FieldConfigArgument{
+          "date": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "entertainmentId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "price": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Float),
+          },
+          "discountPercentage": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+        },
+      },
+      "deleteEntertainmentTicketById":&graphql.Field{
+        Type: types.GetEntertainmentTicketType(),
+        Resolve:resolvers.DeleteEntertainmentTicketById,
+        Args:graphql.FieldConfigArgument{
+          "entertainmentId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+        },
+      },
+      "insertEntertainment":&graphql.Field{
+        Type: types.GetEntertainmentType(),
+        Resolve:resolvers.InsertEntertainment,
+        Args:graphql.FieldConfigArgument{
+          "name": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "price": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Float),
+          },
+          "category": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "isTrending": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Boolean),
+          },
+          "cityId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "image": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "description": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+        },
+      },
+      "updateEntertainmentById":&graphql.Field{
+        Type: types.GetEntertainmentType(),
+        Resolve:resolvers.UpdateEntertainment,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "name": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "price": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Float),
+          },
+          "category": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "isTrending": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Boolean),
+          },
+          "cityId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "image": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "description": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+        },
+      },
+      "deleteEntertainmentById":&graphql.Field{
+        Type: types.GetEntertainmentType(),
+        Resolve:resolvers.DeleteEntertainmentById,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+        },
+      },
+
+
 
     },
 

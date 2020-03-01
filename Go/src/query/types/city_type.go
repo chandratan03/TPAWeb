@@ -24,10 +24,16 @@ func GetCityType() *graphql.Object{
         "thumbnail": &graphql.Field{
             Type:graphql.String,
         },
+        "longitude": &graphql.Field{
+              Type: graphql.Float,
+        },
+        "latitude": &graphql.Field{
+          Type: graphql.Float,
+        },
 
 
       },
-      Description: "Get location Type",
+      Description: "Get city Type",
     })
   }
   return cityType

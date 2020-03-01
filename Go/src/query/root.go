@@ -258,7 +258,7 @@ func GetRoot() *graphql.Object{
       },
       "promoCodes":{
          Type: graphql.NewList(types.GetPromoCodeType()),
-         Resolve:resolvers.GetPromos,
+         Resolve:resolvers.GetPromoCodes,
       },
       "passengers":{
          Type:graphql.NewList(types.GetPassengerType()),
@@ -349,6 +349,14 @@ func GetRoot() *graphql.Object{
           },
 
         },
+      },
+      "promos":{
+        Type:graphql.NewList(types.GetPromoType()),
+        Resolve:resolvers.GetPromos,
+      },
+      "latestPromo":{
+        Type: types.GetPromoType(),
+        Resolve:resolvers.GetLatestPromo,
       },
 
     },

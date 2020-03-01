@@ -14,15 +14,12 @@ type EntertainmentTicket struct{
   DiscountPercentage int
 }
 
-
-
 func GetEntertainmentTickets() []EntertainmentTicket{
   db, err := database.Connect()
   if err!=nil{
     panic(err)
   }
   defer db.Close()
-
   var entertainmentTickets []EntertainmentTicket
   db.Find(&entertainmentTickets)
   for i:=range entertainmentTickets{
@@ -31,7 +28,6 @@ func GetEntertainmentTickets() []EntertainmentTicket{
       Model(&entertainmentTickets[i].Entertainment).Related(&entertainmentTickets[i].Entertainment.City).
       Model(&entertainmentTickets[i].Entertainment.City).Related(&entertainmentTickets[i].Entertainment.City.Region)
   }
-
   return entertainmentTickets
 }
 
@@ -42,7 +38,6 @@ func GetEntertainmentTicketByCategory(category string)[]EntertainmentTicket{
     panic(err)
   }
   defer db.Close()
-
   var entertainmentTickets []EntertainmentTicket
   var temps []EntertainmentTicket
   db.Find(&entertainmentTickets)
@@ -51,10 +46,7 @@ func GetEntertainmentTicketByCategory(category string)[]EntertainmentTicket{
     db.Model(&entertainmentTickets[i]).Related(&entertainmentTickets[i].Entertainment).
       Model(&entertainmentTickets[i].Entertainment).Related(&entertainmentTickets[i].Entertainment.City).
       Model(&entertainmentTickets[i].Entertainment.City).Related(&entertainmentTickets[i].Entertainment.City.Region)
-
-
   }
-
   for i:= range entertainmentTickets{
     if entertainmentTickets[i].Entertainment.Category == category{
       temps= append(temps, entertainmentTickets[i])
@@ -64,7 +56,6 @@ func GetEntertainmentTicketByCategory(category string)[]EntertainmentTicket{
   return temps
 
 }
-
 
 func GetEntertainmentTicketByCategoryAndCityId(category string, cityId int)[]EntertainmentTicket{
   db, err := database.Connect()
@@ -81,18 +72,13 @@ func GetEntertainmentTicketByCategoryAndCityId(category string, cityId int)[]Ent
     db.Model(&entertainmentTickets[i]).Related(&entertainmentTickets[i].Entertainment).
       Model(&entertainmentTickets[i].Entertainment).Related(&entertainmentTickets[i].Entertainment.City).
       Model(&entertainmentTickets[i].Entertainment.City).Related(&entertainmentTickets[i].Entertainment.City.Region)
-
-
   }
-
   for i:= range entertainmentTickets{
     if entertainmentTickets[i].Entertainment.Category == category && entertainmentTickets[i].Entertainment.City.Id == uint(cityId){
       temps= append(temps, entertainmentTickets[i])
     }
   }
-
   return temps
-
 }
 
 func GetEntertainmentTicketByCityId( cityId int)[]EntertainmentTicket{
@@ -101,7 +87,6 @@ func GetEntertainmentTicketByCityId( cityId int)[]EntertainmentTicket{
     panic(err)
   }
   defer db.Close()
-
   var entertainmentTickets []EntertainmentTicket
   var temps []EntertainmentTicket
   db.Find(&entertainmentTickets)
@@ -110,17 +95,52 @@ func GetEntertainmentTicketByCityId( cityId int)[]EntertainmentTicket{
     db.Model(&entertainmentTickets[i]).Related(&entertainmentTickets[i].Entertainment).
       Model(&entertainmentTickets[i].Entertainment).Related(&entertainmentTickets[i].Entertainment.City).
       Model(&entertainmentTickets[i].Entertainment.City).Related(&entertainmentTickets[i].Entertainment.City.Region)
-
-
   }
-
   for i:= range entertainmentTickets{
     if entertainmentTickets[i].Entertainment.City.Id == uint(cityId){
       temps= append(temps, entertainmentTickets[i])
     }
   }
-
   return temps
-
 }
+
+func InsertEntertainmentTicket(Date string, EntertainmentId int, Price float64, DiscountPercentage int)EntertainmentTicket{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+
+  d, error := time.Parse("Mon Jan 02 2006 15:04:05 GMT-0700 (Western Indonesia Time)", Date)
+  if error!=nil {
+    panic(error)
+  }
+
+  db.Create(EntertainmentTicket{
+    Date:               d,
+    EntertainmentId:    EntertainmentId,
+    Price:              Price,
+    DiscountPercentage: DiscountPercentage,
+  })
+  var entertainmentTicket EntertainmentTicket
+  db.Last(&entertainmentTicket)
+  return entertainmentTicket
+}
+
+func DeleteEntertainmentTicket(entertainmentId int)[]EntertainmentTicket{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  var entertainmentTickets []EntertainmentTicket
+
+  db.Where("entertainment_id").Find(&entertainmentTickets)
+
+  db.Delete(&entertainmentTickets)
+
+  return entertainmentTickets
+}
+
+
 

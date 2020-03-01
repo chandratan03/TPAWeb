@@ -48,9 +48,9 @@ export class EventServiceService {
     })
   }
 
-  getEntertainmentTickets():Observable<Query>{
+  getEntertainmentTickets(): Observable<Query> {
     return this.apollo.query<Query>({
-      query : gql`
+      query: gql`
       {
         entertainmentTickets{
           date
@@ -91,9 +91,9 @@ export class EventServiceService {
       `
     })
   }
-  getEntertainmentTicketsByCityId(cityId:number):Observable<Query>{
+  getEntertainmentTicketsByCityId(cityId: number): Observable<Query> {
     return this.apollo.query<Query>({
-      query : gql`
+      query: gql`
       query entertainmentsTicketsByCityId($cityId: Int){
         entertainmentsTicketsByCityId(cityId:$cityId){
           date
@@ -134,14 +134,14 @@ export class EventServiceService {
       `
       ,
       variables: {
-        "cityId":cityId
+        "cityId": cityId
       }
     })
   }
 
-  getEntertainmentTicketsByCategory(category:string):Observable<Query>{
+  getEntertainmentTicketsByCategory(category: string): Observable<Query> {
     return this.apollo.query<Query>({
-      query : gql`
+      query: gql`
       query entertainmentsTicketsByCategory($category: String){
         entertainmentsTicketsByCategory(category:$category){
           date
@@ -182,15 +182,15 @@ export class EventServiceService {
       `
       ,
       variables: {
-        "category":category
+        "category": category
       }
     })
   }
 
-  
-  getEntertainmentTicketsByCategoryAndCityId(category:string, cityId:number):Observable<Query>{
+
+  getEntertainmentTicketsByCategoryAndCityId(category: string, cityId: number): Observable<Query> {
     return this.apollo.query<Query>({
-      query : gql`
+      query: gql`
       query entertainmentsTicketsByCategoryAndCityId($category: String, $cityId: Int){
         entertainmentsTicketsByCategoryAndCityId(category:$category, cityId:$cityId){
           date
@@ -231,11 +231,140 @@ export class EventServiceService {
       `
       ,
       variables: {
-        "category":category,
+        "category": category,
         "cityId": cityId
       }
     })
   }
+
+
+
+  insertEntertainment(name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation insertEntertainment($name: String!, $price:Float!, $category:String!, $isTrending:Boolean!, $cityId:Int!, 
+          $image:String!, $description:String!
+        ){
+          insertEntertainment(name:$name, price:$price, category:$category, isTrending:$isTrending,
+            cityId:$cityId, image:$image, description:$description){
+            id
+            name
+          }
+        }
+      
+      `,
+      variables: {
+        "name": name,
+        "price": parseFloat(price.toString()),
+        "category": category,
+        "isTrending": isTrending,
+        "cityId": cityId,
+        "image": image,
+        "description": description
+      }
+    })
+  }
+  updateEntertainment(id: number, name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation updateEntertainment($id:Int!,$name: String!, $price:Float!, $category:String!, $isTrending:Boolean!, $cityId:Int!, 
+        $image:String!, $description:String!
+      ){
+        updateEntertainmentById(id:$id,name:$name, price:$price, category:$category, isTrending:$isTrending,
+          cityId:$cityId, image:$image, description:$description){
+           id
+          name
+        }
+      }
+      
+      `,
+      variables: {
+        "id": id,
+        "name": name,
+        "price": parseFloat(price.toString()),
+        "category": category,
+        "isTrending": isTrending,
+        "cityId": cityId,
+        "image": image,
+        "description": description
+      }
+    })
+  }
+  deleteEntertainment(id: number): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation deleteEntertainment($id:Int!){
+        deleteEntertainmentById(id:$id){
+          id
+          name
+        }
+      }
+      
+      `,
+      variables: {
+        "id": id,
+      }
+    })
+  }
+
+  insertEntertainmentTicket(date: string, entertainmentId:number, price:number, discountPercentage:number): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+      
+        mutation insertEntertainmentTicket($date:String!, $entertainmentId:Int!, $price: Float!, $discountPercentage:Int!){
+          insertEntertainmentTicket(date:$date, entertainmentId:$entertainmentId, price:$price, discountPercentage:$discountPercentage){
+            id
+            entertainmentId
+          }
+        }
+      
+      `,
+      variables: {
+        "date":date,
+        "entertainmentId": entertainmentId,
+        "price": price,
+        "discountPercentage": discountPercentage
+      }
+    })
+  }
+
+  deleteEntertainmentTicket( entertainmentId:number): Observable<any> {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation deleteEntertainmentTicketById( $entertainmentId:Int!){
+        deleteEntertainmentTicketById(entertainmentId:$entertainmentId){
+          id
+          entertainmentId
+        }
+      }
+      `,
+      variables: {
+        "entertainmentId": entertainmentId,
+      }
+    })
+  }
+  
+  getCities(): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query getCities{
+        cities{
+          id
+          cityName
+          cityCode
+          longitude
+          latitude
+          region{
+            id
+            regionName
+          }
+        }
+      }
+      `
+    })
+  }
+
+
 
 
 

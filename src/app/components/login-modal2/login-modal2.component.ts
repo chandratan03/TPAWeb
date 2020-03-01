@@ -22,6 +22,8 @@ export class LoginModal2Component implements OnInit {
   user$: Subscription;
   hasUser: boolean;
 
+  hide:boolean = true;
+
   email: string;
   password: string;
   ngOnInit() {

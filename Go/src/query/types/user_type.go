@@ -56,6 +56,13 @@ func GetUserType() *graphql.Object{
         "emailVerified": &graphql.Field{
           Type:graphql.Boolean,
         },
+        "language": &graphql.Field{
+          Type:graphql.String,
+        },
+        "isAdmin": &graphql.Field{
+          Type:graphql.Boolean,
+        },
+
 
 
       },

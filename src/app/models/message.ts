@@ -7,4 +7,5 @@ export class Message {
     toUser:User
     message:string
     date:Date
+    image:string
 }

@@ -17,6 +17,7 @@ type User struct {
   Password string `json:"password" db:"password"`
   PhoneNumber string `json:"phonenumber" db:"phonenumber"`
   Nationality string
+  Language string
   Address string
   CityId int `json:"city_id"`
   City City `gorm:"ForeingKey:city_id"`
@@ -24,6 +25,7 @@ type User struct {
   Gender string
   EmailVerified bool
   PhoneVerified bool
+  IsAdmin bool
 }
 
 
@@ -116,6 +118,7 @@ func CreateUser(firstName string, lastName string, password string,  email strin
     Nationality:nationality,
     // tembak manual, 1 itu jakarta
     CityId: 1,
+    IsAdmin:false,
   })
 
   var user User
@@ -128,7 +131,7 @@ func UpdateUserById(id int, firstName string,
   lastName string,email string,
   phoneNumber string, nationality string,
   address string, cityId int, postCode string,
-  gender string)User{
+  gender string, language string)User{
   db, err := database.Connect()
   if err!=nil{
     panic(err)
@@ -146,8 +149,9 @@ func UpdateUserById(id int, firstName string,
   user.CityId = cityId
   user.PostCode = postCode
   user.Gender = gender
+  user.Language = language
   db.Save(&user)
-
+  db.Where("id = ?", id).Find(&user)
   return user
 }
 
