@@ -11,7 +11,7 @@ import { User } from 'src/app/models/user';
 import { PromoCode } from 'src/app/models/promo-code';
 import { HeaderTransaction } from 'src/app/models/header-transaction';
 import { DetailTransaction } from 'src/app/models/detail-transaction';
-import {nationalities} from './checkout';
+import { nationalities } from './checkout';
 import { MatStepper } from '@angular/material';
 import { Entertainment } from 'src/app/models/entertainment';
 import { EntertainmentTicket } from 'src/app/models/entertainment-ticket';
@@ -35,7 +35,7 @@ export class EventOrderComponent implements OnInit {
     private bankService: BankService,
     private checkOutService: GraphqpCheckOutService,
     private userService: GraphqpUserService,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private eventService: EventServiceService
   ) { }
   userNationality: String
@@ -83,7 +83,7 @@ export class EventOrderComponent implements OnInit {
   headerTransaction$: Subscription
   detailTransaction$: Subscription
   passenger$: Subscription
-  entertainmentTicket$:Subscription
+  entertainmentTicket$: Subscription
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
@@ -93,7 +93,7 @@ export class EventOrderComponent implements OnInit {
     this.bank = this.banks[i]
   }
 
-  entertainmentTicketId:number
+  entertainmentTicketId: number
   ngOnInit() {
     this.entertainmentTicketId = +this.route.snapshot.paramMap.get("id")
     this.quantity = + this.route.snapshot.paramMap.get("qty")
@@ -102,6 +102,9 @@ export class EventOrderComponent implements OnInit {
       "nyonya",
       "none"
     ]
+    setTimeout(()=>{
+      document.getElementById("loading-page").style.display="none"
+    },2000)
 
 
     this.selectedBankId = -1
@@ -118,33 +121,57 @@ export class EventOrderComponent implements OnInit {
         this.phoneNumber = this.user.phoneNumber
         this.nationality = this.user.nationality
 
-        if(this.user.gender == "male"){
-          
+        if (this.user.gender == "male") {
+
           this.title = this.titles[0]
-        }else{
+        } else {
           this.title = this.titles[1]
         }
+
+        console.log(this.quantity)
+        this.passengers = []
+        // console.log(this.passengers.length)
+
+        for (let i = 0; i < this.quantity; i++) {
+          let passenger = new EventPassenger()
+          passenger.name = ""
+          passenger.email =""
+          passenger.title = ""
+          passenger.phonenumber = ""
+          this.passengers.push(passenger)
+        }
+        console.log(this.passengers)
       })
     }
-
-      this.setTimer()
+    this.setModal()
+    this.setTimer()
 
     this.getBanks()
 
-    this.passengers = new Array(this.quantity)
-    for(let i=0; i<this.passengers.length; i++){
-      this.passengers[i].name = ""
-      this.passengers[i].phonenumber = ""
-      this.passengers[i].email = ""
-      this.passengers[i].title = ""
-    }
     this.getEntertainmentTicket()
 
   }
 
-  getEntertainmentTicket():void{
-    this.entertainmentTicket$ = this.eventService.getEntertainmentTicketById(this.entertainmentTicketId).subscribe(q=>{
-      this.entertainmentTicket= q.data.entertainmentTicketById
+
+  setModal():void{
+    
+    let modal = document.getElementById("modal")
+    window.onclick = (event)=>{
+      if(event.target == modal){
+        modal.style.display=  "none"
+      }
+    }
+  }
+
+  showModal():void{
+    console.log("test")
+    let modal = document.getElementById("modal")
+    modal.style.display="flex"
+  }
+
+  getEntertainmentTicket(): void {
+    this.entertainmentTicket$ = this.eventService.getEntertainmentTicketById(this.entertainmentTicketId).subscribe(q => {
+      this.entertainmentTicket = q.data.entertainmentTicketById
       console.log(q.data.entertainmentTicketById)
     })
   }
@@ -208,7 +235,7 @@ export class EventOrderComponent implements OnInit {
         return
 
       }
-      
+
       if (this.passengers[i].phonenumber == "" || this.passengers[i].phonenumber == null) {
         alert("please insert passengers phonenumber")
         return
@@ -246,33 +273,48 @@ export class EventOrderComponent implements OnInit {
 
   insertHeaderTransaction(): void {
     let json = JSON.stringify(this.passengers)
+    console.log("helo")
+    console.log(this.user.id, this.title, this.name, this.email, this.nationality, this.bank.id, this.bankNumber)
     if (this.user != null) {
-      this.headerTransaction$ = this.checkOutService.InsertHeaderEvent(this.user.id, this.title, this.name, this.email, this.nationality, this.phoneNumber, this.bank.id, this.bankNumber,json).subscribe(query => {
-        this.headerTransaction = query.data.insertHeaderEvent
+      this.headerTransaction$ = this.checkOutService.InsertHeaderEvent(this.user.id, this.title, this.name, this.email, this.nationality, this.phoneNumber, this.bank.id, this.bankNumber, json).subscribe(query => {
+        this.headerTransaction = query.data.InsertHeaderEvent
+        console.log(query.data)
         console.log(query.data.insertHeaderEvent)
         console.log(this.headerTransaction)
         this.insertDetailTransaction()
-        
+
         if (this.promoCode != null) {
           this.deletePromoCode(this.promoCode.code.toUpperCase())
         }
+        if(this.headerTransaction.id != 0){
+          alert("success")
+        }else{
+          alert("fail")
+        }
       })
     } else {
-      this.headerTransaction$ = this.checkOutService.InsertHeaderEvent(0, this.title, this.name, this.email, this.nationality, this.phoneNumber, this.bank.id, this.bankNumber,json).subscribe(query => {
-        this.headerTransaction = query.data.insertHeaderEvent
+      this.headerTransaction$ = this.checkOutService.InsertHeaderEvent(0, this.title, this.name, this.email, this.nationality, this.phoneNumber, this.bank.id, this.bankNumber, json).subscribe(query => {
+        this.headerTransaction = query.data.InsertHeaderEvent
         console.log(query.data.InsertHeaderTransaction)
         console.log(this.headerTransaction)
         this.insertDetailTransaction()
-       
+
         if (this.promoCode != null) {
           this.deletePromoCode(this.promoCode.code.toUpperCase())
+        }
+        if(this.headerTransaction.id != 0){
+          alert("success")
+        }else{
+          alert("fail")
         }
       })
     }
   }
   entertainmentTicket: EntertainmentTicket
-  insertDetailTransaction():void{
-    this.detailTransaction$ = this.checkOutService.InsertDetailEvent(this.headerTransaction.id,this.entertainmentTicket.id,this.quantity, this.entertainmentTicket.entertainment.category).subscribe()
+  insertDetailTransaction(): void {
+    console.log("ASDASDAS")
+    console.log(this.headerTransaction.id,this.entertainmentTicket.id,this.quantity,this.entertainmentTicket.entertainment.category)
+    this.detailTransaction$ = this.checkOutService.InsertDetailEvent(this.headerTransaction.id, this.entertainmentTicket.id, this.quantity, this.entertainmentTicket.entertainment.category).subscribe()
   }
 
   deletePromoCode(code: string): void {

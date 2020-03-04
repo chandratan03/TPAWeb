@@ -67,6 +67,7 @@ func migrateDB(db *gorm.DB) {
   db.AutoMigrate(models.Bank{})
   db.AutoMigrate(models.HeaderTransaction{})
   db.AutoMigrate(models.DetailTransaction{})
+  db.AutoMigrate(models.DetailEvent{})
   db.AutoMigrate(models.Cart{})
   db.AutoMigrate(models.PromoCode{})
   db.AutoMigrate(models.Passenger{})
@@ -252,6 +253,7 @@ func initCity(db *gorm.DB){
     Latitude: 1.290270,
     Longitude:103.851959,
   })
+
 }
 
 func initLocations(db *gorm.DB){

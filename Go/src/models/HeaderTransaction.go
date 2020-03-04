@@ -109,9 +109,13 @@ func InsertHeaderEvent(userId int, Title string,Name string,Email string,Nationa
     panic(error)
   }
   defer db.Close()
+  id:= 0
+  if userId >0{
+    id = userId
+  }
 
   db.Create(&HeaderTransaction{
-    UserId:             userId,
+    UserId:id,
     Title: Title,
     Name: Name,
     Email:Email,

@@ -23,6 +23,7 @@
 
 
 
+
 .page-filter{
     min-width: 250px;
     width: 30%;
@@ -140,4 +141,20 @@
 
 .event-buttons>button{
     margin:0 2px;
+}
+
+
+.flight-footer{
+    margin: 2%;
+    display:flex;
+    &>div{
+        margin: 0 2%;
+        display:flex;
+        @media (max-width: 300px) {
+            flex-wrap: wrap;
+        }
+        &>button{
+            margin: 0 1%;
+        }
+    }
 }

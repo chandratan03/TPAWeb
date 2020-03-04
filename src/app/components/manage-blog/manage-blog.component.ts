@@ -43,12 +43,12 @@ export class ManageBlogComponent implements OnInit {
     console.log(this.userId)
     this.setModal()
     this.getBlogs()
-    document.onscroll = function () {
-      if (window.scrollY + window.innerHeight + window.innerHeight * 20 / 100 >= document.body.scrollHeight) {
+    // document.onscroll = function () {
+    //   if (window.scrollY + window.innerHeight + window.innerHeight * 20 / 100 >= document.body.scrollHeight) {
 
-        this.setData()
-      }
-    }.bind(this)
+    //     this.setData()
+    //   }
+    // }.bind(this)
     setTimeout(()=>{
       document.getElementById("loading-page").style.display="none"
     },2000)
@@ -84,20 +84,20 @@ export class ManageBlogComponent implements OnInit {
       this.allBlogs = q.data.blogs
       this.pageCount = Math.ceil(this.allBlogs.length/10)
 
-      this.setData()
+      this.setData(0)
     })
   }
 
-  from: number = 0;
-  setData(): void {
-    if (this.from >= this.allBlogs.length) {
-      return
-    }
-    let temp = this.allBlogs.slice(this.from, this.from + 10)
-    console.log(temp)
-    this.blogs.push(...temp)
-    this.from += 10
-  }
+  // from: number = 0;
+  // setData(): void {
+  //   if (this.from >= this.allBlogs.length) {
+  //     return
+  //   }
+  //   let temp = this.allBlogs.slice(this.from, this.from + 10)
+  //   console.log(temp)
+  //   this.blogs.push(...temp)
+  //   this.from += 10
+  // }
 
   toDetailPage(i: number) {
     this.router.navigate(['blog/detail', this.blogs[i].id])
@@ -187,4 +187,31 @@ export class ManageBlogComponent implements OnInit {
     this.popUpDelete=true
     console.log(this.blogId)
   }
+
+
+
+
+  currPage:number = 0;
+
+
+  nextPage(){
+    if(this.currPage == this.pageCount-1)
+      return
+    this.currPage++
+    this.setData(this.currPage)
+  }
+  prevPage(){
+    if(this.currPage!=0){
+      this.currPage--
+    }
+    this.setData(this.currPage)
+  }
+
+
+  setData(i:number):void{
+    this.blogs = this.allBlogs.slice(i*5, i*5+5)
+  } 
+
+
+
 }

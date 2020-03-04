@@ -42,7 +42,7 @@ func InsertHeaderEvent(params graphql.ResolveParams)(interface{}, error){
   phoneNumber:= params.Args["phoneNumber"].(string)
   bankId := params.Args["bankId"].(int)
   bankNumber:= params.Args["bankNumber"].(string)
-  eventPassengers := params.Args["eventPassengers"].(string)
+  eventPassengers := params.Args["passengerEvents"].(string)
   //Title string,Name string,Email string,Nationality string,PhoneNumber string
   row := models.InsertHeaderEvent(userId,title, name,email, nationality,phoneNumber, bankId, bankNumber,eventPassengers)
   return row, nil

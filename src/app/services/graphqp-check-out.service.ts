@@ -58,17 +58,17 @@ export class GraphqpCheckOutService {
   
 
   InsertHeaderEvent(userId:number, title:string, name:string,email:string, nationality: string, phoneNumber:string, bankId:number, bankNumber:string, eventPassengers:string): Observable<any> {
+    console.log(userId,title,name,email, nationality,phoneNumber,bankId, bankNumber,eventPassengers)
     return this.apollo.mutate<any>({
       mutation : gql`
-      mutation insertHeaderEvent($userId:Int, $title:String, $name:String, $email:String, $nationality: String, $phoneNumber:String, $bankId:Int, $bankNumber:String, $eventPassengers){
+      mutation insertHeaderEvent($userId:Int, $title:String, $name:String, $email:String, $nationality: String, $phoneNumber:String, $bankId:Int, $bankNumber:String, $eventPassengers:String){
         InsertHeaderEvent(userId:$userId, title:$title, name:$name, email:$email, nationality:$nationality, phoneNumber:$phoneNumber, bankId:$bankId, bankNumber:$bankNumber,passengerEvents:$eventPassengers){
           id
           date
-          id
           userId
       
         }
-      }      `,
+      } `,
       variables:{
         "userId":userId,
         "title": title,

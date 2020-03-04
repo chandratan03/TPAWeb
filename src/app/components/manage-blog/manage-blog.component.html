@@ -11,6 +11,7 @@
         <button mat-flat-button  class="button" (click)="closePopUp()">No</button>
     </div>
 </app-pop-up>
+
 <div id="modal2" class="modal">
     <div class="form">
         <div class="container-update">
@@ -83,6 +84,13 @@
         
     </div>
    
+    <div class="flight-footer">
+        <button mat-flat-button color="primary" (click)="prevPage()">Prev</button>
+        <div>
+            <button mat-flat-button color="primary" (click)="setData(i)" *ngFor="let item of [].constructor(pageCount); let i = index">{{i+1}}</button>
+        </div>
+        <button mat-flat-button color="primary" (click)="nextPage()">Next</button>
+    </div>
 </div>
 
 <div class="loading-page" id="loading-page">

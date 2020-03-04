@@ -1,3 +1,4 @@
+
 <div class="modal" id="modal">
     <div class="form" id="form">
         <div class="field-container">
@@ -214,6 +215,13 @@
                     </div>
                 </div>
 
+            </div>
+            <div class="flight-footer">
+                <button mat-flat-button color="primary" (click)="prevPage()">Prev</button>
+                <div>
+                    <button mat-flat-button color="primary" (click)="setData(i)" *ngFor="let item of [].constructor(pageCount); let i = index">{{i+1}}</button>
+                </div>
+                <button mat-flat-button color="primary" (click)="nextPage()">Next</button>
             </div>
         </div>
         

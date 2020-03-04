@@ -3,12 +3,17 @@
     padding: 2% 4%;
 }
 
+
 .story-box{
+    border: 3px solid #707070;   
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 5px;
     min-width: 200px;
     max-width: 300px;
     .story-img{
         width: 100%;
-        height: 80%;
+        height: 300px;
         >img{
             width: 100%;
             height: 100%;
@@ -19,6 +24,7 @@
     cursor: pointer;
 }
 .page-container{
+    margin-top: 10px;
     display:grid;
     grid-template-columns:auto auto auto;
     grid-column-gap: 20px;

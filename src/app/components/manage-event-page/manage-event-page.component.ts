@@ -298,6 +298,7 @@ export class ManageEventPageComponent implements OnInit {
   getEntertainmentTickets(): void {
     this.allEntertainments$ = this.eventService.getEntertainmentTickets().subscribe(q => {
       this.allEntertainmentTickets = q.data.entertainmentTickets
+      this.pageCount = Math.ceil(this.allEntertainmentTickets.length/5);
       for (let i = 0; i < this.allEntertainmentTickets.length; i++) {
         this.allEntertainmentTickets[i].date = new Date(this.allEntertainmentTickets[i].date)
       }
@@ -309,6 +310,7 @@ export class ManageEventPageComponent implements OnInit {
           this.maxPrice = this.entertainmentTickets[i].price
         }
       }
+      this.setData(this.currPage)
     })
   }
 
@@ -453,7 +455,25 @@ export class ManageEventPageComponent implements OnInit {
     this.validateAllFilter()
 
   }
+  currPage = 0
+  pageCount = 0
+  nextPage(){
+    if(this.currPage == this.pageCount-1)
+      return
+    this.currPage++
+    this.setData(this.currPage)
+  }
+  prevPage(){
+    if(this.currPage!=0){
+      this.currPage--
+    }
+    this.setData(this.currPage)
+  }
 
+
+  setData(i:number):void{
+    this.entertainmentTickets = this.allEntertainmentTickets.slice(i*5, i*5+5)
+  } 
 
 
 }
