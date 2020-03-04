@@ -25,4 +25,6 @@ export class Flight {
     airlineFacilities: AirlineFacility[]
     total:number
     classPrice:number
+    DEPARTURE:Date
+    ARRIVAL:Date
 }

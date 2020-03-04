@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
-import { Subscription, from } from 'rxjs';
+import { Subscription, from, Subject } from 'rxjs';
 import { Hotel } from 'src/app/models/hotel';
 import { Facility } from 'src/app/models/facility';
 import { MatSliderChange, MatSlider } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, RouteConfigLoadStart } from '@angular/router';
 import { City } from 'src/app/models/city';
 import { Area } from 'src/app/models/area';
 import * as L from 'leaflet';
@@ -117,7 +117,7 @@ export class HotelSearchPageComponent implements OnInit {
     this.isSlidedPrice = false;
     
     this.setModal()
-
+    // this.initAllHotelTickets()
     // console.log(json["cityId"]);
     console.log(this.destination);
     console.log(this.checkOutDate.getDate() - this.checkInDate.getDate())
@@ -751,6 +751,10 @@ export class HotelSearchPageComponent implements OnInit {
     this.router.navigate(["hotel/search/detail", id])
   }
 
+
+
+ 
+  
 
 
 }

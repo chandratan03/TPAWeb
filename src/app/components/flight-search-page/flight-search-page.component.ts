@@ -1,13 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { GraphqpUserService } from '../../services/graphqp-user.service';
 import { Flight } from '../../models/flight';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { MatSliderChange, MatStepper } from '@angular/material';
 import { Airline } from 'src/app/models/airline';
 import { Facility } from 'src/app/models/facility';
 import { City } from 'src/app/models/city';
 import { Router } from '@angular/router';
 import {CalendarView, CalendarEvent} from 'angular-calendar'
+import { HotelTicket } from 'src/app/models/hotel-ticket';
+import { ThrowStmt } from '@angular/compiler';
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours
+} from 'date-fns';
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
 @Component({
   selector: 'app-flight-search-page',
   templateUrl: './flight-search-page.component.html',
@@ -152,7 +178,7 @@ export class FlightSearchPageComponent implements OnInit {
     this.depaturesTime2 = Array(4)
     this.arrivalsTime2 = Array(4)
 
-
+    
     for (let i = 0; i < this.depaturesTime.length; i++) {
       this.depaturesTime[i] = false
       this.depaturesTime2[i] = false
@@ -179,7 +205,9 @@ export class FlightSearchPageComponent implements OnInit {
       }
     }.bind(this)
     this.getCities();
+    this.getAllFlights()
   }
+
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
@@ -634,10 +662,12 @@ export class FlightSearchPageComponent implements OnInit {
     console.log(toId)
     console.log(fromDate)
 
-
+    let test = []
     this.flights$ = this.myService.getFlightsByFromToDate(fromId, toId, fromDate).subscribe(async query => {
       this.AllFlights = query.data.flightsByFromToDate as Flight[]
-      console.log(query.data)
+      // await console.log(this.AllFlights)
+      // await test.push(... query.data.flightsByFromToDate)
+      // console.log(test)
       if(backDate != null){
         this.boolDetailPriceBox = []
         this.flights2$ = this.myService.getFlightsByFromToDate(toId, fromId, backDate).subscribe(query => {
@@ -648,6 +678,7 @@ export class FlightSearchPageComponent implements OnInit {
           for (let i = 0; i < this.AllFlights.length; i++) {
             this.showDetailFlights[i] = false
             this.boolDetailPriceBox[i] = false
+            this.AllFlights[i].DEPARTURE = new Date( this.AllFlights[i].departure)
             
             let depMinTemp = new Date(this.AllFlights[i].departure).getUTCHours()
             let depMin = this.changeTimeFormat(depMinTemp)
@@ -790,6 +821,7 @@ export class FlightSearchPageComponent implements OnInit {
 
 
 
+      // console.log(this.tempFlights)
     }
     )
   }
@@ -909,11 +941,77 @@ export class FlightSearchPageComponent implements OnInit {
 /////////////////////ANGULAR CALENDAR
 
 
-
+dateFlights:Flight[] = []
+dateFlights$:Subscription
+getAllFlights(){
+  this.dateFlights$ = this.myService.getFlights().subscribe(q=>{
+    this.dateFlights = q.data.flights
+    for(let i=0; i<this.dateFlights.length; i++){
+      console.log(this.dateFlights[i].departure)
+      console.log(this.dateFlights[i].arrival)
+      this.dateFlights[i].DEPARTURE = new Date(this.dateFlights[i].departure)
+      this.dateFlights[i].ARRIVAL = new Date(this.dateFlights[i].arrival)
+      
+    }
+    console.log(this.dateFlights)
+    this.initCalenders()
+  })
+}
 view: CalendarView = CalendarView.Month;
 viewDate: Date = new Date();
+CalendarView = CalendarView;
+events: CalendarEvent [] = []
+refresh: Subject<any> = new Subject();
+initCalenders(){
+  
+  var dates=[] as Flight[];
 
-  events: CalendarEvent[]
+  for(let i=0; i<this.dateFlights.length; i++){
+    let lowest;
+    
+    let flag=0
+    for(let j=0; j<dates.length; j++){
+      if(dates[j].DEPARTURE.getDate() == this.dateFlights[i].DEPARTURE.getDate()){
+        flag=1
+        break
+      }
+    }
+    if(flag==1){
+      continue;
+    }
+    for(let j=0; j<this.dateFlights.length; j++){
+      if(this.dateFlights[i].DEPARTURE.getDate() == this.dateFlights[j].DEPARTURE.getDate()){
+        if(lowest == 0 || this.dateFlights[j].price<lowest){
+          lowest = this.dateFlights[j].price
+        }
+      }
+    }
+    dates.push(this.dateFlights[i])
+  }
+
+  console.log(dates)
+  for(let i=0; i<dates.length; i++){
+    this.events.push({
+      start: startOfDay(new Date(dates[i].DEPARTURE)),
+      title: ""+dates[i].price,
+      color: colors.yellow
+    })
+  }
+}
+activeDayIsOpen: boolean = true;
+dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  if (isSameMonth(date, this.viewDate)) {
+    if (
+      (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+      events.length === 0
+    ) {
+      this.activeDayIsOpen = false;
+    } else {
+      this.activeDayIsOpen = true;
+    }
+    this.viewDate = date;
+  }
+}
 
 
 

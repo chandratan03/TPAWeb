@@ -272,11 +272,32 @@ func GetRoot() *graphql.Object{
         Type:graphql.NewList(types.GetEntertainmentTicketType()),
         Resolve:resolvers.GetEntertainmentTickets,
       },
+      "entertainmentTicketById":{
+        Type:types.GetEntertainmentTicketType(),
+        Resolve:resolvers.GetEntertainmentTicketById,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+      },
       "entertainmentsTicketsByCategory":{
         Type:graphql.NewList(types.GetEntertainmentTicketType()),
         Resolve:resolvers.GetEntertainmentTicketsByCategory,
         Args:graphql.FieldConfigArgument{
           "category": &graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+        },
+      },
+      "entertainmentsTicketsByEntertainmentIdAndDate":{
+        Type:graphql.NewList(types.GetEntertainmentTicketType()),
+        Resolve:resolvers.GetEntertainmentTicketsByEntertainmentIdAndDate   ,
+        Args:graphql.FieldConfigArgument{
+          "entertainmentId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+          "date": &graphql.ArgumentConfig{
             Type:graphql.String,
           },
         },
@@ -330,6 +351,16 @@ func GetRoot() *graphql.Object{
       "blogById":{
         Type: types.GetBlogType(),
         Resolve:resolvers.GetBlogById,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+        },
+
+      },
+      "entertainmentById":{
+        Type: types.GetEntertainmentType(),
+        Resolve:resolvers.GetEntertainmentById,
         Args:graphql.FieldConfigArgument{
           "id": &graphql.ArgumentConfig{
             Type:graphql.Int,

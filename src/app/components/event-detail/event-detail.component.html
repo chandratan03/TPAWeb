@@ -1,0 +1,123 @@
+<div class="container">
+
+    <div class="search-container">
+        <app-event-card></app-event-card>
+    </div>
+
+    <div class="page-container">
+
+        <div class="top-page-container">
+            <div class="image-container">
+                <div class="image-top">
+                    <img src={{entertainment.imageEntertainments[0].path}} alt="">
+                </div>
+                <div class="image-bottom">
+                    <div class="image-bottom-child">
+                        <img src={{entertainment.imageEntertainments[0].path}} alt="">
+                    </div>
+                    <div class="image-bottom-child">
+                        <img src={{entertainment.imageEntertainments[1].path}} alt="">
+                    </div>
+                    <div class="image-bottom-child">
+                        <img src={{entertainment.imageEntertainments[2].path}} alt="">
+                    </div>
+                    <div class="image-bottom-child">
+                        <img src={{entertainment.imageEntertainments[3].path}} alt="">
+                    </div>
+                    <div class="image-bottom-child">
+                        <img src={{entertainment.imageEntertainments[4].path}} alt="">
+                    </div>
+                    <div class="image-bottom-child"> 
+
+                        <img src={{entertainment.imageEntertainments[5].path}} alt="">
+                        <div (click)="showImageSlide()" >+</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-information">
+                <div>
+                    <p>{{entertainment.name}}</p>
+                </div>
+                <div>
+                    <p>{{entertainment.price}}</p>
+                </div>
+                <div>
+                    <p>{{entertainment.city.cityName}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-page-container">
+            
+            <div class="select-date-container">
+                <h1>
+                    Select date for the ticket
+                </h1>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="date" [matDatepicker]="picker" placeholder="title">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker (selectedChanged)="onDate($event)" #picker></mat-datepicker>
+                </mat-form-field>
+                <button mat-button (click)="searchTicket()">search</button>
+            </div>
+
+            <div class="ticket-container">
+                            
+                <div class="ticket-box" *ngFor="let ticket of tickets; let i =index" >
+                    <div class="ticket-box-name">
+                        <!-- description -->
+                        <p> <u>Description</u> </p>
+                        {{ticket.description}}
+                    </div>
+                    <div class="ticket-box-price">
+                        <!-- price  -->
+                        <p>
+                            Price: {{ticket.price}}/<small>qty</small>
+                        </p>
+                        <div>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="quantity" placeholder="Quantity" type="number" value="value">
+                            </mat-form-field>
+                            <button (click)="checkout(i)" mat-button>CHECKOUT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+        <div class="event-description">
+            <mat-tab-group>
+                <mat-tab label="Description">
+                    <div class="event-description-box">
+                        <p>{{entertainment.description}}</p>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Terms">
+                    <div class="event-description-box">
+                        <p>{{entertainment.terms}}</p>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div (click)="showImageSlide()" *ngIf="isShowImageSlide" id="image-slider-container" class="image-slider-container">
+    <div class="image-slider">
+        <div class="image-box">
+            <ng-container *ngFor="let image of entertainment.imageEntertainments; let i=index">
+                <div *ngIf="imageShows[i] == true" class="image-slide">
+                    <img (click)="theImage()" src={{image.path}} alt="">
+                </div>
+            </ng-container>
+        </div>
+        <img (click)="prev()" src="../../../assets/image-sliders/left.png" class="prev-next prev">
+        <img (click)="next()" src="../../../assets/image-sliders/right.png" class="prev-next next">
+    </div>
+</div>

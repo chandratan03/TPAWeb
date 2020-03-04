@@ -1,0 +1,110 @@
+.countdown-box{
+    background-color: #4a5c49;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 1;   
+}
+
+.container-1{
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    display:flex;
+    padding: 3%;
+    border-radius: 10px;            
+
+}
+::ng-deep .mat-horizontal-stepper-header {
+    pointer-events: none !important;
+}
+.mat-step-header {
+    pointer-events: none !important;
+}
+.form{
+    width: 70%;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+.flight-container{
+    box-sizing: border-box;
+    width: 20%;
+    background-color: #ffffff;
+    display:block;
+    min-width: 320px;
+    border: 1px solid #4a5c49;
+    padding: 20px;
+    border-radius: 50px;
+    min-height: 300px;
+    height: 30vh;
+}
+
+.user-form{    
+    box-sizing: border-box;
+    background-color: #ffffff;
+    display:block;
+    min-width: 300px;
+    border: 1px solid #4a5c49;
+    padding: 20px;
+    border-radius: 50px;
+    margin-bottom: 2%;
+    
+}
+.passenger-form-container{
+    box-sizing: border-box;
+    background-color: #ffffff;
+    min-width: 300px;
+    border: 1px solid #4a5c49;
+    padding: 20px;
+    border-radius: 50px;
+}
+.passenger-form{
+    min-width: 320px;
+
+}
+
+
+mat-form-field{
+    width: 100%;
+    min-width: 260px;
+}
+
+@media (max-width: 670px){
+    .container{
+        flex-direction: column-reverse;
+    }
+    .flight-container{
+        flex: 1;
+        margin-bottom: 20px;
+    }
+    .form{
+        flex: 2;
+    }
+}
+
+.flight-info>img{
+    width: 25px;
+    height: 25px;
+}
+
+.pop-up{
+    text-align: center;
+    width: 200px;
+    box-sizing: border-box;
+    color: white;
+    background-color:#55635f;
+    padding: 2%;
+    border-radius: 30px;
+}
+.button-div{
+    margin-top: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end   ;
+
+}
+
+.container-2{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}

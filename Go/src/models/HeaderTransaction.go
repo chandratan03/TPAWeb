@@ -11,14 +11,17 @@ type HeaderTransaction  struct{
   User User `gorm:"foreignKey:user_id"`
   DetailTransactions []DetailTransaction
   Passengers []Passenger
-
+  DetailEvents []DetailEvent
   Title string
   Name string
   Email string
   Nationality string
   PhoneNumber string
-  bankId int
-  bankNumber string
+  BankId int
+  BankNumber string
+
+  EventPassengers string // json
+
 
   Date time.Time
   CreatedAt time.Time
@@ -90,13 +93,39 @@ func InsertHeaderTransaction(userId int, Title string,Name string,Email string,N
     Email:Email,
     Nationality: Nationality,
     PhoneNumber:PhoneNumber,
-    bankId:bankId,
-    bankNumber:bankNumber,
+    BankId:bankId,
+    BankNumber:bankNumber,
     Date:               time.Now(),
   })
   var ht HeaderTransaction
   db.Last(&ht)
   return ht
 }
+
+func InsertHeaderEvent(userId int, Title string,Name string,Email string,Nationality string,PhoneNumber string, bankId int, bankNumber string, eventPassengers string)HeaderTransaction{
+  //date by time.now() aja
+  db, error := database.Connect()
+  if error!=nil{
+    panic(error)
+  }
+  defer db.Close()
+
+  db.Create(&HeaderTransaction{
+    UserId:             userId,
+    Title: Title,
+    Name: Name,
+    Email:Email,
+    Nationality: Nationality,
+    PhoneNumber:PhoneNumber,
+    BankId:bankId,
+    BankNumber:bankNumber,
+    EventPassengers:eventPassengers,
+    Date:               time.Now(),
+  })
+  var ht HeaderTransaction
+  db.Last(&ht)
+  return ht
+}
+
 
 

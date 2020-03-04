@@ -1,6 +1,4 @@
-<div class="whatsapp-box">
-    <button (click)="sendMessage()" mat-flat-button color="primary">ASK QUESTION <i class="fab fa-whatsapp"></i></button>
-</div>
+
 <div class="container">
     <app-slider></app-slider>
     <div class="container-detail">
@@ -9,10 +7,36 @@
         </div>
     </div>
     <div class="page-container">
-        
+
+        <div class="loading-page" id="loading-page" *ngIf="loading">
+            <mat-spinner class="loading"></mat-spinner>
+        </div>
+        <div class="hotel-container" *ngIf="loading == false">
+            <div class="hotel-box" *ngFor="let hotel of hotels;let i=index" (click)="orderNow(i)" >
+                <div class="hotel-image">
+                    <img src={{hotel.imagePath}} alt="">
+                </div>
+                <div class="hotel-information">
+                    <h3>{{hotel.hotelName}}</h3>
+                    <p>{{hotel.category}}</p>
+                    <p>{{hotel.area.areaName }} > {{hotel.area.city.cityName}}</p>
+                    <p>{{hotel.price}}/night</p>
+                    <div> <i class="fas fa-star" *ngFor="let i of [].constructor(hotel.ratingNumber)"></i></div>
+                </div>
+                
+            </div>
+            
+
+
+        </div>
     </div>
 </div>
 <div class="overlay"  #overlay (click)="overlayClicked(quickCard, overlay)"></div>
 
 
 
+
+
+<div class="whatsapp-box">
+    <button (click)="sendMessage()" mat-flat-button color="primary">ASK QUESTION <i class="fab fa-whatsapp"></i></button>
+</div>

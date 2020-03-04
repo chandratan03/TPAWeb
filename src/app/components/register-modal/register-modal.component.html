@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="userForm" class="form" method="post" action="http://localhost:8000/register">
+    <div  class="form">
 
         <div>
             <i class="fas fa-arrow-left"></i><span class="title">Daftar</span>
@@ -13,42 +13,40 @@
             </p> -->
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input [(ngModel)]="email" formControlName="email" name="email" type="text" placeholder="Email" matInput>
+                <input [(ngModel)]="email"  name="email" type="text" placeholder="Email" matInput>
             </mat-form-field>
         </div>
         <div class="input input-firstname">
             <mat-form-field appearance="outline">
                 <mat-label>First Name</mat-label>
-                <input [(ngModel)]="firstName" formControlName="firstName" name="firstName" type="text" placeholder="Nama depan" matInput>
+                <input [(ngModel)]="firstName"  name="firstName" type="text" placeholder="Nama depan" matInput>
             </mat-form-field>
         </div>
         <div class="input input-lastname" >
             <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
-                <input [(ngModel)]="lastName"  formControlName="lastName" name="lastName" type="text" placeholder="Nama belakang" matInput>  
+                <input [(ngModel)]="lastName"   name="lastName" type="text" placeholder="Nama belakang" matInput>  
             </mat-form-field>
         </div>
         <div class="box-phonenumber">
             <div class="input input-code">
                 <mat-form-field appearance = "outline">
-                    <mat-select  formControlName="codeArea" placeholder="Kode-Area" [(value)]="selectedCode">
-                        <mat-option value="primary">Primary</mat-option>
-                        <mat-option value="accent">Accent</mat-option>
-                        <mat-option value="warn">Warn</mat-option>
+                    <mat-select   placeholder="Kode-Area" [(ngModel)]="phoneCode">
+                        <mat-option *ngFor="let p of phoneCodesForm" [(value)]="p">{{p.dial_code}}: {{p.code}}</mat-option>
                       </mat-select>
                 </mat-form-field>
             </div>
             <div class="input input-phonenumber">
                 <mat-form-field apperance="outline">
                     <mat-label>Phonenumber</mat-label>
-                    <input [(ngModel)]="phoneNumber" formControlName="phoneNumber" type="text"  placeholder="Nomor ponsel" name="phoneNumber"  matInput>
+                    <input [(ngModel)]="phoneNumber"  type="text"  placeholder="Nomor ponsel" name="phoneNumber"  matInput>
                 </mat-form-field>
             </div>
         </div>
         <div class="input input-password" >
             <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
-                <input [(ngModel)]="password" formControlName="password"  type="password"  placeholder="Password" name="password"  matInput >
+                <input [(ngModel)]="password"   type="password"  placeholder="Password" name="password"  matInput >
                 <mat-hint [ngStyle]="{color: hintColor}">Min. 7 karakter dengan kombinasi antara angka, simbol, & huruf kapital.</mat-hint>
             </mat-form-field>
         </div>
@@ -56,8 +54,14 @@
         <div class="register-button-box">
             <button type="submit" (click)="register()">Buat Akun</button>
         </div>
-
-
-    </form>
+        <p class="or-with">atau dengan</p>
+        <div>
+            <button color="primary" (click)="signInWithFB()" mat-flat-button>Register with Facebook</button>   
+        </div>
+        <br>    
+        <div>
+            <button id="googleBtn" color="primary" style="background-color: yellow;" mat-flat-button>Register with google</button>   
+        </div>
+    </div>
 
 </div>

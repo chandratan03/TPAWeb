@@ -26,6 +26,8 @@ type User struct {
   EmailVerified bool
   PhoneVerified bool
   IsAdmin bool
+  FacebookId string
+  GoogleId string
 }
 
 
@@ -119,6 +121,69 @@ func CreateUser(firstName string, lastName string, password string,  email strin
     // tembak manual, 1 itu jakarta
     CityId: 1,
     IsAdmin:false,
+    FacebookId: "",
+    GoogleId:"",
+  })
+
+  var user User
+  db.Last(&user)
+  return &user, nil
+}
+
+
+func CreateUserWithFacebook(firstName string, lastName string,email string,facebookId string)(i interface{},e error){
+  db, err := database.Connect()
+  if err!=nil{
+    return nil, err
+  }
+
+  defer db.Close()
+  db.Create(&User{
+    CreatedAt:   time.Time{},
+    UpdatedAt:   time.Time{},
+    DeletedAt:   nil,
+    FirstName:   firstName,
+    LastName:    lastName,
+    Email:       email,
+    Password:   "",
+    PhoneNumber: "",
+    Nationality:"'",
+    // tembak manual, 1 itu jakarta
+    CityId: 1,
+    IsAdmin:false,
+    FacebookId: facebookId,
+    GoogleId:"",
+  })
+
+  var user User
+  db.Last(&user)
+  return &user, nil
+}
+
+
+
+func CreateUserWithGoogle(firstName string, lastName string,  email string,  googleId string)(i interface{},e error){
+  db, err := database.Connect()
+  if err!=nil{
+    return nil, err
+  }
+
+  defer db.Close()
+  db.Create(&User{
+    CreatedAt:   time.Time{},
+    UpdatedAt:   time.Time{},
+    DeletedAt:   nil,
+    FirstName:   firstName,
+    LastName:    lastName,
+    Email:       email,
+    Password:    "",
+    PhoneNumber: "",
+    Nationality:"",
+    // tembak manual, 1 itu jakarta
+    CityId: 1,
+    IsAdmin:false,
+    FacebookId: "",
+    GoogleId:googleId,
   })
 
   var user User
@@ -186,5 +251,34 @@ func UpdateVerifyEmail(id int)User{
   user.EmailVerified= true
   db.Save(&user)
   return user
+}
 
+
+func ConnectFacebookToUser(id int, facebookId string)User{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+
+  var  user  User
+  db.Where("id = ?", id).Find(&user)
+  user.FacebookId = facebookId
+  db.Save(&user)
+  return user
+}
+
+
+func ConnectGoogleToUser(id int, googleId string)User{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+
+  var  user  User
+  db.Where("id = ?", id).Find(&user)
+  user.GoogleId = googleId
+  db.Save(&user)
+  return user
 }

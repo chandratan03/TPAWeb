@@ -54,6 +54,34 @@ export class GraphqpCheckOutService {
       }
     })
   }
+
+  
+
+  InsertHeaderEvent(userId:number, title:string, name:string,email:string, nationality: string, phoneNumber:string, bankId:number, bankNumber:string, eventPassengers:string): Observable<any> {
+    return this.apollo.mutate<any>({
+      mutation : gql`
+      mutation insertHeaderEvent($userId:Int, $title:String, $name:String, $email:String, $nationality: String, $phoneNumber:String, $bankId:Int, $bankNumber:String, $eventPassengers){
+        InsertHeaderEvent(userId:$userId, title:$title, name:$name, email:$email, nationality:$nationality, phoneNumber:$phoneNumber, bankId:$bankId, bankNumber:$bankNumber,passengerEvents:$eventPassengers){
+          id
+          date
+          id
+          userId
+      
+        }
+      }      `,
+      variables:{
+        "userId":userId,
+        "title": title,
+        "name": name, 
+        "email":phoneNumber, 
+        "nationality": nationality, 
+        "phoneNumber":phoneNumber,
+        "bankId": bankId,
+        "bankNumber":bankNumber,
+        "eventPassengers":eventPassengers,
+      }
+    })
+  }
   InsertDetailTransaction(headerId:number, flightId:number, quantity:number, type:string):Observable<any>{
     return this.apollo.mutate({
       mutation:gql`
@@ -66,6 +94,23 @@ export class GraphqpCheckOutService {
       variables: {
         "headerId":headerId,
         "flightId":flightId,
+        "quantity": quantity,
+        "type": type,
+      }
+    })
+  }
+  InsertDetailEvent(headerId:number, entertainmentTicketId:number, quantity:number, type:string):Observable<any>{
+    return this.apollo.mutate({
+      mutation:gql`
+      mutation insertDetailEvent($headerId:Int!, $entertainmentTicketId:Int!, $quantity:Int!, $type:String!){
+        insertDetailEvent(headerId: $headerId, entertainmentTicketId: $entertainmentTicketId, quantity:$quantity, type:$type){
+          id
+        }
+    }
+      `,
+      variables: {
+        "headerId":headerId,
+        "entertainmentTicketId":entertainmentTicketId,
         "quantity": quantity,
         "type": type,
       }

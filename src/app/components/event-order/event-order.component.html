@@ -1,0 +1,176 @@
+<div class="countdown-box">
+    COUNTDOWN {{timerMinutes}}:{{timerSeconds}}
+</div>
+<app-pop-up [isOpen]="isTimeOut">
+    <div class="pop-up">
+        YOUR TIME IS UP
+    </div>
+</app-pop-up>
+
+<app-loading [isOpen]="isOpen"></app-loading>
+
+<mat-horizontal-stepper #stepper >
+    <mat-step label="1"  editable="true" >
+
+        <div class="container-1">
+
+            <div class="form">
+                <div class="user-form">
+                    <h2>User detail</h2>
+                    <br>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-error *ngIf="title==  ''"> </mat-error>
+                            <mat-select [(ngModel)]="title" placeholder="Title" name="item">
+                                <mat-option *ngFor="let title of titles" [(value)]="title">
+                                    {{title| titlecase}}
+                                </mat-option>
+                                
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-error *ngIf="name ==  ''"></mat-error>
+                            <mat-label>Nama Lengkap</mat-label>
+                            <input [(ngModel)]="name" matInput placeholder="Name Lengkap">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-error *ngIf="email==  ''"></mat-error>
+                            <mat-label>Email</mat-label>
+                            <input [(ngModel)]="email" matInput placeholder="Email">
+                        </mat-form-field>
+                    </div>
+                    <div>
+
+                        <mat-form-field appearance="outline">
+
+                            <mat-error *ngIf="nationality ==  ''"></mat-error>
+                            <mat-select placeholder="Nationality" [(ngModel)]="nationality" name="item">
+                                <mat-option *ngFor="let nationality of nationalities" [value]="nationality.name">
+                                    {{nationality.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-error *ngIf="true"></mat-error>
+
+                            <mat-label>
+                                Phonenumber
+                            </mat-label>
+                            <input [(ngModel)]="phoneNumber" matInput placeholder="Phonenumber">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="passenger-form-container">
+                    <h2>Passenger Detail</h2>
+                    <br>
+                    <div class="passenger-form" *ngFor="let n of [].constructor(quantity); let i= index" >
+                        
+                        <h4>Passenger {{i+1}}</h4>
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <mat-select [(ngModel)]="passengers[i].title" placeholder="Title"  name="item">
+                                    <mat-option *ngFor="let title of titles" [(value)]="title">
+                                        {{title | titlecase}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- [(ngModel)]="passengers[i].name" -->
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nama Lengkap</mat-label>
+                                <input [(ngModel)]="passengers[i].name" matInput placeholder="Name Lengkap" >
+                            </mat-form-field>
+                        </div>
+                        <!-- [(ngModel)]="passengers[i].nationality" -->
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="passengers[i].phoneNumber" placeholder="Phonenumber" >
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <input matInput [(ngModel)]="passengers[i].email" placeholder="Email" >
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-div">
+                    <button mat-flat-button color="primary" (click)="goNextStep(stepper)" click>Lanjutkan</button>
+                </div>
+            </div>
+            <!-- <div class="flight-container">
+                <h1>Penerbangan</h1>
+                <div>
+                    <div class="flight-info">
+                        <img src={{flight.airline.path}} alt="">
+                        {{flight.from.city.cityName}} -> {{flight.to.city.cityName}} ( {{flight.departure}} -
+                        {{flight.arrival}})
+                    </div>
+                    <p>price: {{flight.price}}</p>
+                    <p>tax: {{flight.tax}}</p>
+                    <p>service charge: {{flight.serviceCharge}}</p>
+                    <p>quantity:{{quantity}}</p>
+                    <p>class: {{selectedClass}}</p>
+                    <h4>Total: {{flight.total}}</h4>
+                </div>
+            </div> -->
+        </div>
+    </mat-step>
+    <mat-step label="2" [completed] = "false">
+        <div class="container-2">
+            <!-- <div class="form2">
+                <div>
+                    <div class="promo-form">
+                        <p>Kode Promo</p>
+                        <mat-form-field>
+                            <input [(ngModel)]="code" matInput placeholder="promo-code">
+                            <button matSuffix mat-button color="primary" (click)="usePromoCode()">Gunakan</button>
+                        </mat-form-field>
+                        <p>price: {{flight.price}}</p>
+                        <p>tax: {{flight.tax}}</p>
+                        <p>service charge: {{flight.serviceCharge}}</p>
+                        <p>quantity:{{quantity}}</p>
+                        <p>class: {{selectedClass}}</p>
+                        <p>promo-code: </p>
+                        <h4>Total: {{flight.total}}   (After Discount{{discount}})</h4>
+
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                Banks
+                            </mat-expansion-panel-header>
+                            <mat-radio-group [(ngModel)]="bank">
+                                <div *ngFor="let b of banks; let i= index" >
+                                    <mat-radio-button [value]="b">{{b.name}}</mat-radio-button>
+
+                                </div>
+                            </mat-radio-group>
+                            
+                        </mat-expansion-panel>
+                        <mat-form-field>
+                            <input matInput [(ngModel)]="bankNumber" placeholder="bank number" type="number" value="">
+                        </mat-form-field>
+                        <br>
+                        <div>
+                            <button mat-flat-button color="accent" matStepperPrevious>Back</button>
+                        </div>
+                        <div>
+                            <button (click)="checkOut()" color="accent" mat-flat-button>CHECKOUT</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div> -->
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

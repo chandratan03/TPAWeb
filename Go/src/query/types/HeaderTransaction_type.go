@@ -28,6 +28,9 @@ func GetHeaderTransactionType() *graphql.Object{
         "detailTransactions": &graphql.Field{
           Type: graphql.NewList(GetDetailTransactionType()),
         },
+        "eventPassengers": &graphql.Field{
+            Type:graphql.String,
+        },
       },
     })
   }

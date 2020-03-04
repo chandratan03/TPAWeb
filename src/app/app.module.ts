@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule, Routes, Router} from '@angular/router';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule, MatStepperModule, MatRadioModule, MatIconModule} from '@angular/material';
+import {MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,MatCheckboxModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatButtonModule, MatProgressSpinnerModule, MatSliderModule, MatTooltip, MatTooltipModule, MatExpansionModule, MatStepperModule, MatRadioModule, MatIconModule, MatTabsModule} from '@angular/material';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { QuickCardComponent } from './components/quick-card/quick-card.component';
 import {ApolloModule, Apollo} from 'apollo-angular';
@@ -58,6 +58,8 @@ import { SafePipe } from './pipe/safe.pipe';
 import { PromoPageComponent } from './components/promo-page/promo-page.component';
 import { ManageEventPageComponent } from './components/manage-event-page/manage-event-page.component';
 import { ManageBlogComponent } from './components/manage-blog/manage-blog.component';
+import { EventDetailComponent } from './components/event-detail/event-detail.component';
+import { EventOrderComponent } from './components/event-order/event-order.component';
 
 @NgModule({
   exports: [
@@ -107,6 +109,8 @@ import { ManageBlogComponent } from './components/manage-blog/manage-blog.compon
     PromoPageComponent,
     ManageEventPageComponent,
     ManageBlogComponent,
+    EventDetailComponent,
+    EventOrderComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -210,11 +214,18 @@ import { ManageBlogComponent } from './components/manage-blog/manage-blog.compon
       },
       {
         path:'manage/event', component:ManageEventPageComponent,
+      },
+      {
+        path: 'event/detail/:id', component:EventDetailComponent,
+      },
+      {
+        path: 'event/order/:id/:qty', component:EventOrderComponent
       }
       
     ]),
     BrowserAnimationsModule,
     MatDialogModule,
+    MatTabsModule,
     CalendarModule.forRoot({ 
       provide: DateAdapter, useFactory: adapterFactory 
     }),

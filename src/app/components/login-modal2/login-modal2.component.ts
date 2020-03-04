@@ -24,8 +24,8 @@ export class LoginModal2Component implements OnInit {
 
   hide:boolean = true;
 
-  email: string;
-  password: string;
+  email: string = "";
+  password: string ="";
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem("user"));
     if(this.user == null || this.user.email == ""){
@@ -64,6 +64,14 @@ export class LoginModal2Component implements OnInit {
   } 
 
   login(): void{
+    if(this.password == ""){
+      alert("Pkease insert your password")
+      return
+    }else if(this.email == ""){
+      alert("please insert your email")
+      return
+    }
+    
     this.user$ = this.userService.getUserByEmailAndPassword(this.email, this.password).subscribe(query =>{
       this.user = query.data.userByEmailAndPassword as User
       // if(this.user!=null){
@@ -75,6 +83,9 @@ export class LoginModal2Component implements OnInit {
         console.log(this.user);
       // }
     })
+
+
+
   }
 
 

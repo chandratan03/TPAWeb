@@ -62,9 +62,12 @@ func GetUserType() *graphql.Object{
         "isAdmin": &graphql.Field{
           Type:graphql.Boolean,
         },
-
-
-
+        "googleId": &graphql.Field{
+          Type:graphql.String,
+        },
+        "facebookId": &graphql.Field{
+          Type:graphql.String,
+        },
       },
       //Description: "",
     })

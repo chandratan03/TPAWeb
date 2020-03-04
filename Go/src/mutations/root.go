@@ -36,6 +36,42 @@ func GetRoot() *graphql.Object{
         },
         Resolve: resolvers.CreateUser,
       },
+      "createUserWithFacebook": &graphql.Field{
+        Type:              types.GetUserType(),
+        Args: graphql.FieldConfigArgument{
+          "firstName" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "lastName" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "email" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "facebookId": &graphql.ArgumentConfig{
+              Type: graphql.NewNonNull(graphql.String),
+          },
+        },
+        Resolve: resolvers.CreateUserWithFacebookId,
+      },
+      "createUserWithGoogle": &graphql.Field{
+        Type:              types.GetUserType(),
+        Args: graphql.FieldConfigArgument{
+          "firstName" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "lastName" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "email" : &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+          "googleId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+        },
+        Resolve: resolvers.CreateUserWithGoogleId,
+      },
       "createFlight": &graphql.Field{
           Type:types.GetFlightType(),
           Args: graphql.FieldConfigArgument{
@@ -320,6 +356,39 @@ func GetRoot() *graphql.Object{
         },
         Resolve:resolvers.InsertHeaderTransaction,
       },
+      "InsertHeaderEvent": &graphql.Field{
+        Type:types.GetHeaderTransactionType(),
+        Args: graphql.FieldConfigArgument{
+          "userId": &graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+          "title": &graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "name":&graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "email":&graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "nationality":&graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "phoneNumber":&graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "bankId":&graphql.ArgumentConfig{
+            Type:graphql.Int,
+          },
+          "bankNumber":&graphql.ArgumentConfig{
+            Type:graphql.String,
+          },
+          "passengerEvents": &graphql.ArgumentConfig{
+              Type:graphql.String,
+          },
+        },
+        Resolve:resolvers.InsertHeaderEvent,
+      },
       "deletePromoCodeByCode": &graphql.Field{
         Type:types.GetPromoCodeType(),
         Args: graphql.FieldConfigArgument{
@@ -370,6 +439,26 @@ func GetRoot() *graphql.Object{
           },
         },
         Resolve:resolvers.InsertDetailTransaction,
+      },
+
+      "insertDetailEvent": &graphql.Field{
+        Type:types.GetEventDetailType(),
+        //HeaderId int, FlightId int, Quantity int, Type string
+        Args: graphql.FieldConfigArgument{
+          "headerId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "entertainmentTicketId": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "quantity": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.Int),
+          },
+          "type": &graphql.ArgumentConfig{
+            Type:graphql.NewNonNull(graphql.String),
+          },
+        },
+        Resolve:resolvers.InsertDetailEvent,
       },
       "insertMessage": &graphql.Field{
         Type:types.GetMessageType(),
@@ -619,6 +708,32 @@ func GetRoot() *graphql.Object{
           "id": &graphql.ArgumentConfig{
             Type: graphql.NewNonNull(graphql.Int),
           },
+        },
+      },
+      "connectUserToGoogle":&graphql.Field{
+        Type: types.GetUserType(),
+        Resolve:resolvers.ConnectUserToGoogle,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "googleId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+
+        },
+      },
+      "connectUserToFacebook":&graphql.Field{
+        Type: types.GetUserType(),
+        Resolve:resolvers.ConnectUserToFacebook,
+        Args:graphql.FieldConfigArgument{
+          "id": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.Int),
+          },
+          "facebookId": &graphql.ArgumentConfig{
+            Type: graphql.NewNonNull(graphql.String),
+          },
+
         },
       },
 

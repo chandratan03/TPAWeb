@@ -5,13 +5,19 @@
 .card-contents{
     box-sizing: border-box;
     border: 1px solid black;
-
+    justify-content: center;
+    padding: 5px 10px;
+    box-sizing: border-box;
     .card-content{
         display:inline-block;
         box-sizing: border-box;
         text-align: center;
         width: 20%;
-        border-left: 0.5px solid darkgrey;
+        min-width: 150px;
+        
+        >*{
+            width: 95%;
+        }
     }
   
     
@@ -22,6 +28,17 @@
     justify-content: flex-end;
     padding: 2% 4%;
 }
+
+@media (max-width:550px){
+    .card-header-top{
+        display:block;
+        >div{
+            width: auto;
+            padding: 10px 0;
+        }
+    }    
+}
+
 
 .card-header-top-left{
     width: 50%;

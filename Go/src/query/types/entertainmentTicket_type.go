@@ -35,6 +35,10 @@ func GetEntertainmentTicketType() *graphql.Object{
         "discountPercentage": &graphql.Field{
           Type: graphql.Int,
         },
+        "description": &graphql.Field{
+          Type: graphql.String,
+        },
+
       },
     })
   }

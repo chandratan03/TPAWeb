@@ -4,7 +4,7 @@ import { Entertainment } from 'src/app/models/entertainment';
 import { Subscription } from 'rxjs';
 import { EntertainmentTicket } from 'src/app/models/entertainment-ticket';
 import { MatSliderChange } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-search',
@@ -15,7 +15,8 @@ export class EventSearchComponent implements OnInit {
 
   constructor(
     private eventService: EventServiceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
 
   }
@@ -42,6 +43,10 @@ export class EventSearchComponent implements OnInit {
   slided: boolean
   maxPrice: number = 0
 
+  goToDetail(i:number){
+    let id= this.entertainmentTickets[i].id
+    this.router.navigateByUrl("event/detail/"+id);
+  }
   ngOnInit() {
     
     let category = this.route.snapshot.paramMap.get("category")

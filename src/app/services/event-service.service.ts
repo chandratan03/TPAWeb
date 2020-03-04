@@ -49,6 +49,46 @@ export class EventServiceService {
       `
     })
   }
+  getEntertainmentById(id :number): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query entertainmentById($id: Int!){
+        entertainmentById(id:$id){
+          id
+          name
+          price
+          category
+          image
+          longitude
+          latitude
+          cityId
+          isTrending
+          description
+          terms
+          city{
+            id
+            cityCode
+            cityName
+            thumbnail
+            region{
+              id
+              regionName
+            }
+          }
+          imageEntertainments{
+            id
+            entertainmentId
+            path
+          }
+        }
+      }
+      `,
+      variables:{
+        "id":id,
+      }
+    })
+  }
+
 
   getEntertainmentTickets(): Observable<Query> {
     return this.apollo.query<Query>({
@@ -94,6 +134,56 @@ export class EventServiceService {
         
       }
       `
+    })
+  }
+  
+  getEntertainmentTicketById(id:number): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query entertainmentTicketById($id:Int!){
+        entertainmentTicketById(id:$id){
+          date
+          discountPercentage
+          
+          entertainmentId
+          id
+          price
+          entertainment{
+          id
+          name
+          price
+          category
+          
+          image
+          longitude
+          latitude
+          cityId
+          terms
+          description
+          city{
+            id
+            cityCode
+            cityName
+            thumbnail
+            region{
+              id
+              regionName
+            }
+          }
+          imageEntertainments{
+            id
+            entertainmentId
+            path
+          }
+        }
+        }
+        
+        
+      }
+      `,
+      variables:{
+        "id":id
+      }
     })
   }
   getEntertainmentTicketsByCityId(cityId: number): Observable<Query> {
@@ -248,6 +338,57 @@ export class EventServiceService {
     })
   }
 
+
+  getEntertainmentTicketsByEntertainmentIdAndDate(entertainmentId: number, date:string): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query entertainmentsTicketsByEntertainmentIdAndDate($entertainmentId: Int, $date: String){
+        entertainmentsTicketsByEntertainmentIdAndDate(entertainmentId:$entertainmentId,date:$date){
+          date
+          discountPercentage
+          description
+          entertainmentId
+          id
+          price
+          entertainment{
+            description
+          terms
+          id
+          name
+          price
+          category
+          image
+          longitude
+          latitude
+          cityId
+          city{
+            id
+            cityCode
+            cityName
+            thumbnail
+            region{
+              id
+              regionName
+            }
+          }
+          imageEntertainments{
+            id
+            entertainmentId
+            path
+          }
+        }
+        }
+        
+        
+      }
+      `
+      ,
+      variables: {
+        "entertainmentId":entertainmentId ,
+        "date":date,
+      }
+    })
+  }
 
 
   insertEntertainment(name: string, price: number, category: string, isTrending: boolean, cityId: number, image: string, description: string, terms:string): Observable<any> {

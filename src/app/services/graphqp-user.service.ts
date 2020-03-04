@@ -34,6 +34,8 @@ export class GraphqpUserService {
           phoneVerified
           language
           isAdmin
+          facebookId
+          googleId
           city{
             cityCode
             cityName
@@ -128,6 +130,38 @@ export class GraphqpUserService {
     })
   }
 
+  connectUserToFacebook(id:number, facebookId:string): Observable<any>{
+    return this.apollo.mutate<any>({
+      mutation:gql`
+      mutation connectUserToFacebook($id:Int!, $facebookId:String!){
+        connectUserToFacebook(id:$id, facebookId:$facebookId){
+          id
+        }
+      }
+      `,
+      variables:{
+        'id': id,
+        "facebookId":facebookId
+      }
+    })
+  }
+
+  
+  connectUserToGoogle(id:number, googleId:string): Observable<any>{
+    return this.apollo.mutate<any>({
+      mutation:gql`
+      mutation connectUserToGoogle($id:Int!, $googleId:String!){
+        connectUserToGoogle(id:$id, googleId:$googleId){
+          id
+        }
+      }
+      `,
+      variables:{
+        'id': id,
+        "googleId":googleId
+      }
+    })
+  }
 
   getUserByEmailAndPassword(email: string, password: string): Observable<Query> {
     return this.apollo.query<Query>({
@@ -170,25 +204,80 @@ export class GraphqpUserService {
     lastName: string,
     password: string,
     email: string,
-    phoneNumber: string): Observable<any> {
+    phoneNumber: string, nationality: string): Observable<any> {
     return this.apollo.mutate<any>({
       mutation: gql`
-          mutation createUser($firstName: String!, $lastName:String!,$password:String!, $email:String!, $phoneNumber:String!){
-            createUser(firstName: $firstName, lastName: $lastName, password: $password, email: $email, phoneNumber: $phoneNumber){
-              firstName
-              lastName
-              email
-              password
-              phoneNumber
-            }
-          }
+      mutation createUser($firstName: String!, $lastName:String!,$password:String!, $email:String!, $phoneNumber:String!, $nationality:String!){
+        createUser(firstName: $firstName, lastName: $lastName, password: $password, email: $email, phoneNumber: $phoneNumber, nationality:$nationality){
+          id
+          firstName
+          lastName
+          email
+          password
+          phoneNumber
+        }
+      }
         `,
       variables: {
         "firstName": firstName,
         "lastName": lastName,
         "password": password,
         "email": email,
-        "phoneNumber": phoneNumber
+        "phoneNumber": phoneNumber,
+        "nationality": nationality
+      }
+    })
+  }
+  createUserFacebook(firstName: string,
+    lastName: string,
+    email: string,
+    facebookId:string
+  ): Observable<any> {
+    return this.apollo.mutate<any>({
+      mutation: gql`
+      mutation createUser($firstName: String!, $lastName:String!, $email:String!, $facebookId:String!){
+        createUserWithFacebook(firstName: $firstName, lastName: $lastName, email: $email,facebookId:$facebookId){
+          id
+          firstName
+          lastName
+          email
+          password
+          phoneNumber
+        }
+      }
+        `,
+      variables: {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "facebookId": facebookId
+      }
+    })
+  }
+
+  createUserGoogle(firstName: string,
+    lastName: string,
+    email: string,
+    googleId:string
+  ): Observable<any> {
+    return this.apollo.mutate<any>({
+      mutation: gql`
+      mutation createUser($firstName: String!, $lastName:String!, $email:String!, $googleId:String!){
+        createUserWithGoogle(firstName: $firstName, lastName: $lastName, email: $email,googleId:$googleId){
+          id
+          firstName
+          lastName
+          email
+          password
+          phoneNumber
+        }
+      }
+        `,
+      variables: {
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "googleId": googleId
       }
     })
   }

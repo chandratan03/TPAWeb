@@ -9,6 +9,7 @@ export class Hotel {
     address: string
     rate: number
     price: number
+    imagePath
     longitude: number
     latitude: number
     city: City

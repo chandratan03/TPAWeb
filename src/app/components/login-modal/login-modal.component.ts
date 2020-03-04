@@ -17,7 +17,7 @@ declare const gapi: any;
 export class LoginModalComponent implements OnInit {
   @Output() nextPage = new EventEmitter()
   
-  emailOrPhonenumber:string;
+  emailOrPhonenumber:string = "";
 
   user$: Subscription
   user: User;
@@ -129,6 +129,10 @@ export class LoginModalComponent implements OnInit {
   }
 
    goToNextPage():void{
+     if(this.emailOrPhonenumber == ""){
+       alert("Please insert the field")
+       return
+     }
      this.user$ =   this.userServiceGraph.getUserByEmail(this.emailOrPhonenumber).subscribe(query =>{
         this.user = query.data.userByEmail as User
         console.log(typeof(query.data.userByEmail))

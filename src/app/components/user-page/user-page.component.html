@@ -26,6 +26,13 @@
                 </mat-option>
             </mat-select>
         </div>
+        <div>
+            <button color="primary" (click)="signInWithFB()" *ngIf="user.facebookId == ''" mat-button>Connect to facebook</button>
+        </div>
+        <div>
+            <button color="primary" id="googleBtn" *ngIf="user.googleId == ''" mat-button>Connect to google</button>
+        </div>
+
     </div>
     <div class="form-box">
         <div>

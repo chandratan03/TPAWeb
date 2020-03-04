@@ -43,6 +43,24 @@ func GetEntertainments()[]Entertainment{
   return entertainments
 }
 
+
+func GetEntertainmentById(id int)Entertainment{
+  db, error := database.Connect()
+
+  if error!=nil{
+    panic(error)
+  }
+  defer db.Close()
+
+  var entertainment Entertainment
+  db.Where("id = ?", id).Find(&entertainment)
+  db.Where("entertainment_id = ?", entertainment.Id).Find(&entertainment.ImageEntertainments)
+  db.Model(&entertainment).Related(&entertainment.City).
+    Model(&entertainment.City).Related(&entertainment.City.Region)
+
+  return entertainment
+}
+
 func InsertEntertainment(name string, price float64, category string,
   isTrending bool,
   cityId int, image string, description string, terms string)Entertainment{
@@ -135,6 +153,8 @@ func DeleteEntertainment(id int)Entertainment{
 
   return  entertainment
 }
+
+
 
 
 

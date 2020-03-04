@@ -25,8 +25,8 @@ export class HeaderComponent implements OnInit {
   }
   openDialogLogin(){
     this.dialogLogin.open(LoginModalComponent, {
-      width: "25%",
-      height: "60%",
+      width: "auto",
+      height: "auto",
       minWidth: "400px",
       minHeight: "425px",
       panelClass:"dialogBox"
@@ -37,8 +37,8 @@ export class HeaderComponent implements OnInit {
     console.log("test")
     this.dialogLogin.closeAll()
     this.dialogLogin.open(LoginModal2Component, {
-      width: "25%",
-      height: "60%",
+      width: "auto",
+      height: "auto",
       minWidth: "400px",
       minHeight: "425px",
       panelClass:"dialogBox"
@@ -48,8 +48,8 @@ export class HeaderComponent implements OnInit {
   openDialogRegister(){
     this.dialogLogin.open(RegisterModalComponent, {
       panelClass: "dialogBox",
-      width: "25%",
-      height: "70%",
+      width: "auto",
+      height: "auto",
       minWidth: "400px",
       minHeight: "425px",
     })

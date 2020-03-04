@@ -7,4 +7,5 @@ export class EntertainmentTicket {
     price:number
     discountPercentage: number
     date:Date
+    description:string
 }

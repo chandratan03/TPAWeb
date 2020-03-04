@@ -1,4 +1,34 @@
 <div>
+    
+<div class="calendar" [ngSwitch]="view">
+    <mwl-calendar-month-view
+    [viewDate] = "viewDate"
+    [events]="events"
+    *ngSwitchCase="CalendarView.Month"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    
+    >
+
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+           
+        >
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+           
+        >
+        </mwl-calendar-day-view>
+</div>
     <div>
         <div class="card card-contents">
             <div class="card-content card-content-from">
@@ -155,13 +185,7 @@
                     </div>
                 </div>
                 <div class="box2">
-                    <div>
-                        <mwl-calendar-month-view
-                        [viewDate] = "viewDate"
-                        >
-
-                        </mwl-calendar-month-view>
-                    </div>
+                  
 
                     <i class="fas fa-filter">
                         <mat-select [(ngModel)]="selectedValue" name="item">

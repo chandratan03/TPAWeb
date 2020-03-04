@@ -72,7 +72,7 @@
 
             </i>
             <div class="page-data">
-                <div class="event-box" *ngFor="let entertainmentTicket of entertainmentTickets">
+                <div (click)="goToDetail(i)" class="event-box" *ngFor="let entertainmentTicket of entertainmentTickets; let i=index">
                     <div class="image-box">
                         <img src={{entertainmentTicket.entertainment.image}} alt="">
                     </div>

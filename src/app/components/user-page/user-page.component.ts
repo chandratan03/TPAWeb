@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { City } from 'src/app/models/city';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
@@ -7,7 +7,8 @@ import { GraphqpUserService } from 'src/app/services/graphqp-user.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Validators } from '@angular/forms';
-
+declare var FB: any;
+declare const gapi: any;
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -20,6 +21,7 @@ export class UserPageComponent implements OnInit {
     private hotelService: GraphqHotelService,
     private userService: GraphqpUserService,
     private http: HttpClient,
+    private element: ElementRef,
   ) { }
 
   title: string = ""
@@ -40,8 +42,8 @@ export class UserPageComponent implements OnInit {
 
   cities: City[]
   cities$: Subscription
-
-
+  
+  
 
   ngOnInit() {
     if(sessionStorage.getItem("user") == null){
@@ -74,8 +76,29 @@ export class UserPageComponent implements OnInit {
     // }else{
     //   this.title = this.titles[1]
     // }
-    this.getUserById(this.user.id)
+    this.getUserById(this.user.id);
     
+    (window as any).fbAsyncInit = function(){
+      FB.init({
+        appId:"552493818931035",
+        cookie:true,
+        xfbml: true,
+        version: 'v3.1'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d,s,id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if(d.getElementById(id)){
+        return;
+      };
+      js= d.createElement(s); js.id=id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    this.googleInit();
     
   }
   getCities():void{
@@ -203,5 +226,120 @@ export class UserPageComponent implements OnInit {
   }
 
   
+  signInWithFB():void{
+    FB.login((response)=>{
+      if(response.authResponse){
+        ///what to do if success
+        console.log(FB.user)
+        // FB.
+        // FB.signOut();
+        FB.api('/me', {fields: 'first_name,last_name, email'},(response)=>{
+          // console.log(response.first_name)
+          console.log(response);
+          console.log(response.email)
+          let desc = {
+            'firstName': response.first_name,
+            'lastName': response.last_name,
+            'email' : response.email,
+            'password': "",
+            'phoneNumber': "",
+          }
+          let facebookIsLogin= true;
+          this.userService.connectUserToFacebook(this.user.id, response.id).subscribe( q=>{
+            let temp = q.data.connectUserToFacebook
+            if(this.user.id == temp.id){
+              alert("success connect to facebook")
+            }
+          })
 
+          // sessionStorage.setItem("user", JSON.stringify(desc))
+          // // console.log(JSON.stringify(facebookIsLogin))
+          // sessionStorage.setItem("fb", JSON.stringify(facebookIsLogin));
+          
+          // location.reload()
+        });
+
+
+
+      }else{
+        //what to do if fail
+      }
+      
+    },{
+      scope: "email",
+      
+    })
+  }
+
+  
+  logOutWithFB():void{
+    FB.logout(()=>{
+         
+    }
+    )
+  }
+
+
+  private scope = [
+    'profile',
+    'email',
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/admin.directory.user.readonly'
+  ].join(' ');
+
+
+  private clientId:string = "928387927303-m0ecfie9ug0dflt54b046qc887fmu9r4.apps.googleusercontent.com"
+
+  
+  public auth2: any;
+  public googleInit() {
+    let that = this;
+    gapi.load('auth2', function () {
+      that.auth2 = gapi.auth2.init({
+        client_id: that.clientId,
+        cookie_policy: 'single_host_origin',
+        scope: that.scope
+      });
+      that.attachSignin(that.element.nativeElement.querySelector("#googleBtn"));
+    });
+    
+  } 
+  
+  public attachSignin(element) {
+    let that = this;
+    this.auth2.attachClickHandler(element, {},
+      function (googleUser) {
+        let profile = googleUser.getBasicProfile();
+        // let desc = {
+        //   'firstName': profile.getGivenName(),
+        //   'lastName': profile.getFamilyName(),
+        //   'email' : profile.getEmail(),
+        //   'password': "",
+        //   'phoneNumber': "",
+        // }
+        let userId 
+        let urlGoogle = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=" + googleUser['uc']["access_token"]
+        that.http.get(urlGoogle).subscribe(user => {
+
+          userId = user["user_id"]
+          that.userService.connectUserToGoogle(that.user.id, userId).subscribe(q=>{
+            let temp = q.data.connectUserToGoogle
+            if(that.user.id == temp.id){
+              alert("success connecto google")
+            }
+          })
+        })
+
+
+        // console.log(desc["email"])
+        // sessionStorage.setItem("user", JSON.stringify(desc))
+        // location.reload()
+
+
+
+      }, function (error) {
+        console.log(JSON.stringify(error, undefined, 2));
+      });
+  }
 }

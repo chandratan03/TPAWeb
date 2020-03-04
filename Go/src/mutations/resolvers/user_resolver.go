@@ -18,6 +18,33 @@ func CreateUser(params graphql.ResolveParams)(i interface{}, e error){
   }
   return newUser, nil
 }
+
+func CreateUserWithFacebookId(params graphql.ResolveParams)(i interface{}, e error){
+  firstName := params.Args["firstName"].(string)
+  lastName := params.Args["lastName"].(string)
+  email := params.Args["email"].(string)
+  facebookId := params.Args["facebookId"].(string)
+  newUser, err := models.CreateUserWithFacebook(firstName, lastName,  email, facebookId)
+  if err!=nil{
+    return nil, err
+  }
+  return newUser, nil
+}
+
+func CreateUserWithGoogleId(params graphql.ResolveParams)(i interface{}, e error){
+  firstName := params.Args["firstName"].(string)
+  lastName := params.Args["lastName"].(string)
+  email := params.Args["email"].(string)
+  googleId:= params.Args["googleId"].(string)
+  newUser, err := models.CreateUserWithGoogle(firstName, lastName,  email, googleId)
+  if err!=nil{
+    return nil, err
+  }
+  return newUser, nil
+}
+
+
+
 func UpdateUserById(params graphql.ResolveParams)(interface{}, error) {
   id := params.Args["id"].(int)
   firstName := params.Args["firstName"].(string)
@@ -44,6 +71,21 @@ func UpdateVerifiedEmail(params graphql.ResolveParams) (interface{}, error){
 func UpdateVerifiedPhone(params graphql.ResolveParams) (interface{}, error){
   id:= params.Args["id"].(int)
   row:=models.UpdateVerifyPhone(id)
+  return row,nil
+}
+
+
+func ConnectUserToFacebook(params graphql.ResolveParams) (interface{}, error){
+  id:= params.Args["id"].(int)
+  facebookId := params.Args["facebookId"].(string)
+  row:=models.ConnectFacebookToUser(id, facebookId)
+  return row,nil
+}
+
+func ConnectUserToGoogle(params graphql.ResolveParams) (interface{}, error){
+  id:= params.Args["id"].(int)
+  googleId := params.Args["googleId"].(string)
+  row:=models.ConnectGoogleToUser(id, googleId)
   return row,nil
 }
 
