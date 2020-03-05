@@ -2347,9 +2347,11 @@ func main() {
   Playground:       true,
   })
   ////
+  var token string
+  token = "lksdflkajsdlfkjaf"
   wrapped := middleware.CorsMiddleware(h)
   r:= middleware.NewRoutes()
-  r.Handle("/API", wrapped)
+  r.Handle("/"+token+"/API", wrapped)
 
   // for handling routing/
   //

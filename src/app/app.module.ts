@@ -61,7 +61,7 @@ import { ManageBlogComponent } from './components/manage-blog/manage-blog.compon
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventOrderComponent } from './components/event-order/event-order.component';
 import { ChatComponent } from './components/chat/chat.component';
-
+const token = "lksdflkajsdlfkjaf"
 @NgModule({
   exports: [
     MatDialogModule,
@@ -246,7 +246,7 @@ export class AppModule {
     httpLink: HttpLink
   ){
     apollo.create({
-      link: httpLink.create({uri:'http://localhost:8000/API'}),
+      link: httpLink.create({uri:'http://localhost:8000/'+token+'/API'}),
       cache: new InMemoryCache()
     })
   }
