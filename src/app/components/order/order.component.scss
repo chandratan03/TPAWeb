@@ -1,0 +1,50 @@
+.container{
+    padding: 2% 4%;
+    box-sizing: border-box;
+    display:flex;
+    >div{
+        border: 3px solid #4a7aff;
+        padding: 2%;
+        border-radius: 20px;
+        margin-left: 5px;
+        box-sizing: border-box;
+    }
+}
+
+
+.left-container{
+    width: 30%;
+    box-sizing: border-box;
+    
+}
+#username{
+    font-size: 24px;
+    color: black;
+    font-weight: 500;
+}
+.page-container{
+    width: 70%;
+}
+
+.detail{
+    >p{
+        margin-bottom:5px;
+        box-sizing: border-box;
+    }
+    box-sizing: border-box;
+    border-bottom: 1px solid black; 
+    margin-bottom: 4px;
+}
+
+
+@media (max-width:450px){
+    .container{
+        display:block;
+        >div{
+            width: 100% !important;
+        }   
+    }
+    .left-container{
+        margin-bottom: 10px;
+    }
+}

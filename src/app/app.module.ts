@@ -61,6 +61,7 @@ import { ManageBlogComponent } from './components/manage-blog/manage-blog.compon
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventOrderComponent } from './components/event-order/event-order.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { OrderComponent } from './components/order/order.component';
 const token = "lksdflkajsdlfkjaf"
 @NgModule({
   exports: [
@@ -113,6 +114,7 @@ const token = "lksdflkajsdlfkjaf"
     EventDetailComponent,
     EventOrderComponent,
     ChatComponent,
+    OrderComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -225,7 +227,10 @@ const token = "lksdflkajsdlfkjaf"
       },
       {
         path: 'event/order/:id/:qty', component:EventOrderComponent
-      }
+      },
+      {
+        path: 'orders', component: OrderComponent,
+      },
       
     ]),
     BrowserAnimationsModule,
