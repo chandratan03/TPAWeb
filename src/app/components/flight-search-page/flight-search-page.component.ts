@@ -1013,7 +1013,16 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
   }
 }
 
-
+calendarIsShow:boolean = false
+  showCalendar(){
+    if(this.calendarIsShow == false){
+      document.getElementById("calendar").style.display= 'block';
+      this.calendarIsShow = true
+    }else{
+      document.getElementById("calendar").style.display= 'none';
+      this.calendarIsShow= false
+    }
+  }
 
 
 

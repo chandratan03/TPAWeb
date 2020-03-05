@@ -1,0 +1,25 @@
+.container{
+    box-sizing: border-box;
+    padding: 2%;
+
+}
+
+.chats-container{
+    padding: 2%;
+    border: 2px solid #636363;
+    border-radius: 10px;;
+    box-sizing: border-box;
+
+}
+
+.chat-box{
+    padding: 0.5%;
+    box-sizing: border-box;
+    border: 3px solid black;
+    
+    &:hover{
+        background-color: #5a99f2;
+        color: #f3ff17;
+        font-weight: 500;
+    }
+}

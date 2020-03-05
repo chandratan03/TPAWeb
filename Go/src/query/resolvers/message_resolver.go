@@ -18,3 +18,11 @@ func GetAllMessagesBySenderAndReceiver(params graphql.ResolveParams)(interface{}
   return rows, nil
 }
 
+
+func GetAllMessagesByUser(params graphql.ResolveParams)(interface{}, error){
+  userId:= params.Args["userId"].(int)
+  println(userId)
+  rows := models.GetAllMessagesByUser(userId)
+  return rows, nil
+}
+

@@ -60,6 +60,7 @@ import { ManageEventPageComponent } from './components/manage-event-page/manage-
 import { ManageBlogComponent } from './components/manage-blog/manage-blog.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventOrderComponent } from './components/event-order/event-order.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   exports: [
@@ -111,6 +112,7 @@ import { EventOrderComponent } from './components/event-order/event-order.compon
     ManageBlogComponent,
     EventDetailComponent,
     EventOrderComponent,
+    ChatComponent,
   ],
   entryComponents: [LoginModalComponent],
   imports: [
@@ -178,6 +180,9 @@ import { EventOrderComponent } from './components/event-order/event-order.compon
       },
       {
         path:'chatPage', component:ChatPageComponent,
+      },
+      {
+        path:'chat', component:ChatComponent
       },
       {
         path:'event', component:EventPageComponent,

@@ -40,6 +40,28 @@ func GetAllMessagesBySenderAndReceiver(from int, to int)[]Message{
   return messages
 }
 
+func GetAllMessagesByUser(userId int)[]Message{
+  db, err := database.Connect()
+  if err!=nil{
+    panic(err)
+  }
+  defer db.Close()
+  //println("?",userId)
+  var messages []Message
+  //var messages2 []Message
+
+  db.Where("messages.from = ? or messages.to = ?", userId, userId).Find(&messages)
+  //db.Find(&messages2)
+  //
+  //for i := range messages2{
+  //  messages = append(messages, messages2[i])
+  //
+  //}
+  //println(messages[0].Message)
+  return messages
+
+}
+
 func InsertMessage(from int, to int, message string, image string)Message{
   db, err := database.Connect()
   if err!=nil{

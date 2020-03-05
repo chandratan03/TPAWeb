@@ -152,3 +152,45 @@
         flex-wrap: wrap;
     }
 }
+
+
+//modal
+
+// <div class="modal" id="modal">
+//     <div class="form">
+//         <div class="notification">
+//             THERE'S NEW TRAIN JUST UPDATED, PLEASE REFRESH THE PAGE to see the new one
+//         </div>
+//     </div>
+// </div>
+.modal{
+    display: none;
+    position: fixed;
+    min-width: 300px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+
+    overflow-x: auto;
+}
+
+.form{
+    width: auto;
+    padding: 2% 4%;
+    border: 1p solid black;
+    border-radius: 20px;
+    background: rgba($color: #FFFFFF, $alpha: 1.0);
+    margin: auto;
+    >button{
+        margin-left: 2px;
+    }
+    overflow-x: auto;
+}
+.notification{
+    background-color: white;
+    color: black;
+    padding: 5%;
+}

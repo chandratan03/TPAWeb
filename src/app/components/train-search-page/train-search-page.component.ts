@@ -6,6 +6,7 @@ import { Train } from 'src/app/models/train';
 import { Station } from 'src/app/models/station';
 import { Router } from '@angular/router';
 import { TrainType } from 'src/app/models/train-type';
+import { ChatServiceService } from 'src/app/services/chat-service.service';
 
 @Component({
   selector: 'app-train-search-page',
@@ -15,7 +16,8 @@ import { TrainType } from 'src/app/models/train-type';
 export class TrainSearchPageComponent implements OnInit {
 
   constructor(private service: GraphqTrainService,
-    private router: Router 
+    private router: Router,
+    private chatService: ChatServiceService
     ) { }
 
   trainTrips$: Subscription
@@ -77,6 +79,24 @@ export class TrainSearchPageComponent implements OnInit {
     for(let i=0; i<this.timeCheckbox.length; i++){
       this.timeCheckbox[i] = false
       this.times[i] = 6*i
+    }
+    this.chatService.listen('waitForNewTrain').subscribe(msg => {
+      
+    let modal = document.getElementById("modal")
+    modal.style.display = "flex"
+      console.log('test')
+    })
+    this.setModal()
+  }
+  setModal(): void {
+
+    let modal = document.getElementById("modal")
+    
+    window.onclick = (event) => {
+      if (event.target == modal) {
+
+        modal.style.display = "none"
+      }
     }
   }
 

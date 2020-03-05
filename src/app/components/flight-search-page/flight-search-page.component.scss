@@ -296,12 +296,24 @@
     justify-content: center;
     align-items: center;
 }
-.flight-infomartion-box{
-    
+
+.calendar-box{
+    width: 100%;
 }
 
 .calendar{
-
-    padding:5px;
+    display:none;
+    z-index: 100;
+    box-shadow: 5px 5px;
+    position: absolute;
+    border: 1px solid black;;
+    min-width: 250px;
+    width: 80%;
+    max-width: 500px;
+    padding:20px;
     box-sizing: border-box;
+    background-color: white;
+    >*{
+        width: 100%;
+    }
 }

@@ -75,4 +75,24 @@ export class ChatServiceService {
     )
   }
 
+  getMessagesByUser(userId: number):Observable<Query>{
+    console.log(userId)
+    return this.apollo.query<Query>({
+      query: gql`
+      query messageByUser($userId:Int){
+        messagesByUser(userId:$userId){
+          id
+          date
+          from
+          to
+          message
+          image
+        }
+      }
+      `,
+      variables:{
+        "userId": userId
+      }
+    })
+  }
 }

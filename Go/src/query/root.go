@@ -328,6 +328,15 @@ func GetRoot() *graphql.Object{
         Type:graphql.NewList(types.GetMessageType()),
         Resolve:resolvers.GetAllMessages,
       },
+      "messagesByUser":{
+       Type:graphql.NewList(types.GetMessageType()),
+       Resolve:resolvers.GetAllMessagesByUser,
+       Args:graphql.FieldConfigArgument{
+         "userId": &graphql.ArgumentConfig{
+           Type: graphql.Int,
+         },
+       },
+      },
       "allMessagesBySenderAndReceiver":{
         Type:graphql.NewList(types.GetMessageType()),
         Resolve:resolvers.GetAllMessagesBySenderAndReceiver,
