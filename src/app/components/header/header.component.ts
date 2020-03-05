@@ -4,6 +4,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { LoginModal2Component } from '../login-modal2/login-modal2.component';
 import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -13,7 +14,9 @@ export class HeaderComponent implements OnInit {
   user: User
   // temp: string
   hasUser: boolean
-  constructor(public dialogLogin: MatDialog) { }
+  constructor(public dialogLogin: MatDialog,
+    private router:Router
+    ) { }
   ngOnInit() {
     // sessionStorage.removeItem("user");
     this.user = JSON.parse(sessionStorage.getItem("user"))
@@ -62,6 +65,9 @@ export class HeaderComponent implements OnInit {
     }
     location.reload()
     
+  }
+  goToUser(){
+    this.router.navigateByUrl('/user')
   }
 
 }

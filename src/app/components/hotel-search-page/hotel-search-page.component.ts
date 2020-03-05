@@ -381,6 +381,7 @@ export class HotelSearchPageComponent implements OnInit {
     this.validateSlide()
     this.validateAreas();
     this.validateCategory()
+    this.setMarkerHotel()
   } 
   validateHotelNames():void{
     this.hotels = []

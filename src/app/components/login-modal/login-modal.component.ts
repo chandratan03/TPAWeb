@@ -35,7 +35,7 @@ export class LoginModalComponent implements OnInit {
     
   }
 
-  googleButton:HTMLElement = document.getElementById('googleBtn')
+  // googleButton:HTMLElement = document.getElementById('googleBtn')
   ngOnInit() {
     // this.user = {
     //   id:0,
@@ -51,7 +51,7 @@ export class LoginModalComponent implements OnInit {
     this.route.fragment.subscribe((fragment) => {
       console.log(fragment)
     });
-
+    this.googleInit();
 
     //FACEBOOK
     (window as any).fbAsyncInit = function(){

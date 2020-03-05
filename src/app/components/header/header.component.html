@@ -26,7 +26,7 @@
 
             <a *ngIf="!hasUser"class="modal" (click)="openDialogLogin()" >Login</a>
             <a *ngIf="!hasUser"class="modal registerButton" (click)="openDialogRegister()">Daftar</a>
-            <a *ngIf="hasUser" class="profile">{{user.firstName}}</a>
+            <a *ngIf="hasUser" (click)="goToUser()" class="profile">{{user.firstName}}</a>
             <a *ngIf="hasUser" class="" (click)="logOut()">logOut</a>
             
             <!-- <a class="modal" style="display: none;" (nextPage)="openDialogLogin2()">Daftar</a> -->
