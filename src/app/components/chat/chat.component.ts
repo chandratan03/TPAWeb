@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit {
 
   messages$: Subscription
   messages: Message[][]
+  messagesToShow: Message[]
   ngOnInit() {
     let temp = JSON.parse(sessionStorage.getItem('user'))
     this.messages= []
@@ -56,48 +57,68 @@ export class ChatComponent implements OnInit {
     this.messages$ = this.chatService.getMessagesByUser(this.user.id).subscribe(
       q=>{
         console.log(q.data)
-        this.messages=[]
+        
         console.log(q.data.messagesByUser)
         let temp = q.data.messagesByUser as Message[]
-        let temp2 =[]
-        for(let i=0; i<temp.length; i++){
-          let flag=0
-          for(let j=0; j<temp2.length; j++){
-            if(temp[i].from !=this.userId){
-              if(temp2[j] == temp[i].from ){
-                flag=1;
-                break
-              } 
-            }
-            if(temp[i].to !=this.userId){
-              if(temp2[j] == temp[i].to ){
-                flag=2;
-                break
-              } 
-            }
-          }
-          if(flag==1){
-            temp2.push(temp[i].from)
-          }else if(flag==2){
-
-            temp2.push(temp[i].to)
-          }
-
-        }
-        console.log(temp2)
+        let otherIds =[]
         
-
-        for(let i=0; i<temp2.length; i++){
-          this.messages[i] = []
-          for(let j=0; j<temp.length; j++){
-            if(temp2[i] == temp[i].from ||temp2[i] == temp[i].to  )
-              this.messages[i].push(temp[j]);
+        console.log(temp)
+        for(let i=0; i<temp.length; i++){
+          let flag=0;
+          for(let j=0; j<otherIds.length; j++){
+            if(temp[i].from == otherIds[j]
+              || temp[i].to == otherIds[j]
+              ) {
+                // console.log(otherIds[j])
+                flag=1;
+                break;
+              }
           }
+          if(flag==0){
+            if(this.userId != temp[i].from){
+              otherIds.push(temp[i].to)
+            }else if(this.userId != temp[i].to){
+              otherIds.push(temp[i].from)
+            }
+            console.log('test')
+          }   
+        }
+        this.messages= new Array(otherIds.length)
+        console.log(otherIds)
+        for(let i=0; i<otherIds.length; i++){
+          this.messages[i] = new Array()
+          for(let j=0; j<temp.length; j++){
+            if(otherIds[i] == temp[j].from || otherIds[i] == temp[j].to ){
+              this.messages[i].push(temp[j])
+            }
+          }
+          for(let j=0; j<this.messages[i].length; j++){
+            this.messages[i][j].date = new Date(this.messages[i][j].date)
+          }
+          this.messages[i] = this.messages[i].sort((a,b) =>a.date.getDate() - b.date.getDate())
         }
         console.log(this.messages)
-
+        this.messagesToShow = []
+        for(let i=0; i<this.messages.length; i++){
+          this.messagesToShow.push(this.messages[i][this.messages[i].length-1])
+          
+        }
+        
+        for(let i=0; i<this.messagesToShow.length; i++){
+          
+          
+          this.userService.getUserById(this.messagesToShow[i].from).subscribe(q=>{
+            this.messagesToShow[i].fromUser= q.data.userById[0]
+            }
+          ) 
+           
+          this.userService.getUserById(this.messagesToShow[i].to).subscribe(q=>{
+            this.messagesToShow[i].toUser= q.data.userById[0]
+            }
+          ) 
+        }
+        console.log(this.messagesToShow)
       }
-
     )
   }
 

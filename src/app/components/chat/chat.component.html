@@ -1,11 +1,21 @@
 <div class="container">
     <div class="chats-container">
-        <div class="chat-box">
-            <div>
-                Name
+        <div class="chat-box" *ngFor="let message of messagesToShow">
+            <div *ngIf="message.from != user.id">
+                
+                {{message.fromUser.firstName}} {{message.fromUser.lastName}}
+            </div>
+            <br>
+            <div *ngIf="message.to != user.id">
+                {{message.toUser.firstName}} {{message.toUser.lastName}}
+
             </div>
             <div>
-                <p>16:41 hehehehehhehhehhhehheh</p>
+                {{message.date.getHours()}}:{{message.date.getMinutes()}} - {{message.date| date:'dd-MM-yy'}}
+            </div>
+            <br>
+            <div>
+                {{message.message}}
             </div>
         </div>
     </div>
