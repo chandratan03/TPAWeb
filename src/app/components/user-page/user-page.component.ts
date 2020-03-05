@@ -185,6 +185,13 @@ export class UserPageComponent implements OnInit {
     })
     
   }
+
+  subcribeEmail():void{
+    this.user$ = this.userService.subcribeEmail(this.user.email).subscribe(q=>{
+      alert("SUBCRIBE SUCCESS")
+    })
+  }
+
   getUserById(id:number):void{
     this.user$ = this.userService.getUserById(id).subscribe(q=>{
       this.user = q.data.userById[0]

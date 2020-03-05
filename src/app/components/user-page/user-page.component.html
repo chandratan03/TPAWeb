@@ -32,7 +32,10 @@
         <div>
             <button color="primary" id="googleBtn" *ngIf="user.googleId == ''" mat-button>Connect to google</button>
         </div>
-
+        <div>
+            <button color="primary" (click)="subcribeEmail()" mat-button>Subcribe</button>
+            
+        </div>
     </div>
     <div class="form-box">
         <div>

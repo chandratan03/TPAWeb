@@ -367,6 +367,8 @@ func GetRoot() *graphql.Object{
         },
 
       },
+
+
       "entertainmentById":{
         Type: types.GetEntertainmentType(),
         Resolve:resolvers.GetEntertainmentById,
@@ -397,6 +399,15 @@ func GetRoot() *graphql.Object{
       "latestPromo":{
         Type: types.GetPromoType(),
         Resolve:resolvers.GetLatestPromo,
+      },
+      "sendEmail":{
+          Type: graphql.Boolean,
+          Resolve:resolvers.SendEmail,
+          Args:graphql.FieldConfigArgument{
+            "toEmail": &graphql.ArgumentConfig{
+              Type:graphql.String,
+            },
+          },
       },
 
     },

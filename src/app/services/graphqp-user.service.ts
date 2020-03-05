@@ -15,6 +15,18 @@ export class GraphqpUserService {
   constructor(private apollo: Apollo) {
   }
 
+  subcribeEmail(email:string): Observable<Query> {
+    return this.apollo.query<Query>({
+      query: gql`
+      query sendEmail($email:String){   
+        sendEmail(toEmail:$email)
+      }
+      `,
+      variables:{
+        "email":email
+      }
+    })
+  }
 
   getUserById(id: number): Observable<Query> {
     return this.apollo.query<Query>({
@@ -130,35 +142,35 @@ export class GraphqpUserService {
     })
   }
 
-  connectUserToFacebook(id:number, facebookId:string): Observable<any>{
+  connectUserToFacebook(id: number, facebookId: string): Observable<any> {
     return this.apollo.mutate<any>({
-      mutation:gql`
+      mutation: gql`
       mutation connectUserToFacebook($id:Int!, $facebookId:String!){
         connectUserToFacebook(id:$id, facebookId:$facebookId){
           id
         }
       }
       `,
-      variables:{
+      variables: {
         'id': id,
-        "facebookId":facebookId
+        "facebookId": facebookId
       }
     })
   }
 
-  
-  connectUserToGoogle(id:number, googleId:string): Observable<any>{
+
+  connectUserToGoogle(id: number, googleId: string): Observable<any> {
     return this.apollo.mutate<any>({
-      mutation:gql`
+      mutation: gql`
       mutation connectUserToGoogle($id:Int!, $googleId:String!){
         connectUserToGoogle(id:$id, googleId:$googleId){
           id
         }
       }
       `,
-      variables:{
+      variables: {
         'id': id,
-        "googleId":googleId
+        "googleId": googleId
       }
     })
   }
@@ -231,7 +243,7 @@ export class GraphqpUserService {
   createUserFacebook(firstName: string,
     lastName: string,
     email: string,
-    facebookId:string
+    facebookId: string
   ): Observable<any> {
     return this.apollo.mutate<any>({
       mutation: gql`
@@ -258,7 +270,7 @@ export class GraphqpUserService {
   createUserGoogle(firstName: string,
     lastName: string,
     email: string,
-    googleId:string
+    googleId: string
   ): Observable<any> {
     return this.apollo.mutate<any>({
       mutation: gql`
@@ -282,12 +294,12 @@ export class GraphqpUserService {
     })
   }
 
-  updateUserById(id:number, firstName:string, 
-    lastName:string, email:string, phoneNumber:string, 
-    nationality:string, address:string, cityId:number, 
-    postCode:string, gender:string, language:string):Observable<any>{
-      return this.apollo.mutate<any>({
-        mutation:gql`
+  updateUserById(id: number, firstName: string,
+    lastName: string, email: string, phoneNumber: string,
+    nationality: string, address: string, cityId: number,
+    postCode: string, gender: string, language: string): Observable<any> {
+    return this.apollo.mutate<any>({
+      mutation: gql`
         mutation updateUserById($id:Int!, $firstName:String!,
           $lastName:String!, $email:String!, $phoneNumber:String!,
           $nationality:String!, $address:String!, $cityId:Int!, 
@@ -304,47 +316,47 @@ export class GraphqpUserService {
           }
         }
         `,
-        variables:{
-          "id":id,
-          "firstName":firstName,
-          "lastName":lastName,
-          "email":email,
-          "phoneNumber":phoneNumber,
-          "nationality":nationality,
-          "address": address,
-          "cityId":cityId,
-          "postCode":postCode,
-          "gender": gender,
-          "language": language,
-        }
-      })
+      variables: {
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "phoneNumber": phoneNumber,
+        "nationality": nationality,
+        "address": address,
+        "cityId": cityId,
+        "postCode": postCode,
+        "gender": gender,
+        "language": language,
+      }
+    })
   }
 
 
-  updateEmailVerified(id:number):Observable<any>{
+  updateEmailVerified(id: number): Observable<any> {
     return this.apollo.mutate({
-      mutation:gql`
+      mutation: gql`
         mutation updateVerifiedEmail($id:Int!){
           updateVerifiedEmail(id:$id){
             id
           }
         }
-      `,variables:{
-        "id":id
+      `, variables: {
+        "id": id
       }
     })
   }
-  updatePhoneVerified(id:number):Observable<any>{
+  updatePhoneVerified(id: number): Observable<any> {
     return this.apollo.mutate({
-      mutation:gql`
+      mutation: gql`
         mutation updateVerifiedPhone($id:Int!){
           updateVerifiedPhone(id:$id){
             id
           }
         }
       `
-      ,variables:{
-        "id":id
+      , variables: {
+        "id": id
       }
     })
   }
