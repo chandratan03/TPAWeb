@@ -951,7 +951,9 @@ getAllFlights(){
       console.log(this.dateFlights[i].arrival)
       this.dateFlights[i].DEPARTURE = new Date(this.dateFlights[i].departure)
       this.dateFlights[i].ARRIVAL = new Date(this.dateFlights[i].arrival)
-      
+      this.dateFlights[i].DEPARTURE.setHours(0,0,0,0)
+      this.dateFlights[i].ARRIVAL.setHours(0,0,0,0)
+        
     }
     console.log(this.dateFlights)
     this.initCalenders()
@@ -971,7 +973,10 @@ initCalenders(){
     
     let flag=0
     for(let j=0; j<dates.length; j++){
-      if(dates[j].DEPARTURE.getDate() == this.dateFlights[i].DEPARTURE.getDate()){
+      console.log(dates[j].DEPARTURE.getDate())
+      console.log(this.dateFlights[i].DEPARTURE)
+      console.log(dates[j].DEPARTURE.getDate()== this.dateFlights[i].DEPARTURE.getDate())
+      if(dates[j].DEPARTURE.getTime()== this.dateFlights[i].DEPARTURE.getTime()){
         flag=1
         break
       }
@@ -980,7 +985,7 @@ initCalenders(){
       continue;
     }
     for(let j=0; j<this.dateFlights.length; j++){
-      if(this.dateFlights[i].DEPARTURE.getDate() == this.dateFlights[j].DEPARTURE.getDate()){
+      if(this.dateFlights[i].DEPARTURE.getTime()== this.dateFlights[j].DEPARTURE.getTime()){
         if(lowest == 0 || this.dateFlights[j].price<lowest){
           lowest = this.dateFlights[j].price
         }

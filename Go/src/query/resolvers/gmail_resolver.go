@@ -65,7 +65,7 @@ func saveToken(path string, token *oauth2.Token) {
 }
 
 func SendEmail(params graphql.ResolveParams)(interface{}, error) {
-  token, err := ioutil.ReadFile("D:\\TPAWEB\\TPAWeb\\Go\\src\\credentials.json") //Read File token kita id dan kawan kawan
+  token, err := ioutil.ReadFile("credentials.json") //Read File token kita id dan kawan kawan
   if err != nil {
     log.Fatalf("Fail Read json.: %v", err)
   }
@@ -94,7 +94,7 @@ func SendEmail(params graphql.ResolveParams)(interface{}, error) {
     "To:  " + toEmail + "\r\n" +
     "Subject: WOLCOME \r\n" +
     "\r\n" + pesan)
-  
+
   message.Raw = base64.StdEncoding.EncodeToString(temp)
   message.Raw = strings.Replace(message.Raw, "/", "_", -1)
   message.Raw = strings.Replace(message.Raw, "+", "-", -1)
