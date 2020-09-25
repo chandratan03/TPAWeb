@@ -1,5 +1,5 @@
 # About
-This project is a tiket.com clone, is created by using Angular Framework Frontend, GO as backend, ,GRAPHQL, and Database PostgreSQL. 
+This project is a tiket.com clone, is created by using Angular Framework Frontend, GO as a backend, GRAPHQL, and Database PostgreSQL. 
 
 # TPAWeb
 
